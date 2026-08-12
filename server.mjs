@@ -313,6 +313,7 @@ const mimeTypes = {
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8',
   '.webmanifest': 'application/manifest+json; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
 }
 
 function getFilePath(requestUrl) {
@@ -329,6 +330,7 @@ function getFilePath(requestUrl) {
     '/privacy/': 'privacy.html',
     '/privacy.html': 'privacy.html',
     '/robots.txt': 'robots.txt',
+    '/sitemap.xml': 'sitemap.xml',
     '/google831fe18e8943573a.html': 'google831fe18e8943573a.html',
   }
   const relativePath = routes[pathname]
