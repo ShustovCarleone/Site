@@ -120,7 +120,8 @@ function securityHeaders(contentType = '') {
       "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https://www.google.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net",
-      "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net",
+      "connect-src 'self' https://video.akamai.steamstatic.com https://www.google-analytics.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net",
+      "media-src 'self' blob: https://video.akamai.steamstatic.com",
       "font-src 'self' data:",
       'upgrade-insecure-requests',
     ].join('; ')
@@ -323,6 +324,7 @@ function getFilePath(requestUrl) {
   }
   const routes = {
     '/': 'index.html',
+    '/index.html': 'index.html',
     '/privacy': 'privacy.html',
     '/privacy/': 'privacy.html',
     '/privacy.html': 'privacy.html',

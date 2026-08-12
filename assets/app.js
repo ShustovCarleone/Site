@@ -457,7 +457,13 @@ function initializeHlsPlayers() {
 }
 
 initializeHlsPlayers()
-document.querySelector('[data-hls-library]')?.addEventListener('load', initializeHlsPlayers)
+const hlsLibrary = document.querySelector('[data-hls-library]')
+hlsLibrary?.addEventListener('load', initializeHlsPlayers)
+hlsLibrary?.addEventListener('error', () => {
+  document.querySelectorAll('video[data-hls]').forEach((video) => {
+    video.setAttribute('title', 'The trailer could not be loaded. Please open the game page on Steam.')
+  })
+})
 
 window.addEventListener('beforeunload', () => hlsPlayers.forEach((player) => player.destroy()))
 
