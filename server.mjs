@@ -1,9 +1,7 @@
 import { createReadStream, existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from 'node:fs'
-import { randomUUID, timingSafeEqual } from 'node:crypto'
 import { createServer } from 'node:http'
 import { extname, join, normalize, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import nodemailer from 'nodemailer'
 
 const root = fileURLToPath(new URL('.', import.meta.url))
 const resolvedRoot = resolve(root)
@@ -14,25 +12,6 @@ const visitorDataDir = process.env.VISITOR_DATA_DIR
   || process.env.RAILWAY_VOLUME_MOUNT_PATH
   || (process.platform !== 'win32' && existsSync('/data') ? '/data' : join(root, '.data'))
 const visitorDataFile = join(visitorDataDir, 'visitor-stats.json')
-const contactDataFile = join(visitorDataDir, 'contact-messages.json')
-const contactAdminToken = String(process.env.CONTACT_ADMIN_TOKEN || '')
-const gmailUser = extractEmail(process.env.GMAIL_USER || '')
-const gmailAppPassword = String(process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '')
-const emailSenderName = cleanSingleLine(process.env.EMAIL_SENDER_NAME || 'ShuGhost', 70)
-const contactNotificationEmail = extractEmail(process.env.CONTACT_NOTIFICATION_EMAIL || 'shustovxd15032112@gmail.com')
-const emailTransport = gmailUser && gmailAppPassword.length >= 16
-  ? nodemailer.createTransport(process.env.NODE_ENV === 'test'
-    ? { jsonTransport: true }
-    : {
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: { user: gmailUser, pass: gmailAppPassword },
-        connectionTimeout: 12_000,
-        greetingTimeout: 12_000,
-        socketTimeout: 20_000,
-      })
-  : null
 const activeVisitors = new Map()
 const activeWindowMs = 45_000
 const supportedSteamApps = new Set(['4981140', '4925710'])
@@ -44,7 +23,6 @@ const rateLimitWindowMs = 60_000
 const pageViewWindowMs = 30 * 60 * 1000
 const maximumTrackedClients = 10_000
 const maximumJsonBodyBytes = 4096
-const maximumContactBodyBytes = 16_384
 let saveTimer = null
 let visitsDirty = false
 
@@ -61,145 +39,6 @@ function loadTotalVisits() {
 }
 
 let totalViews = loadTotalVisits()
-
-function loadContactMessages() {
-  try {
-    const stored = JSON.parse(readFileSync(contactDataFile, 'utf8'))
-    return Array.isArray(stored) ? stored.slice(0, 2000) : []
-  } catch {
-    return []
-  }
-}
-
-let contactMessages = loadContactMessages()
-
-function saveContactMessages() {
-  const temporaryFile = `${contactDataFile}.tmp`
-  writeFileSync(temporaryFile, JSON.stringify(contactMessages, null, 2), 'utf8')
-  renameSync(temporaryFile, contactDataFile)
-}
-
-function readJsonBody(request, maximumBytes, callback) {
-  let body = ''
-  let bodyTooLarge = false
-
-  request.on('data', (chunk) => {
-    if (bodyTooLarge) return
-    body += chunk
-    if (Buffer.byteLength(body, 'utf8') > maximumBytes) {
-      bodyTooLarge = true
-      body = ''
-    }
-  })
-
-  request.on('end', () => {
-    if (bodyTooLarge) {
-      callback(new Error('too-large'))
-      return
-    }
-    try {
-      callback(null, JSON.parse(body || '{}'))
-    } catch {
-      callback(new Error('invalid-json'))
-    }
-  })
-}
-
-function cleanSingleLine(value, maximumLength) {
-  return String(value || '').replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, maximumLength)
-}
-
-function cleanMessage(value, maximumLength) {
-  return String(value || '').replace(/\u0000/g, '').replace(/\r\n?/g, '\n').trim().slice(0, maximumLength)
-}
-
-function extractEmail(value) {
-  const match = String(value || '').match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)
-  return match ? match[0].toLowerCase() : ''
-}
-
-function extractTelegramUsername(value) {
-  const text = String(value || '')
-  const urlMatch = text.match(/(?:https?:\/\/)?t\.me\/([a-zA-Z0-9_]{5,32})/i)
-  if (urlMatch) return urlMatch[1]
-  const usernameMatch = text.match(/(?:^|\s)@([a-zA-Z0-9_]{5,32})(?:\s|$)/)
-  return usernameMatch ? usernameMatch[1] : ''
-}
-
-function getReplyChannel(replyTo) {
-  const email = extractEmail(replyTo)
-  if (email) return { type: 'email', target: email }
-  const username = extractTelegramUsername(replyTo)
-  if (username) return { type: 'telegram', target: `https://t.me/${username}` }
-  return { type: 'manual', target: cleanSingleLine(replyTo, 160) }
-}
-
-function isEmailReplyConfigured() {
-  return Boolean(emailTransport && gmailUser)
-}
-
-async function sendEmail(payload) {
-  if (!isEmailReplyConfigured()) throw new Error('email-not-configured')
-  try {
-    const result = await emailTransport.sendMail({
-      from: { name: emailSenderName, address: gmailUser },
-      ...payload,
-    })
-    return cleanSingleLine(result.messageId, 250)
-  } catch (error) {
-    console.error('Gmail SMTP rejected an email:', error?.code || '', error?.message || '')
-    throw new Error('email-provider-error')
-  }
-}
-
-async function notifyOwnerOfContact(item) {
-  const visitorEmail = extractEmail(item.replyTo)
-  const textContent = [
-    'New message from the ShuGhost website',
-    '',
-    `Name: ${item.name}`,
-    `Contact: ${item.replyTo}`,
-    `Subject: ${item.subject}`,
-    `Language: ${item.language}`,
-    `Sent: ${item.createdAt}`,
-    '',
-    item.message,
-    '',
-    'Open the private inbox:',
-    'https://shughost.up.railway.app/inbox',
-  ].join('\n')
-
-  return sendEmail({
-    to: { name: 'ShuGhost', address: contactNotificationEmail },
-    ...(visitorEmail ? { replyTo: { name: item.name, address: visitorEmail } } : {}),
-    subject: `[ShuGhost website] ${item.subject}`.slice(0, 200),
-    text: textContent,
-  })
-}
-
-async function sendContactReply(item, replyText) {
-  const channel = getReplyChannel(item.replyTo)
-  if (channel.type !== 'email') throw new Error('recipient-not-email')
-  if (!isEmailReplyConfigured()) throw new Error('email-not-configured')
-
-  const providerId = await sendEmail({
-      to: { name: item.name, address: channel.target },
-      replyTo: { name: emailSenderName, address: gmailUser },
-      subject: `Re: ${item.subject}`.slice(0, 200),
-      text: replyText,
-  })
-  return { channel, providerId }
-}
-
-function isAdminRequest(request) {
-  if (contactAdminToken.length < 16) return false
-  const authorization = String(request.headers.authorization || '')
-  const provided = authorization.startsWith('Bearer ') ? authorization.slice(7) : ''
-  const providedBuffer = Buffer.from(provided)
-  const expectedBuffer = Buffer.from(contactAdminToken)
-  if (providedBuffer.length !== expectedBuffer.length) return false
-  return timingSafeEqual(providedBuffer, expectedBuffer)
-}
 
 function saveTotalVisits() {
   try {
@@ -368,155 +207,6 @@ function handleVisitorHeartbeat(request, response) {
   })
 }
 
-function handleContactMessage(request, response) {
-  readJsonBody(request, maximumContactBodyBytes, async (error, payload) => {
-    if (error?.message === 'too-large') {
-      sendJson(response, 413, { error: 'Message is too large' })
-      return
-    }
-    if (error) {
-      sendJson(response, 400, { error: 'Invalid request' })
-      return
-    }
-
-    const name = cleanSingleLine(payload.name, 80)
-    const replyTo = cleanSingleLine(payload.replyTo, 160)
-    const subject = cleanSingleLine(payload.subject, 120)
-    const message = cleanMessage(payload.message, 5000)
-    const website = cleanSingleLine(payload.website, 200)
-
-    if (website) {
-      sendJson(response, 200, { ok: true })
-      return
-    }
-    if (name.length < 2 || replyTo.length < 3 || subject.length < 2 || message.length < 10) {
-      sendJson(response, 400, { error: 'Please complete all required fields' })
-      return
-    }
-
-    const item = {
-      id: randomUUID(),
-      createdAt: new Date().toISOString(),
-      name,
-      replyTo,
-      subject,
-      message,
-      language: ['uk', 'en', 'ru'].includes(payload.language) ? payload.language : 'en',
-      read: false,
-    }
-
-    contactMessages.unshift(item)
-    contactMessages = contactMessages.slice(0, 2000)
-    try {
-      saveContactMessages()
-      let emailNotified = false
-      if (isEmailReplyConfigured()) {
-        try {
-          item.notification = {
-            sentAt: new Date().toISOString(),
-            providerId: await notifyOwnerOfContact(item),
-          }
-          saveContactMessages()
-          emailNotified = true
-        } catch (notificationError) {
-          console.error('Unable to email contact notification:', notificationError.message)
-        }
-      }
-      sendJson(response, 201, { ok: true, emailNotified })
-    } catch (saveError) {
-      console.error('Unable to save contact message:', saveError)
-      contactMessages = contactMessages.filter((messageItem) => messageItem.id !== item.id)
-      sendJson(response, 500, { error: 'Unable to save the message' })
-    }
-  })
-}
-
-function handleContactAdmin(request, response) {
-  if (!isAdminRequest(request)) {
-    sendJson(response, 401, { error: 'Unauthorized' })
-    return
-  }
-
-  if (request.method === 'GET') {
-    sendJson(response, 200, {
-      messages: contactMessages.map((message) => ({
-        ...message,
-        replyChannel: getReplyChannel(message.replyTo),
-      })),
-      emailReplyConfigured: isEmailReplyConfigured(),
-    })
-    return
-  }
-
-  readJsonBody(request, maximumJsonBodyBytes, (error, payload) => {
-    if (error) {
-      sendJson(response, 400, { error: 'Invalid request' })
-      return
-    }
-    const id = cleanSingleLine(payload.id, 64)
-    const item = contactMessages.find((message) => message.id === id)
-    if (!item) {
-      sendJson(response, 404, { error: 'Message not found' })
-      return
-    }
-    item.read = Boolean(payload.read)
-    try {
-      saveContactMessages()
-      sendJson(response, 200, { ok: true })
-    } catch (saveError) {
-      console.error('Unable to update contact message:', saveError)
-      sendJson(response, 500, { error: 'Unable to update the message' })
-    }
-  })
-}
-
-function handleContactReply(request, response) {
-  if (!isAdminRequest(request)) {
-    sendJson(response, 401, { error: 'Unauthorized' })
-    return
-  }
-
-  readJsonBody(request, maximumContactBodyBytes, async (error, payload) => {
-    if (error) {
-      sendJson(response, error.message === 'too-large' ? 413 : 400, { error: 'Invalid request' })
-      return
-    }
-    const id = cleanSingleLine(payload.id, 64)
-    const replyText = cleanMessage(payload.reply, 8000)
-    const item = contactMessages.find((message) => message.id === id)
-    if (!item) {
-      sendJson(response, 404, { error: 'Message not found' })
-      return
-    }
-    if (replyText.length < 2) {
-      sendJson(response, 400, { error: 'Reply is empty' })
-      return
-    }
-
-    try {
-      const sent = await sendContactReply(item, replyText)
-      item.read = true
-      item.replies = Array.isArray(item.replies) ? item.replies : []
-      item.replies.unshift({
-        id: randomUUID(),
-        createdAt: new Date().toISOString(),
-        text: replyText,
-        channel: sent.channel.type,
-        providerId: sent.providerId,
-      })
-      saveContactMessages()
-      sendJson(response, 200, { ok: true })
-    } catch (sendError) {
-      const statusByError = {
-        'recipient-not-email': 400,
-        'email-not-configured': 503,
-        'email-provider-error': 502,
-      }
-      sendJson(response, statusByError[sendError.message] || 502, { error: sendError.message || 'reply-failed' })
-    }
-  })
-}
-
 function summarizeSteamContent(content) {
   const text = String(content || '')
     .replace(/\[img\][\s\S]*?\[\/img\]/gi, ' ')
@@ -639,10 +329,6 @@ function getFilePath(requestUrl) {
     '/privacy': 'privacy.html',
     '/privacy/': 'privacy.html',
     '/privacy.html': 'privacy.html',
-    '/inbox': 'inbox.html',
-    '/inbox/': 'inbox.html',
-    '/inbox.html': 'inbox.html',
-    '/inbox.js': 'inbox.js',
     '/robots.txt': 'robots.txt',
     '/sitemap.xml': 'sitemap.xml',
     '/google831fe18e8943573a.html': 'google831fe18e8943573a.html',
@@ -710,48 +396,6 @@ const server = createServer((request, response) => {
       return
     }
     void handleSteamNews(requestUrl, response)
-    return
-  }
-
-  if (pathname === '/api/contact') {
-    if (request.method !== 'POST') {
-      sendText(response, 405, 'Method Not Allowed', { Allow: 'POST' })
-      return
-    }
-    const rateLimit = allowRequest(request, 'contact', 3)
-    if (!rateLimit.allowed) {
-      sendRateLimit(response, rateLimit.retryAfter)
-      return
-    }
-    handleContactMessage(request, response)
-    return
-  }
-
-  if (pathname === '/api/contact-admin') {
-    if (!['GET', 'PATCH'].includes(request.method || 'GET')) {
-      sendText(response, 405, 'Method Not Allowed', { Allow: 'GET, PATCH' })
-      return
-    }
-    const rateLimit = allowRequest(request, 'contact-admin', 30)
-    if (!rateLimit.allowed) {
-      sendRateLimit(response, rateLimit.retryAfter)
-      return
-    }
-    handleContactAdmin(request, response)
-    return
-  }
-
-  if (pathname === '/api/contact-reply') {
-    if (request.method !== 'POST') {
-      sendText(response, 405, 'Method Not Allowed', { Allow: 'POST' })
-      return
-    }
-    const rateLimit = allowRequest(request, 'contact-reply', 10)
-    if (!rateLimit.allowed) {
-      sendRateLimit(response, rateLimit.retryAfter)
-      return
-    }
-    handleContactReply(request, response)
     return
   }
 

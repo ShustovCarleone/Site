@@ -27,10 +27,7 @@ const translations = {
     'support.telegram': 'Join Telegram', 'support.discord': 'Join Discord',
     'contact.eyebrow': 'Work together', 'contact.title': 'Have an idea or collaboration proposal?',
     'contact.text': 'Send a message directly to ShuGhost. You can write about reviews, partnerships, game coverage, development work, or anything else relevant.',
-    'contact.note': 'Your message is stored privately and is not shown publicly.', 'contact.name': 'Your name', 'contact.namePlaceholder': 'Name or studio',
-    'contact.reply': 'Email or Telegram', 'contact.replyPlaceholder': 'How should I reply?', 'contact.subject': 'Subject', 'contact.subjectPlaceholder': 'What would you like to discuss?',
-    'contact.message': 'Message', 'contact.messagePlaceholder': 'Tell me about your proposal…', 'contact.send': 'Send message',
-    'contact.sending': 'Sending…', 'contact.success': 'Thank you! Your message has been delivered.', 'contact.error': 'The message could not be sent. Please try again.', 'contact.rateLimit': 'Please wait a minute before sending another message.',
+    'contact.note': 'Contact ShuGhost directly by email.', 'contact.emailLabel': 'Email', 'contact.emailButton': 'Write an email',
     'footer.tagline': 'Independent games with a mischievous soul.', 'footer.privacy': 'Privacy', 'footer.cookies': 'Cookie settings',
     'footer.legal': 'All rights reserved. Steam is a trademark of Valve Corporation.',
     'stats.online': 'online', 'stats.visits': 'views',
@@ -48,8 +45,7 @@ const translations = {
     'privacy.adsTitle': 'Advertising and analytics', 'privacy.adsText': 'This website uses the Google tag for Google Ads measurement. Advertising and analytics storage is denied by default and enabled only after you grant consent. Google may then process device, browser, interaction, and advertising-attribution information under its own privacy terms.',
     'privacy.externalTitle': 'External websites', 'privacy.externalText': 'Links to Steam and other third-party services leave this website. ShuGhost is not responsible for the privacy practices or content of those external services.',
     'privacy.choicesTitle': 'Your choices', 'privacy.choicesText': 'You can clear the on-site cart from the cart panel. You can also remove stored site data at any time using your browser\'s privacy or site settings.',
-    'privacy.contactTitle': 'Contact', 'privacy.contactText': 'For game support or privacy questions, use the official Steam Community support links on the', 'privacy.contactLink': 'ShuGhost support section',
-    'privacy.contactMessagesTitle': 'Contact messages', 'privacy.contactMessagesText': 'When you use the contact form, ShuGhost stores the name, reply address, subject, message, language, submission time, and any replies sent through the private inbox. Google Gmail may process this information to deliver a private notification and reply. It is not displayed publicly.',
+    'privacy.contactTitle': 'Contact', 'privacy.contactText': 'For game support or privacy questions, contact ShuGhost at',
     'genre.gremlins': 'Desktop pet · Simulation', 'genre.violet': 'Visual novel · Story rich',
   },
   uk: {
@@ -80,10 +76,7 @@ const translations = {
     'support.telegram': 'Приєднатися до Telegram', 'support.discord': 'Приєднатися до Discord',
     'contact.eyebrow': 'Співпраця', 'contact.title': 'Маєте ідею або пропозицію співпраці?',
     'contact.text': 'Напишіть безпосередньо ShuGhost. Тут можна запропонувати огляд, партнерство, висвітлення гри, роботу над проєктом або обговорити іншу доречну ідею.',
-    'contact.note': 'Ваше повідомлення зберігається приватно й не публікується на сайті.', 'contact.name': 'Ваше ім’я', 'contact.namePlaceholder': 'Ім’я або назва студії',
-    'contact.reply': 'Email або Telegram', 'contact.replyPlaceholder': 'Як вам відповісти?', 'contact.subject': 'Тема', 'contact.subjectPlaceholder': 'Що ви хочете обговорити?',
-    'contact.message': 'Повідомлення', 'contact.messagePlaceholder': 'Розкажіть про свою пропозицію…', 'contact.send': 'Надіслати повідомлення',
-    'contact.sending': 'Надсилання…', 'contact.success': 'Дякую! Ваше повідомлення доставлено.', 'contact.error': 'Не вдалося надіслати повідомлення. Спробуйте ще раз.', 'contact.rateLimit': 'Зачекайте хвилину перед наступним повідомленням.',
+    'contact.note': 'Зв’яжіться із ShuGhost безпосередньо через електронну пошту.', 'contact.emailLabel': 'Електронна пошта', 'contact.emailButton': 'Написати листа',
     'footer.tagline': 'Незалежні ігри з бешкетною душею.', 'footer.privacy': 'Конфіденційність', 'footer.cookies': 'Налаштування cookie',
     'footer.legal': 'Усі права захищено. Steam є торговельною маркою Valve Corporation.',
     'stats.online': 'онлайн', 'stats.visits': 'переглядів',
@@ -101,8 +94,7 @@ const translations = {
     'privacy.adsTitle': 'Реклама й аналітика', 'privacy.adsText': 'Цей сайт використовує тег Google для вимірювання Google Ads. Сховища реклами й аналітики типово вимкнені та вмикаються лише після вашої згоди. Після цього Google може обробляти інформацію про пристрій, браузер, взаємодії та рекламну атрибуцію відповідно до власної політики конфіденційності.',
     'privacy.externalTitle': 'Зовнішні сайти', 'privacy.externalText': 'Посилання на Steam та інші сторонні сервіси ведуть за межі цього сайту. ShuGhost не відповідає за правила конфіденційності або вміст сторонніх сервісів.',
     'privacy.choicesTitle': 'Ваш вибір', 'privacy.choicesText': 'Ви можете очистити кошик у його панелі. Також у будь-який момент можна видалити збережені дані сайту через налаштування конфіденційності браузера.',
-    'privacy.contactTitle': 'Зв’язок', 'privacy.contactText': 'Для підтримки ігор або запитань щодо конфіденційності скористайтеся офіційними посиланнями спільноти Steam у', 'privacy.contactLink': 'розділі підтримки ShuGhost',
-    'privacy.contactMessagesTitle': 'Контактні повідомлення', 'privacy.contactMessagesText': 'Коли ви користуєтеся контактною формою, ShuGhost зберігає вказані вами ім’я, адресу для відповіді, тему, повідомлення, мову, час надсилання та відповіді з приватного inbox. Google Gmail може обробляти ці дані, щоб доставити приватне сповіщення та відповідь. Вони не публікуються на сайті.',
+    'privacy.contactTitle': 'Зв’язок', 'privacy.contactText': 'Для підтримки ігор або запитань щодо конфіденційності напишіть ShuGhost на адресу',
     'genre.gremlins': 'Десктопний улюбленець · Симулятор', 'genre.violet': 'Візуальна новела · Сюжетна гра',
   },
   ru: {
@@ -133,10 +125,7 @@ const translations = {
     'support.telegram': 'Присоединиться к Telegram', 'support.discord': 'Присоединиться к Discord',
     'contact.eyebrow': 'Сотрудничество', 'contact.title': 'Есть идея или предложение о сотрудничестве?',
     'contact.text': 'Напишите напрямую ShuGhost. Здесь можно предложить обзор, партнёрство, освещение игры, работу над проектом или обсудить другую подходящую идею.',
-    'contact.note': 'Ваше сообщение хранится конфиденциально и не публикуется на сайте.', 'contact.name': 'Ваше имя', 'contact.namePlaceholder': 'Имя или название студии',
-    'contact.reply': 'Email или Telegram', 'contact.replyPlaceholder': 'Как вам ответить?', 'contact.subject': 'Тема', 'contact.subjectPlaceholder': 'Что вы хотите обсудить?',
-    'contact.message': 'Сообщение', 'contact.messagePlaceholder': 'Расскажите о своём предложении…', 'contact.send': 'Отправить сообщение',
-    'contact.sending': 'Отправка…', 'contact.success': 'Спасибо! Ваше сообщение доставлено.', 'contact.error': 'Не удалось отправить сообщение. Попробуйте ещё раз.', 'contact.rateLimit': 'Подождите минуту перед следующим сообщением.',
+    'contact.note': 'Свяжитесь с ShuGhost напрямую по электронной почте.', 'contact.emailLabel': 'Электронная почта', 'contact.emailButton': 'Написать письмо',
     'footer.tagline': 'Независимые игры с озорной душой.', 'footer.privacy': 'Конфиденциальность', 'footer.cookies': 'Настройки cookie',
     'footer.legal': 'Все права защищены. Steam является товарным знаком Valve Corporation.',
     'stats.online': 'онлайн', 'stats.visits': 'просмотров',
@@ -154,8 +143,7 @@ const translations = {
     'privacy.adsTitle': 'Реклама и аналитика', 'privacy.adsText': 'Этот сайт использует тег Google для измерения Google Ads. Хранилища рекламы и аналитики по умолчанию отключены и включаются только после вашего согласия. После этого Google может обрабатывать информацию об устройстве, браузере, взаимодействиях и рекламной атрибуции в соответствии со своей политикой конфиденциальности.',
     'privacy.externalTitle': 'Внешние сайты', 'privacy.externalText': 'Ссылки на Steam и другие сторонние сервисы ведут за пределы этого сайта. ShuGhost не отвечает за правила конфиденциальности или содержимое сторонних сервисов.',
     'privacy.choicesTitle': 'Ваш выбор', 'privacy.choicesText': 'Вы можете очистить корзину в её панели. Также в любой момент можно удалить сохранённые данные сайта через настройки конфиденциальности браузера.',
-    'privacy.contactTitle': 'Связь', 'privacy.contactText': 'Для поддержки игр или вопросов о конфиденциальности воспользуйтесь официальными ссылками сообщества Steam в', 'privacy.contactLink': 'разделе поддержки ShuGhost',
-    'privacy.contactMessagesTitle': 'Контактные сообщения', 'privacy.contactMessagesText': 'Когда вы используете контактную форму, ShuGhost сохраняет указанные вами имя, адрес для ответа, тему, сообщение, язык, время отправки и ответы из приватного inbox. Google Gmail может обрабатывать эти данные для доставки приватного уведомления и ответа. Они не публикуются на сайте.',
+    'privacy.contactTitle': 'Связь', 'privacy.contactText': 'Для поддержки игр или вопросов о конфиденциальности напишите ShuGhost по адресу',
     'genre.gremlins': 'Питомец рабочего стола · Симулятор', 'genre.violet': 'Визуальная новелла · Сюжетная игра',
   },
 }
@@ -538,31 +526,6 @@ document.querySelector('[data-cart-clear]')?.addEventListener('click', () => {
   cart = []
   saveCart()
   renderCart()
-})
-
-const contactForm = document.querySelector('[data-contact-form]')
-const contactStatus = document.querySelector('[data-contact-status]')
-const contactSubmit = document.querySelector('[data-contact-submit]')
-contactForm?.addEventListener('submit', async (event) => {
-  event.preventDefault()
-  if (!contactForm.reportValidity()) return
-  const payload = Object.fromEntries(new FormData(contactForm).entries())
-  payload.language = currentLanguage
-  contactSubmit.disabled = true
-  contactStatus.className = 'form-status'
-  contactStatus.textContent = t('contact.sending')
-  try {
-    const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-    if (!response.ok) throw new Error(response.status === 429 ? 'rate-limit' : 'send-failed')
-    contactForm.reset()
-    contactStatus.className = 'form-status is-success'
-    contactStatus.textContent = t('contact.success')
-  } catch (error) {
-    contactStatus.className = 'form-status is-error'
-    contactStatus.textContent = error.message === 'rate-limit' ? t('contact.rateLimit') : t('contact.error')
-  } finally {
-    contactSubmit.disabled = false
-  }
 })
 
 document.addEventListener('keydown', (event) => {

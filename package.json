@@ -7,9 +7,6 @@
   "scripts": {
     "start": "node server.mjs"
   },
-  "dependencies": {
-    "nodemailer": "^9.0.3"
-  },
   "engines": {
     "node": ">=20"
   }

@@ -47,31 +47,8 @@ Google Ads tag `AW-18379981521` is installed with Consent Mode v2. Advertising
 and analytics storage are denied until a visitor accepts them in the site's
 cookie banner.
 
-## Collaboration inbox
+## Contact
 
-The public collaboration form posts to `/api/contact`. Messages are stored in
-the same persistent Railway volume as visitor statistics. Add a Railway service
-variable named `CONTACT_ADMIN_TOKEN` with a unique password of at least 16
-characters, then open `/inbox` and enter that password to read messages.
-
-Do not commit the token to Git or expose it in client-side code.
-
-To receive contact notifications and reply directly from `/inbox`, enable
-Google 2-Step Verification, create a dedicated Google App Password, and add
-these Railway Variables:
-
-- `GMAIL_USER`: the Gmail sender address, for example `name@gmail.com`
-- `GMAIL_APP_PASSWORD`: the 16-character Google App Password (never the normal
-  Google Account password)
-- `EMAIL_SENDER_NAME`: optional display name, for example `ShuGhost`
-- `CONTACT_NOTIFICATION_EMAIL`: optional inbox for new-message notifications;
-  defaults to `shustovxd15032112@gmail.com`
-
-With Gmail configured, every new website message is saved in `/inbox` and also
-emailed to `shustovxd15032112@gmail.com`. If the visitor supplied an email
-address, Gmail's Reply action addresses the visitor directly.
-
-Never commit the App Password to Git or place it in browser-side JavaScript.
-
-Telegram contacts open in Telegram because bots and websites cannot initiate a
-conversation with an arbitrary Telegram user who has not contacted the bot.
+The site displays `shustovxd15032112@gmail.com` as a direct `mailto:` contact.
+It does not store contact messages or require any email-related Railway
+variables.
