@@ -27,9 +27,9 @@
       gtag('config', 'AW-18379981521');
     </script>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="assets/styles.css?v=5" />
+    <link rel="stylesheet" href="assets/styles.css?v=7" />
     <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js" defer data-hls-library></script>
-    <script src="assets/app.js?v=6" defer></script>
+    <script src="assets/app.js?v=7" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -44,6 +44,7 @@
         <a href="#games" data-i18n="nav.games">Games</a>
         <a href="#about" data-i18n="nav.about">About</a>
         <a href="#support" data-i18n="nav.support">Support</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
 
       <div class="header-tools">
@@ -296,6 +297,30 @@
           </div>
         </div>
       </section>
+
+      <section class="contact section" id="contact">
+        <div class="contact-panel reveal">
+          <div class="contact-copy">
+            <p class="eyebrow"><span></span> <b data-i18n="contact.eyebrow">Work together</b></p>
+            <h2 data-i18n="contact.title">Have an idea or collaboration proposal?</h2>
+            <p data-i18n="contact.text">Send a message directly to ShuGhost. You can write about reviews, partnerships, game coverage, development work, or anything else relevant.</p>
+            <div class="contact-note"><span aria-hidden="true">✦</span><span data-i18n="contact.note">Your message is stored privately and is not shown publicly.</span></div>
+          </div>
+          <form class="contact-form" data-contact-form>
+            <div class="contact-form-row">
+              <label><span data-i18n="contact.name">Your name</span><input name="name" type="text" maxlength="80" autocomplete="name" required data-i18n-placeholder="contact.namePlaceholder" placeholder="Name or studio" /></label>
+              <label><span data-i18n="contact.reply">Email or Telegram</span><input name="replyTo" type="text" maxlength="160" autocomplete="email" required data-i18n-placeholder="contact.replyPlaceholder" placeholder="How should I reply?" /></label>
+            </div>
+            <label><span data-i18n="contact.subject">Subject</span><input name="subject" type="text" maxlength="120" required data-i18n-placeholder="contact.subjectPlaceholder" placeholder="What would you like to discuss?" /></label>
+            <label><span data-i18n="contact.message">Message</span><textarea name="message" rows="7" maxlength="5000" required data-i18n-placeholder="contact.messagePlaceholder" placeholder="Tell me about your proposal…"></textarea></label>
+            <label class="contact-honeypot" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+            <div class="contact-submit-row">
+              <p class="form-status" data-contact-status aria-live="polite"></p>
+              <button class="button button-primary" type="submit" data-contact-submit><span data-i18n="contact.send">Send message</span></button>
+            </div>
+          </form>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -314,6 +339,7 @@
         <a href="https://t.me/CursorVerse" target="_blank" rel="noopener noreferrer">Telegram</a>
         <a href="https://discord.gg/9agE2cnpJ7" target="_blank" rel="noopener noreferrer">Discord</a>
         <a href="#support" data-i18n="nav.support">Support</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
       <small>© <span data-year></span> ShuGhost. <span data-i18n="footer.legal">All rights reserved. Steam is a trademark of Valve Corporation.</span></small>
     </footer>

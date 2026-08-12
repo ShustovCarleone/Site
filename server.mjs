@@ -1,4 +1,5 @@
 import { createReadStream, existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from 'node:fs'
+import { randomUUID, timingSafeEqual } from 'node:crypto'
 import { createServer } from 'node:http'
 import { extname, join, normalize, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -12,6 +13,8 @@ const visitorDataDir = process.env.VISITOR_DATA_DIR
   || process.env.RAILWAY_VOLUME_MOUNT_PATH
   || (process.platform !== 'win32' && existsSync('/data') ? '/data' : join(root, '.data'))
 const visitorDataFile = join(visitorDataDir, 'visitor-stats.json')
+const contactDataFile = join(visitorDataDir, 'contact-messages.json')
+const contactAdminToken = String(process.env.CONTACT_ADMIN_TOKEN || '')
 const activeVisitors = new Map()
 const activeWindowMs = 45_000
 const supportedSteamApps = new Set(['4981140', '4925710'])
@@ -23,6 +26,7 @@ const rateLimitWindowMs = 60_000
 const pageViewWindowMs = 30 * 60 * 1000
 const maximumTrackedClients = 10_000
 const maximumJsonBodyBytes = 4096
+const maximumContactBodyBytes = 16_384
 let saveTimer = null
 let visitsDirty = false
 
@@ -39,6 +43,67 @@ function loadTotalVisits() {
 }
 
 let totalViews = loadTotalVisits()
+
+function loadContactMessages() {
+  try {
+    const stored = JSON.parse(readFileSync(contactDataFile, 'utf8'))
+    return Array.isArray(stored) ? stored.slice(0, 2000) : []
+  } catch {
+    return []
+  }
+}
+
+let contactMessages = loadContactMessages()
+
+function saveContactMessages() {
+  const temporaryFile = `${contactDataFile}.tmp`
+  writeFileSync(temporaryFile, JSON.stringify(contactMessages, null, 2), 'utf8')
+  renameSync(temporaryFile, contactDataFile)
+}
+
+function readJsonBody(request, maximumBytes, callback) {
+  let body = ''
+  let bodyTooLarge = false
+
+  request.on('data', (chunk) => {
+    if (bodyTooLarge) return
+    body += chunk
+    if (Buffer.byteLength(body, 'utf8') > maximumBytes) {
+      bodyTooLarge = true
+      body = ''
+    }
+  })
+
+  request.on('end', () => {
+    if (bodyTooLarge) {
+      callback(new Error('too-large'))
+      return
+    }
+    try {
+      callback(null, JSON.parse(body || '{}'))
+    } catch {
+      callback(new Error('invalid-json'))
+    }
+  })
+}
+
+function cleanSingleLine(value, maximumLength) {
+  return String(value || '').replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, maximumLength)
+}
+
+function cleanMessage(value, maximumLength) {
+  return String(value || '').replace(/\u0000/g, '').replace(/\r\n?/g, '\n').trim().slice(0, maximumLength)
+}
+
+function isAdminRequest(request) {
+  if (contactAdminToken.length < 16) return false
+  const authorization = String(request.headers.authorization || '')
+  const provided = authorization.startsWith('Bearer ') ? authorization.slice(7) : ''
+  const providedBuffer = Buffer.from(provided)
+  const expectedBuffer = Buffer.from(contactAdminToken)
+  if (providedBuffer.length !== expectedBuffer.length) return false
+  return timingSafeEqual(providedBuffer, expectedBuffer)
+}
 
 function saveTotalVisits() {
   try {
@@ -207,6 +272,89 @@ function handleVisitorHeartbeat(request, response) {
   })
 }
 
+function handleContactMessage(request, response) {
+  readJsonBody(request, maximumContactBodyBytes, (error, payload) => {
+    if (error?.message === 'too-large') {
+      sendJson(response, 413, { error: 'Message is too large' })
+      return
+    }
+    if (error) {
+      sendJson(response, 400, { error: 'Invalid request' })
+      return
+    }
+
+    const name = cleanSingleLine(payload.name, 80)
+    const replyTo = cleanSingleLine(payload.replyTo, 160)
+    const subject = cleanSingleLine(payload.subject, 120)
+    const message = cleanMessage(payload.message, 5000)
+    const website = cleanSingleLine(payload.website, 200)
+
+    if (website) {
+      sendJson(response, 200, { ok: true })
+      return
+    }
+    if (name.length < 2 || replyTo.length < 3 || subject.length < 2 || message.length < 10) {
+      sendJson(response, 400, { error: 'Please complete all required fields' })
+      return
+    }
+
+    const item = {
+      id: randomUUID(),
+      createdAt: new Date().toISOString(),
+      name,
+      replyTo,
+      subject,
+      message,
+      language: ['uk', 'en', 'ru'].includes(payload.language) ? payload.language : 'en',
+      read: false,
+    }
+
+    contactMessages.unshift(item)
+    contactMessages = contactMessages.slice(0, 2000)
+    try {
+      saveContactMessages()
+      sendJson(response, 201, { ok: true })
+    } catch (saveError) {
+      console.error('Unable to save contact message:', saveError)
+      contactMessages = contactMessages.filter((messageItem) => messageItem.id !== item.id)
+      sendJson(response, 500, { error: 'Unable to save the message' })
+    }
+  })
+}
+
+function handleContactAdmin(request, response) {
+  if (!isAdminRequest(request)) {
+    sendJson(response, 401, { error: 'Unauthorized' })
+    return
+  }
+
+  if (request.method === 'GET') {
+    sendJson(response, 200, { messages: contactMessages })
+    return
+  }
+
+  readJsonBody(request, maximumJsonBodyBytes, (error, payload) => {
+    if (error) {
+      sendJson(response, 400, { error: 'Invalid request' })
+      return
+    }
+    const id = cleanSingleLine(payload.id, 64)
+    const item = contactMessages.find((message) => message.id === id)
+    if (!item) {
+      sendJson(response, 404, { error: 'Message not found' })
+      return
+    }
+    item.read = Boolean(payload.read)
+    try {
+      saveContactMessages()
+      sendJson(response, 200, { ok: true })
+    } catch (saveError) {
+      console.error('Unable to update contact message:', saveError)
+      sendJson(response, 500, { error: 'Unable to update the message' })
+    }
+  })
+}
+
 function summarizeSteamContent(content) {
   const text = String(content || '')
     .replace(/\[img\][\s\S]*?\[\/img\]/gi, ' ')
@@ -329,6 +477,10 @@ function getFilePath(requestUrl) {
     '/privacy': 'privacy.html',
     '/privacy/': 'privacy.html',
     '/privacy.html': 'privacy.html',
+    '/inbox': 'inbox.html',
+    '/inbox/': 'inbox.html',
+    '/inbox.html': 'inbox.html',
+    '/inbox.js': 'inbox.js',
     '/robots.txt': 'robots.txt',
     '/sitemap.xml': 'sitemap.xml',
     '/google831fe18e8943573a.html': 'google831fe18e8943573a.html',
@@ -396,6 +548,34 @@ const server = createServer((request, response) => {
       return
     }
     void handleSteamNews(requestUrl, response)
+    return
+  }
+
+  if (pathname === '/api/contact') {
+    if (request.method !== 'POST') {
+      sendText(response, 405, 'Method Not Allowed', { Allow: 'POST' })
+      return
+    }
+    const rateLimit = allowRequest(request, 'contact', 3)
+    if (!rateLimit.allowed) {
+      sendRateLimit(response, rateLimit.retryAfter)
+      return
+    }
+    handleContactMessage(request, response)
+    return
+  }
+
+  if (pathname === '/api/contact-admin') {
+    if (!['GET', 'PATCH'].includes(request.method || 'GET')) {
+      sendText(response, 405, 'Method Not Allowed', { Allow: 'GET, PATCH' })
+      return
+    }
+    const rateLimit = allowRequest(request, 'contact-admin', 30)
+    if (!rateLimit.allowed) {
+      sendRateLimit(response, rateLimit.retryAfter)
+      return
+    }
+    handleContactAdmin(request, response)
     return
   }
 

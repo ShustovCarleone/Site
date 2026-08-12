@@ -46,3 +46,12 @@ settings after registering it with a domain registrar.
 Google Ads tag `AW-18379981521` is installed with Consent Mode v2. Advertising
 and analytics storage are denied until a visitor accepts them in the site's
 cookie banner.
+
+## Collaboration inbox
+
+The public collaboration form posts to `/api/contact`. Messages are stored in
+the same persistent Railway volume as visitor statistics. Add a Railway service
+variable named `CONTACT_ADMIN_TOKEN` with a unique password of at least 16
+characters, then open `/inbox` and enter that password to read messages.
+
+Do not commit the token to Git or expose it in client-side code.

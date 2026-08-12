@@ -3,7 +3,7 @@ const translations = {
     'meta.title': 'ShuGhost — Independent Games',
     'meta.description': 'ShuGhost is an independent game developer creating unusual, character-driven games for PC. Discover Desktop Gremlins and DR. VIOLET\'S NIGHT OFF.',
     'language.label': 'Language',
-    'nav.label': 'Main navigation', 'nav.games': 'Games', 'nav.about': 'About', 'nav.support': 'Support', 'nav.cart': 'Cart',
+    'nav.label': 'Main navigation', 'nav.games': 'Games', 'nav.about': 'About', 'nav.support': 'Support', 'nav.contact': 'Contact', 'nav.cart': 'Cart',
     'hero.eyebrow': 'Independent developer', 'hero.title': 'Games that refuse to stay', 'hero.accent': 'inside the window.',
     'hero.text': 'Strange companions, mischievous systems, and stories with a little darkness. Welcome to the worlds of ShuGhost.',
     'hero.gamesCta': 'Explore the games', 'hero.aboutCta': 'Meet the developer', 'hero.worlds': 'worlds',
@@ -25,6 +25,12 @@ const translations = {
     'support.text': 'Report a problem, share feedback, or join the ShuGhost community on Steam, Telegram, and Discord.',
     'support.gremlins': 'Desktop Gremlins support', 'support.violet': 'Dr. Violet support',
     'support.telegram': 'Join Telegram', 'support.discord': 'Join Discord',
+    'contact.eyebrow': 'Work together', 'contact.title': 'Have an idea or collaboration proposal?',
+    'contact.text': 'Send a message directly to ShuGhost. You can write about reviews, partnerships, game coverage, development work, or anything else relevant.',
+    'contact.note': 'Your message is stored privately and is not shown publicly.', 'contact.name': 'Your name', 'contact.namePlaceholder': 'Name or studio',
+    'contact.reply': 'Email or Telegram', 'contact.replyPlaceholder': 'How should I reply?', 'contact.subject': 'Subject', 'contact.subjectPlaceholder': 'What would you like to discuss?',
+    'contact.message': 'Message', 'contact.messagePlaceholder': 'Tell me about your proposal…', 'contact.send': 'Send message',
+    'contact.sending': 'Sending…', 'contact.success': 'Thank you! Your message has been delivered.', 'contact.error': 'The message could not be sent. Please try again.', 'contact.rateLimit': 'Please wait a minute before sending another message.',
     'footer.tagline': 'Independent games with a mischievous soul.', 'footer.privacy': 'Privacy', 'footer.cookies': 'Cookie settings',
     'footer.legal': 'All rights reserved. Steam is a trademark of Valve Corporation.',
     'stats.online': 'online', 'stats.visits': 'views',
@@ -43,13 +49,14 @@ const translations = {
     'privacy.externalTitle': 'External websites', 'privacy.externalText': 'Links to Steam and other third-party services leave this website. ShuGhost is not responsible for the privacy practices or content of those external services.',
     'privacy.choicesTitle': 'Your choices', 'privacy.choicesText': 'You can clear the on-site cart from the cart panel. You can also remove stored site data at any time using your browser\'s privacy or site settings.',
     'privacy.contactTitle': 'Contact', 'privacy.contactText': 'For game support or privacy questions, use the official Steam Community support links on the', 'privacy.contactLink': 'ShuGhost support section',
+    'privacy.contactMessagesTitle': 'Contact messages', 'privacy.contactMessagesText': 'When you use the contact form, ShuGhost stores the name, reply address, subject, message, language, and submission time you provide. This information is used only to read and respond to your request and is not displayed publicly.',
     'genre.gremlins': 'Desktop pet · Simulation', 'genre.violet': 'Visual novel · Story rich',
   },
   uk: {
     'meta.title': 'ShuGhost — незалежні ігри',
     'meta.description': 'ShuGhost — незалежний розробник незвичайних персонажних ігор для ПК. Відкрийте Desktop Gremlins і DR. VIOLET\'S NIGHT OFF.',
     'language.label': 'Мова',
-    'nav.label': 'Головна навігація', 'nav.games': 'Ігри', 'nav.about': 'Про мене', 'nav.support': 'Підтримка', 'nav.cart': 'Кошик',
+    'nav.label': 'Головна навігація', 'nav.games': 'Ігри', 'nav.about': 'Про мене', 'nav.support': 'Підтримка', 'nav.contact': 'Зв’язок', 'nav.cart': 'Кошик',
     'hero.eyebrow': 'Незалежний розробник', 'hero.title': 'Ігри, які відмовляються залишатися', 'hero.accent': 'у межах вікна.',
     'hero.text': 'Дивні компаньйони, бешкетні системи та історії з краплею темряви. Ласкаво просимо до світів ShuGhost.',
     'hero.gamesCta': 'Переглянути ігри', 'hero.aboutCta': 'Про розробника', 'hero.worlds': 'світи',
@@ -71,6 +78,12 @@ const translations = {
     'support.text': 'Повідомте про проблему, поділіться відгуком або приєднайтеся до спільноти ShuGhost у Steam, Telegram і Discord.',
     'support.gremlins': 'Підтримка Desktop Gremlins', 'support.violet': 'Підтримка Dr. Violet',
     'support.telegram': 'Приєднатися до Telegram', 'support.discord': 'Приєднатися до Discord',
+    'contact.eyebrow': 'Співпраця', 'contact.title': 'Маєте ідею або пропозицію співпраці?',
+    'contact.text': 'Напишіть безпосередньо ShuGhost. Тут можна запропонувати огляд, партнерство, висвітлення гри, роботу над проєктом або обговорити іншу доречну ідею.',
+    'contact.note': 'Ваше повідомлення зберігається приватно й не публікується на сайті.', 'contact.name': 'Ваше ім’я', 'contact.namePlaceholder': 'Ім’я або назва студії',
+    'contact.reply': 'Email або Telegram', 'contact.replyPlaceholder': 'Як вам відповісти?', 'contact.subject': 'Тема', 'contact.subjectPlaceholder': 'Що ви хочете обговорити?',
+    'contact.message': 'Повідомлення', 'contact.messagePlaceholder': 'Розкажіть про свою пропозицію…', 'contact.send': 'Надіслати повідомлення',
+    'contact.sending': 'Надсилання…', 'contact.success': 'Дякую! Ваше повідомлення доставлено.', 'contact.error': 'Не вдалося надіслати повідомлення. Спробуйте ще раз.', 'contact.rateLimit': 'Зачекайте хвилину перед наступним повідомленням.',
     'footer.tagline': 'Незалежні ігри з бешкетною душею.', 'footer.privacy': 'Конфіденційність', 'footer.cookies': 'Налаштування cookie',
     'footer.legal': 'Усі права захищено. Steam є торговельною маркою Valve Corporation.',
     'stats.online': 'онлайн', 'stats.visits': 'переглядів',
@@ -89,13 +102,14 @@ const translations = {
     'privacy.externalTitle': 'Зовнішні сайти', 'privacy.externalText': 'Посилання на Steam та інші сторонні сервіси ведуть за межі цього сайту. ShuGhost не відповідає за правила конфіденційності або вміст сторонніх сервісів.',
     'privacy.choicesTitle': 'Ваш вибір', 'privacy.choicesText': 'Ви можете очистити кошик у його панелі. Також у будь-який момент можна видалити збережені дані сайту через налаштування конфіденційності браузера.',
     'privacy.contactTitle': 'Зв’язок', 'privacy.contactText': 'Для підтримки ігор або запитань щодо конфіденційності скористайтеся офіційними посиланнями спільноти Steam у', 'privacy.contactLink': 'розділі підтримки ShuGhost',
+    'privacy.contactMessagesTitle': 'Контактні повідомлення', 'privacy.contactMessagesText': 'Коли ви користуєтеся контактною формою, ShuGhost зберігає вказані вами ім’я, адресу для відповіді, тему, повідомлення, мову та час надсилання. Ці дані використовуються лише для перегляду вашого звернення й відповіді на нього та не публікуються на сайті.',
     'genre.gremlins': 'Десктопний улюбленець · Симулятор', 'genre.violet': 'Візуальна новела · Сюжетна гра',
   },
   ru: {
     'meta.title': 'ShuGhost — независимые игры',
     'meta.description': 'ShuGhost — независимый разработчик необычных игр для ПК с запоминающимися персонажами. Откройте Desktop Gremlins и DR. VIOLET\'S NIGHT OFF.',
     'language.label': 'Язык',
-    'nav.label': 'Главная навигация', 'nav.games': 'Игры', 'nav.about': 'Обо мне', 'nav.support': 'Поддержка', 'nav.cart': 'Корзина',
+    'nav.label': 'Главная навигация', 'nav.games': 'Игры', 'nav.about': 'Обо мне', 'nav.support': 'Поддержка', 'nav.contact': 'Связаться', 'nav.cart': 'Корзина',
     'hero.eyebrow': 'Независимый разработчик', 'hero.title': 'Игры, которые отказываются оставаться', 'hero.accent': 'в пределах окна.',
     'hero.text': 'Странные компаньоны, озорные системы и истории с каплей тьмы. Добро пожаловать в миры ShuGhost.',
     'hero.gamesCta': 'Посмотреть игры', 'hero.aboutCta': 'О разработчике', 'hero.worlds': 'мира',
@@ -117,6 +131,12 @@ const translations = {
     'support.text': 'Сообщите о проблеме, поделитесь отзывом или присоединитесь к сообществу ShuGhost в Steam, Telegram и Discord.',
     'support.gremlins': 'Поддержка Desktop Gremlins', 'support.violet': 'Поддержка Dr. Violet',
     'support.telegram': 'Присоединиться к Telegram', 'support.discord': 'Присоединиться к Discord',
+    'contact.eyebrow': 'Сотрудничество', 'contact.title': 'Есть идея или предложение о сотрудничестве?',
+    'contact.text': 'Напишите напрямую ShuGhost. Здесь можно предложить обзор, партнёрство, освещение игры, работу над проектом или обсудить другую подходящую идею.',
+    'contact.note': 'Ваше сообщение хранится конфиденциально и не публикуется на сайте.', 'contact.name': 'Ваше имя', 'contact.namePlaceholder': 'Имя или название студии',
+    'contact.reply': 'Email или Telegram', 'contact.replyPlaceholder': 'Как вам ответить?', 'contact.subject': 'Тема', 'contact.subjectPlaceholder': 'Что вы хотите обсудить?',
+    'contact.message': 'Сообщение', 'contact.messagePlaceholder': 'Расскажите о своём предложении…', 'contact.send': 'Отправить сообщение',
+    'contact.sending': 'Отправка…', 'contact.success': 'Спасибо! Ваше сообщение доставлено.', 'contact.error': 'Не удалось отправить сообщение. Попробуйте ещё раз.', 'contact.rateLimit': 'Подождите минуту перед следующим сообщением.',
     'footer.tagline': 'Независимые игры с озорной душой.', 'footer.privacy': 'Конфиденциальность', 'footer.cookies': 'Настройки cookie',
     'footer.legal': 'Все права защищены. Steam является товарным знаком Valve Corporation.',
     'stats.online': 'онлайн', 'stats.visits': 'просмотров',
@@ -135,6 +155,7 @@ const translations = {
     'privacy.externalTitle': 'Внешние сайты', 'privacy.externalText': 'Ссылки на Steam и другие сторонние сервисы ведут за пределы этого сайта. ShuGhost не отвечает за правила конфиденциальности или содержимое сторонних сервисов.',
     'privacy.choicesTitle': 'Ваш выбор', 'privacy.choicesText': 'Вы можете очистить корзину в её панели. Также в любой момент можно удалить сохранённые данные сайта через настройки конфиденциальности браузера.',
     'privacy.contactTitle': 'Связь', 'privacy.contactText': 'Для поддержки игр или вопросов о конфиденциальности воспользуйтесь официальными ссылками сообщества Steam в', 'privacy.contactLink': 'разделе поддержки ShuGhost',
+    'privacy.contactMessagesTitle': 'Контактные сообщения', 'privacy.contactMessagesText': 'Когда вы используете контактную форму, ShuGhost сохраняет указанные вами имя, адрес для ответа, тему, сообщение, язык и время отправки. Эти данные используются только для просмотра обращения и ответа на него и не публикуются на сайте.',
     'genre.gremlins': 'Питомец рабочего стола · Симулятор', 'genre.violet': 'Визуальная новелла · Сюжетная игра',
   },
 }
@@ -416,6 +437,9 @@ function applyLanguage(language) {
   document.querySelectorAll('[data-i18n-aria]').forEach((element) => {
     element.setAttribute('aria-label', t(element.dataset.i18nAria))
   })
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+    element.setAttribute('placeholder', t(element.dataset.i18nPlaceholder))
+  })
   document.querySelectorAll('[data-lang]').forEach((button) => {
     const active = button.dataset.lang === currentLanguage
     button.classList.toggle('active', active)
@@ -514,6 +538,31 @@ document.querySelector('[data-cart-clear]')?.addEventListener('click', () => {
   cart = []
   saveCart()
   renderCart()
+})
+
+const contactForm = document.querySelector('[data-contact-form]')
+const contactStatus = document.querySelector('[data-contact-status]')
+const contactSubmit = document.querySelector('[data-contact-submit]')
+contactForm?.addEventListener('submit', async (event) => {
+  event.preventDefault()
+  if (!contactForm.reportValidity()) return
+  const payload = Object.fromEntries(new FormData(contactForm).entries())
+  payload.language = currentLanguage
+  contactSubmit.disabled = true
+  contactStatus.className = 'form-status'
+  contactStatus.textContent = t('contact.sending')
+  try {
+    const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    if (!response.ok) throw new Error(response.status === 429 ? 'rate-limit' : 'send-failed')
+    contactForm.reset()
+    contactStatus.className = 'form-status is-success'
+    contactStatus.textContent = t('contact.success')
+  } catch (error) {
+    contactStatus.className = 'form-status is-error'
+    contactStatus.textContent = error.message === 'rate-limit' ? t('contact.rateLimit') : t('contact.error')
+  } finally {
+    contactSubmit.disabled = false
+  }
 })
 
 document.addEventListener('keydown', (event) => {

@@ -24,6 +24,12 @@ const translations = {
     'support.eyebrow': 'Need help?', 'support.title': 'Support & community',
     'support.text': 'Report a problem, share feedback, or join a discussion through the official Steam hubs.',
     'support.gremlins': 'Desktop Gremlins support', 'support.violet': 'Dr. Violet support',
+    'contact.eyebrow': 'Work together', 'contact.title': 'Have an idea or collaboration proposal?',
+    'contact.text': 'Send a message directly to ShuGhost. You can write about reviews, partnerships, game coverage, development work, or anything else relevant.',
+    'contact.note': 'Your message is stored privately and is not shown publicly.', 'contact.name': 'Your name', 'contact.namePlaceholder': 'Name or studio',
+    'contact.reply': 'Email or Telegram', 'contact.replyPlaceholder': 'How should I reply?', 'contact.subject': 'Subject', 'contact.subjectPlaceholder': 'What would you like to discuss?',
+    'contact.message': 'Message', 'contact.messagePlaceholder': 'Tell me about your proposal…', 'contact.send': 'Send message',
+    'contact.sending': 'Sending…', 'contact.success': 'Thank you! Your message has been delivered.', 'contact.error': 'The message could not be sent. Please try again.', 'contact.rateLimit': 'Please wait a minute before sending another message.',
     'footer.tagline': 'Independent games with a mischievous soul.', 'footer.privacy': 'Privacy', 'footer.cookies': 'Cookie settings',
     'footer.legal': 'All rights reserved. Steam is a trademark of Valve Corporation.',
     'cart.open': 'Open cart', 'cart.close': 'Close cart', 'cart.eyebrow': 'Your selection', 'cart.title': 'Steam cart',
@@ -67,6 +73,12 @@ const translations = {
     'support.eyebrow': 'Потрібна допомога?', 'support.title': 'Підтримка і спільнота',
     'support.text': 'Повідомте про проблему, поділіться відгуком або долучіться до обговорення в офіційних центрах Steam.',
     'support.gremlins': 'Підтримка Desktop Gremlins', 'support.violet': 'Підтримка Dr. Violet',
+    'contact.eyebrow': 'Співпраця', 'contact.title': 'Маєте ідею або пропозицію співпраці?',
+    'contact.text': 'Напишіть безпосередньо ShuGhost. Тут можна запропонувати огляд, партнерство, висвітлення гри, роботу над проєктом або обговорити іншу доречну ідею.',
+    'contact.note': 'Ваше повідомлення зберігається приватно й не публікується на сайті.', 'contact.name': 'Ваше ім’я', 'contact.namePlaceholder': 'Ім’я або назва студії',
+    'contact.reply': 'Email або Telegram', 'contact.replyPlaceholder': 'Як вам відповісти?', 'contact.subject': 'Тема', 'contact.subjectPlaceholder': 'Що ви хочете обговорити?',
+    'contact.message': 'Повідомлення', 'contact.messagePlaceholder': 'Розкажіть про свою пропозицію…', 'contact.send': 'Надіслати повідомлення',
+    'contact.sending': 'Надсилання…', 'contact.success': 'Дякую! Ваше повідомлення доставлено.', 'contact.error': 'Не вдалося надіслати повідомлення. Спробуйте ще раз.', 'contact.rateLimit': 'Зачекайте хвилину перед наступним повідомленням.',
     'footer.tagline': 'Незалежні ігри з бешкетною душею.', 'footer.privacy': 'Конфіденційність', 'footer.cookies': 'Налаштування cookie',
     'footer.legal': 'Усі права захищено. Steam є торговельною маркою Valve Corporation.',
     'cart.open': 'Відкрити кошик', 'cart.close': 'Закрити кошик', 'cart.eyebrow': 'Ваш вибір', 'cart.title': 'Кошик Steam',
@@ -110,6 +122,12 @@ const translations = {
     'support.eyebrow': 'Нужна помощь?', 'support.title': 'Поддержка и сообщество',
     'support.text': 'Сообщите о проблеме, поделитесь отзывом или присоединитесь к обсуждению в официальных центрах Steam.',
     'support.gremlins': 'Поддержка Desktop Gremlins', 'support.violet': 'Поддержка Dr. Violet',
+    'contact.eyebrow': 'Сотрудничество', 'contact.title': 'Есть идея или предложение о сотрудничестве?',
+    'contact.text': 'Напишите напрямую ShuGhost. Здесь можно предложить обзор, партнёрство, освещение игры, работу над проектом или обсудить другую подходящую идею.',
+    'contact.note': 'Ваше сообщение хранится конфиденциально и не публикуется на сайте.', 'contact.name': 'Ваше имя', 'contact.namePlaceholder': 'Имя или название студии',
+    'contact.reply': 'Email или Telegram', 'contact.replyPlaceholder': 'Как вам ответить?', 'contact.subject': 'Тема', 'contact.subjectPlaceholder': 'Что вы хотите обсудить?',
+    'contact.message': 'Сообщение', 'contact.messagePlaceholder': 'Расскажите о своём предложении…', 'contact.send': 'Отправить сообщение',
+    'contact.sending': 'Отправка…', 'contact.success': 'Спасибо! Ваше сообщение доставлено.', 'contact.error': 'Не удалось отправить сообщение. Попробуйте ещё раз.', 'contact.rateLimit': 'Подождите минуту перед следующим сообщением.',
     'footer.tagline': 'Независимые игры с озорной душой.', 'footer.privacy': 'Конфиденциальность', 'footer.cookies': 'Настройки cookie',
     'footer.legal': 'Все права защищены. Steam является товарным знаком Valve Corporation.',
     'cart.open': 'Открыть корзину', 'cart.close': 'Закрыть корзину', 'cart.eyebrow': 'Ваш выбор', 'cart.title': 'Корзина Steam',
@@ -227,6 +245,9 @@ function applyLanguage(language) {
   document.querySelectorAll('[data-i18n-aria]').forEach((element) => {
     element.setAttribute('aria-label', t(element.dataset.i18nAria))
   })
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+    element.setAttribute('placeholder', t(element.dataset.i18nPlaceholder))
+  })
   document.querySelectorAll('[data-lang]').forEach((button) => {
     const active = button.dataset.lang === currentLanguage
     button.classList.toggle('active', active)
@@ -318,6 +339,41 @@ document.querySelector('[data-cart-clear]')?.addEventListener('click', () => {
   cart = []
   saveCart()
   renderCart()
+})
+
+const contactForm = document.querySelector('[data-contact-form]')
+const contactStatus = document.querySelector('[data-contact-status]')
+const contactSubmit = document.querySelector('[data-contact-submit]')
+contactForm?.addEventListener('submit', async (event) => {
+  event.preventDefault()
+  if (!contactForm.reportValidity()) return
+
+  const formData = new FormData(contactForm)
+  const payload = Object.fromEntries(formData.entries())
+  payload.language = currentLanguage
+  contactSubmit.disabled = true
+  contactStatus.className = 'form-status'
+  contactStatus.textContent = t('contact.sending')
+
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+    if (!response.ok) {
+      if (response.status === 429) throw new Error('rate-limit')
+      throw new Error('send-failed')
+    }
+    contactForm.reset()
+    contactStatus.className = 'form-status is-success'
+    contactStatus.textContent = t('contact.success')
+  } catch (error) {
+    contactStatus.className = 'form-status is-error'
+    contactStatus.textContent = error.message === 'rate-limit' ? t('contact.rateLimit') : t('contact.error')
+  } finally {
+    contactSubmit.disabled = false
+  }
 })
 
 document.addEventListener('keydown', (event) => {

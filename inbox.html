@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>ShuGhost Inbox</title>
+  <link rel="stylesheet" href="/assets/styles.css?v=7" />
+</head>
+<body class="inbox-page">
+  <main class="inbox-shell">
+    <header class="inbox-header">
+      <div><p class="eyebrow"><span></span><b>Private</b></p><h1>ShuGhost Inbox</h1></div>
+      <a class="button button-ghost button-small" href="/">На сайт</a>
+    </header>
+
+    <section class="inbox-login" data-inbox-login>
+      <h2>Введи пароль адміністратора</h2>
+      <p>Це значення <code>CONTACT_ADMIN_TOKEN</code> із Railway Variables.</p>
+      <form data-inbox-login-form>
+        <label>Пароль<input type="password" name="token" minlength="16" autocomplete="current-password" required /></label>
+        <button class="button button-primary" type="submit">Відкрити повідомлення</button>
+      </form>
+      <p class="form-status" data-inbox-login-status aria-live="polite"></p>
+    </section>
+
+    <section class="inbox-content" data-inbox-content hidden>
+      <div class="inbox-toolbar"><p data-inbox-count></p><button class="button button-ghost button-small" type="button" data-inbox-refresh>Оновити</button></div>
+      <div class="inbox-list" data-inbox-list></div>
+    </section>
+  </main>
+  <script src="/inbox.js?v=1" defer></script>
+</body>
+</html>
