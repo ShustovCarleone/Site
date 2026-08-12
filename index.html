@@ -27,9 +27,9 @@
       gtag('config', 'AW-18379981521');
     </script>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/styles.css?v=4" />
     <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js" async data-hls-library></script>
-    <script src="assets/app.js" defer></script>
+    <script src="assets/app.js?v=5" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -127,9 +127,12 @@
               <button class="button button-primary" type="button" data-add-game="gremlins">
                 <span data-i18n="games.addCart">Add to cart</span>
               </button>
+              <button class="button button-ghost" type="button" data-updates-open="gremlins">
+                <span data-i18n="games.updates">Updates</span>
+              </button>
               <a
                 class="text-link"
-                href="https://store.steampowered.com/app/4981140/Desktop_Gremlins/"
+                href="https://store.steampowered.com/app/4981140/Desktop_Gremlins/?utm_source=shughost_site&amp;utm_medium=referral&amp;utm_campaign=desktop_gremlins&amp;utm_content=game_card"
                 target="_blank"
                 rel="noopener noreferrer"
               ><span data-i18n="games.viewSteam">View on Steam</span> <span aria-hidden="true">↗</span></a>
@@ -166,9 +169,12 @@
               <button class="button button-primary violet-button" type="button" data-add-game="violet">
                 <span data-i18n="games.addCart">Add to cart</span>
               </button>
+              <button class="button button-ghost" type="button" data-updates-open="violet">
+                <span data-i18n="games.updates">Updates</span>
+              </button>
               <a
                 class="text-link"
-                href="https://store.steampowered.com/app/4925710/DR_VIOLETS_NIGHT_OFF/"
+                href="https://store.steampowered.com/app/4925710/DR_VIOLETS_NIGHT_OFF/?utm_source=shughost_site&amp;utm_medium=referral&amp;utm_campaign=dr_violets_night_off&amp;utm_content=game_card"
                 target="_blank"
                 rel="noopener noreferrer"
               ><span data-i18n="games.viewSteam">View on Steam</span> <span aria-hidden="true">↗</span></a>
@@ -322,6 +328,26 @@
     <dialog class="lightbox" data-lightbox>
       <button class="icon-button lightbox-close" type="button" data-lightbox-close aria-label="Close image" data-i18n-aria="media.close">×</button>
       <img data-lightbox-image alt="" />
+    </dialog>
+
+    <dialog class="updates-dialog" data-updates-dialog aria-labelledby="updates-title">
+      <div class="updates-shell">
+        <header class="updates-header">
+          <div>
+            <p class="eyebrow"><span></span> <b data-i18n="updates.eyebrow">Steam news</b></p>
+            <h2 id="updates-title"><span data-updates-game-title></span> <em data-i18n="updates.title">updates</em></h2>
+          </div>
+          <button class="icon-button" type="button" data-updates-close aria-label="Close updates" data-i18n-aria="updates.close">×</button>
+        </header>
+        <p class="updates-status" data-updates-status data-i18n="updates.loading">Loading updates from Steam…</p>
+        <div class="updates-list" data-updates-list></div>
+        <footer class="updates-footer">
+          <span data-i18n="updates.automatic">Automatically synchronized with Steam announcements.</span>
+          <a class="text-link" data-updates-all href="#" target="_blank" rel="noopener noreferrer">
+            <span data-i18n="updates.viewAll">View all on Steam</span> <span aria-hidden="true">↗</span>
+          </a>
+        </footer>
+      </div>
     </dialog>
 
     <section class="cookie-banner" data-cookie-banner aria-label="Cookie notice" hidden>

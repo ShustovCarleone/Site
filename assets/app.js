@@ -136,6 +136,45 @@ const translations = {
   },
 }
 
+Object.assign(translations.en, {
+  'games.updates': 'Updates',
+  'updates.eyebrow': 'Steam news',
+  'updates.title': 'updates',
+  'updates.close': 'Close updates',
+  'updates.loading': 'Loading updates from Steam…',
+  'updates.empty': 'No Steam announcements have been published yet.',
+  'updates.error': 'Steam updates could not be loaded right now. Please try again later.',
+  'updates.readMore': 'Read on Steam',
+  'updates.viewAll': 'View all on Steam',
+  'updates.automatic': 'Automatically synchronized with Steam announcements.',
+})
+
+Object.assign(translations.uk, {
+  'games.updates': 'Оновлення',
+  'updates.eyebrow': 'Новини Steam',
+  'updates.title': '— оновлення',
+  'updates.close': 'Закрити оновлення',
+  'updates.loading': 'Завантажуємо оновлення зі Steam…',
+  'updates.empty': 'У Steam ще немає опублікованих оголошень.',
+  'updates.error': 'Зараз не вдалося завантажити оновлення зі Steam. Спробуйте пізніше.',
+  'updates.readMore': 'Читати у Steam',
+  'updates.viewAll': 'Переглянути всі у Steam',
+  'updates.automatic': 'Автоматично синхронізується з оголошеннями Steam.',
+})
+
+Object.assign(translations.ru, {
+  'games.updates': 'Обновления',
+  'updates.eyebrow': 'Новости Steam',
+  'updates.title': '— обновления',
+  'updates.close': 'Закрыть обновления',
+  'updates.loading': 'Загружаем обновления из Steam…',
+  'updates.empty': 'В Steam пока нет опубликованных объявлений.',
+  'updates.error': 'Сейчас не удалось загрузить обновления из Steam. Попробуйте позже.',
+  'updates.readMore': 'Читать в Steam',
+  'updates.viewAll': 'Посмотреть все в Steam',
+  'updates.automatic': 'Автоматически синхронизируется с объявлениями Steam.',
+})
+
 const LANG_KEY = 'shughost-language-v1'
 const supportedLanguages = ['uk', 'en', 'ru']
 const detectedLanguage = (navigator.language || 'en').toLowerCase().split('-')[0]
@@ -149,22 +188,29 @@ function t(key) {
 const games = {
   gremlins: {
     id: 'gremlins',
+    appId: '4981140',
     title: 'Desktop Gremlins',
     genreKey: 'genre.gremlins',
     image: 'assets/images/desktop-gremlins-cover.png',
-    steam: 'https://store.steampowered.com/app/4981140/Desktop_Gremlins/',
+    newsImage: 'assets/media/gremlins/trailer-poster.jpg',
+    announcements: 'https://steamcommunity.com/app/4981140/announcements/',
+    steam: 'https://store.steampowered.com/app/4981140/Desktop_Gremlins/?utm_source=shughost_site&utm_medium=referral&utm_campaign=desktop_gremlins&utm_content=cart_checkout',
   },
   violet: {
     id: 'violet',
+    appId: '4925710',
     title: "DR. VIOLET'S NIGHT OFF",
     genreKey: 'genre.violet',
     image: 'assets/images/dr-violet-cover.png',
-    steam: 'https://store.steampowered.com/app/4925710/DR_VIOLETS_NIGHT_OFF/',
+    newsImage: 'assets/media/violet/trailer-poster.jpg',
+    announcements: 'https://steamcommunity.com/app/4925710/announcements/',
+    steam: 'https://store.steampowered.com/app/4925710/DR_VIOLETS_NIGHT_OFF/?utm_source=shughost_site&utm_medium=referral&utm_campaign=dr_violets_night_off&utm_content=cart_checkout',
   },
 }
 
 const CART_KEY = 'shughost-cart-v1'
 const CONSENT_KEY = 'shughost-consent-v2'
+const GOOGLE_ADS_GREMLINS_CONVERSION = 'AW-18379981521/VkPTCMj5lOAcENGFobxE'
 
 function loadCart() {
   try {
@@ -206,7 +252,7 @@ function renderCart() {
         <span>${t('cart.price')}</span>
       </div>
       <button class="cart-remove" type="button" data-remove-game="${game.id}" aria-label="${t('cart.remove')} ${game.title}">×</button>
-      <a class="button button-primary button-full" href="${game.steam}" target="_blank" rel="noopener noreferrer">
+      <a class="button button-primary button-full" href="${game.steam}" target="_blank" rel="noopener noreferrer" data-steam-checkout="${game.id}">
         ${t('cart.continue')} <span aria-hidden="true">↗</span>
       </a>
     `
@@ -221,6 +267,140 @@ function renderCart() {
     })
   })
 }
+
+function reportGoogleAdsGremlinsConversion() {
+  if (typeof window.gtag !== 'function') return
+
+  window.gtag('event', 'conversion', {
+    send_to: GOOGLE_ADS_GREMLINS_CONVERSION,
+    value: 1.0,
+    currency: 'EUR',
+    transaction_id: '',
+  })
+}
+
+cartItems?.addEventListener('click', (event) => {
+  const checkoutLink = event.target.closest('[data-steam-checkout]')
+  if (!checkoutLink || checkoutLink.dataset.steamCheckout !== 'gremlins') return
+
+  // Steam opens in a new tab while the conversion event is sent from this page.
+  reportGoogleAdsGremlinsConversion()
+})
+
+const updatesDialog = document.querySelector('[data-updates-dialog]')
+const updatesGameTitle = document.querySelector('[data-updates-game-title]')
+const updatesStatus = document.querySelector('[data-updates-status]')
+const updatesList = document.querySelector('[data-updates-list]')
+const updatesAllLink = document.querySelector('[data-updates-all]')
+let activeUpdatesGame = null
+let activeUpdatesItems = []
+let activeUpdatesStatusKey = 'updates.loading'
+
+function formatUpdateDate(timestamp) {
+  const date = new Date(Number(timestamp) * 1000)
+  if (Number.isNaN(date.getTime())) return ''
+
+  const locales = { en: 'en-US', uk: 'uk-UA', ru: 'ru-RU' }
+  return new Intl.DateTimeFormat(locales[currentLanguage] || 'en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date)
+}
+
+function setUpdatesStatus(key, visible = true) {
+  activeUpdatesStatusKey = key
+  if (!updatesStatus) return
+  updatesStatus.textContent = t(key)
+  updatesStatus.hidden = !visible
+}
+
+function renderUpdates() {
+  if (!updatesList || !activeUpdatesGame) return
+  updatesList.replaceChildren()
+
+  if (activeUpdatesItems.length === 0) {
+    setUpdatesStatus('updates.empty')
+    return
+  }
+
+  setUpdatesStatus(activeUpdatesStatusKey, false)
+  activeUpdatesItems.forEach((newsItem) => {
+    const article = document.createElement('article')
+    article.className = 'update-card'
+
+    const image = document.createElement('img')
+    image.className = 'update-card-image'
+    image.src = activeUpdatesGame.newsImage
+    image.alt = ''
+    image.loading = 'lazy'
+
+    const content = document.createElement('div')
+    content.className = 'update-card-content'
+
+    const date = document.createElement('time')
+    date.dateTime = new Date(Number(newsItem.date) * 1000).toISOString()
+    date.textContent = formatUpdateDate(newsItem.date)
+
+    const title = document.createElement('h3')
+    title.textContent = newsItem.title
+
+    const summary = document.createElement('p')
+    summary.textContent = newsItem.summary
+
+    const link = document.createElement('a')
+    link.className = 'text-link'
+    link.href = newsItem.url
+    link.target = '_blank'
+    link.rel = 'noopener noreferrer'
+    link.textContent = `${t('updates.readMore')} ↗`
+
+    content.append(date, title, summary, link)
+    article.append(image, content)
+    updatesList.appendChild(article)
+  })
+}
+
+function refreshUpdatesLanguage() {
+  if (!updatesDialog?.open) return
+  if (activeUpdatesItems.length > 0) renderUpdates()
+  else setUpdatesStatus(activeUpdatesStatusKey)
+}
+
+async function openUpdates(gameId) {
+  const game = games[gameId]
+  if (!game || !updatesDialog || !updatesList) return
+
+  activeUpdatesGame = game
+  activeUpdatesItems = []
+  if (updatesGameTitle) updatesGameTitle.textContent = game.title
+  if (updatesAllLink) updatesAllLink.href = game.announcements
+  updatesList.replaceChildren()
+  setUpdatesStatus('updates.loading')
+
+  if (!updatesDialog.open) updatesDialog.showModal()
+
+  try {
+    const response = await fetch(`/api/steam-news?appid=${encodeURIComponent(game.appId)}`, { cache: 'no-store' })
+    if (!response.ok) throw new Error(`Steam news request failed: ${response.status}`)
+    const payload = await response.json()
+    if (activeUpdatesGame !== game) return
+
+    activeUpdatesItems = Array.isArray(payload.items) ? payload.items : []
+    renderUpdates()
+  } catch {
+    if (activeUpdatesGame !== game) return
+    setUpdatesStatus('updates.error')
+  }
+}
+
+document.querySelectorAll('[data-updates-open]').forEach((button) => {
+  button.addEventListener('click', () => openUpdates(button.dataset.updatesOpen))
+})
+document.querySelector('[data-updates-close]')?.addEventListener('click', () => updatesDialog?.close())
+updatesDialog?.addEventListener('click', (event) => {
+  if (event.target === updatesDialog) updatesDialog.close()
+})
 
 function applyLanguage(language) {
   currentLanguage = supportedLanguages.includes(language) ? language : 'en'
@@ -244,6 +424,7 @@ function applyLanguage(language) {
   const description = document.querySelector('meta[name="description"]')
   if (description) description.setAttribute('content', isPrivacyPage ? t('privacy.overviewText') : t('meta.description'))
   renderCart()
+  refreshUpdatesLanguage()
 }
 
 document.querySelectorAll('[data-lang]').forEach((button) => {
@@ -408,7 +589,8 @@ async function updateVisitorStats(pageView = false) {
     if (!response.ok) throw new Error(`Visitor stats request failed: ${response.status}`)
     const stats = await response.json()
     onlineCount.textContent = Number(stats.online).toLocaleString()
-    totalVisitCount.textContent = Number(stats.views).toLocaleString()
+    const views = stats.views ?? stats.totalVisits ?? 0
+    totalVisitCount.textContent = Number(views).toLocaleString()
   } catch {
     onlineCount.textContent = '—'
     totalVisitCount.textContent = '—'
