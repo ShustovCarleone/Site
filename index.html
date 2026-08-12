@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070a17" />
+    <meta
+      name="description"
+      content="ShuGhost is an independent game developer creating unusual, character-driven games for PC. Discover Desktop Gremlins and DR. VIOLET'S NIGHT OFF."
+    />
+    <title>ShuGhost — Independent Games</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js" async data-hls-library></script>
+    <script src="assets/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="ShuGhost home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>ShuGhost</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation" data-i18n-aria="nav.label">
+        <a href="#games" data-i18n="nav.games">Games</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#support" data-i18n="nav.support">Support</a>
+      </nav>
+
+      <div class="header-tools">
+        <div class="language-switcher" role="group" aria-label="Language" data-i18n-aria="language.label">
+          <button type="button" data-lang="uk" aria-label="Українська">UA</button>
+          <button type="button" data-lang="en" aria-label="English">EN</button>
+          <button type="button" data-lang="ru" aria-label="Русский">RU</button>
+        </div>
+        <button class="cart-button" type="button" data-cart-open aria-label="Open cart" data-i18n-aria="cart.open">
+          <span data-i18n="nav.cart">Cart</span>
+          <span class="cart-count" data-cart-count>0</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-noise" aria-hidden="true"></div>
+        <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
+        <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span> <b data-i18n="hero.eyebrow">Independent developer</b></p>
+          <h1><span data-i18n="hero.title">Games that refuse to stay</span> <em data-i18n="hero.accent">inside the window.</em></h1>
+          <p class="hero-text" data-i18n="hero.text">
+            Strange companions, mischievous systems, and stories with a little darkness.
+            Welcome to the worlds of ShuGhost.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#games" data-i18n="hero.gamesCta">Explore the games</a>
+            <a class="button button-ghost" href="#about" data-i18n="hero.aboutCta">Meet the developer</a>
+          </div>
+        </div>
+
+        <div class="hero-art reveal" aria-label="Featured ShuGhost games">
+          <article class="floating-cover cover-gremlins">
+            <img src="assets/images/desktop-gremlins-cover.png" alt="Desktop Gremlins cover art" />
+          </article>
+          <article class="floating-cover cover-violet">
+            <img src="assets/images/dr-violet-cover.png" alt="DR. VIOLET'S NIGHT OFF cover art" />
+          </article>
+          <div class="hero-stamp" aria-hidden="true">2<br /><small data-i18n="hero.worlds">worlds</small></div>
+        </div>
+      </section>
+
+      <section class="games section" id="games">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow"><span></span> <b data-i18n="games.eyebrow">Available on Steam</b></p>
+            <h2 data-i18n="games.title">Choose your kind of chaos.</h2>
+          </div>
+          <p data-i18n="games.subtitle">Two very different games, both built independently with care.</p>
+        </div>
+
+        <article class="game-card game-card-gremlins reveal">
+          <div class="game-visual">
+            <img
+              class="game-backdrop"
+              src="assets/media/gremlins/screenshot-3.jpg"
+              alt="Desktop Gremlins Chaos Mode gameplay"
+            />
+            <div class="game-poster-wrap">
+              <img src="assets/images/desktop-gremlins-cover.png" alt="Desktop Gremlins cover" />
+            </div>
+          </div>
+          <div class="game-content">
+            <div class="game-meta">
+              <span data-i18n="gremlins.tag1">Desktop pet</span><span data-i18n="gremlins.tag2">Simulation</span><span>Steam Workshop</span>
+            </div>
+            <h3>Desktop Gremlins</h3>
+            <p data-i18n="gremlins.description">
+              Meet a mischievous desktop companion that evolves, reacts to your programs and music,
+              and occasionally decides your open windows need a little chaos.
+            </p>
+            <ul class="feature-list">
+              <li data-i18n="gremlins.feature1">Four evolving character forms</li>
+              <li data-i18n="gremlins.feature2">Music and application reactions</li>
+              <li data-i18n="gremlins.feature3">Community sprite packs via Steam Workshop</li>
+            </ul>
+            <div class="game-actions">
+              <button class="button button-primary" type="button" data-add-game="gremlins">
+                <span data-i18n="games.addCart">Add to cart</span>
+              </button>
+              <a
+                class="text-link"
+                href="https://store.steampowered.com/app/4981140/Desktop_Gremlins/"
+                target="_blank"
+                rel="noopener noreferrer"
+              ><span data-i18n="games.viewSteam">View on Steam</span> <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card game-card-violet reveal">
+          <div class="game-visual">
+            <img
+              class="game-backdrop"
+              src="assets/media/violet/screenshot-2.jpg"
+              alt="Dr. Violet character and controls"
+            />
+            <div class="game-poster-wrap violet-poster">
+              <img src="assets/images/dr-violet-cover.png" alt="DR. VIOLET'S NIGHT OFF cover" />
+            </div>
+          </div>
+          <div class="game-content">
+            <div class="game-meta">
+              <span data-i18n="violet.tag1">Visual novel</span><span data-i18n="violet.tag2">Story rich</span><span data-i18n="violet.tag3">Atmospheric</span>
+            </div>
+            <h3>DR. VIOLET'S NIGHT OFF</h3>
+            <p data-i18n="violet.description">
+              A quiet night, a complicated doctor, and a story that becomes more personal than
+              expected. Step into Violet's world when her carefully controlled routine breaks.
+            </p>
+            <ul class="feature-list">
+              <li data-i18n="violet.feature1">Character-driven narrative</li>
+              <li data-i18n="violet.feature2">Dark, intimate atmosphere</li>
+              <li data-i18n="violet.feature3">A compact independent experience</li>
+            </ul>
+            <div class="game-actions">
+              <button class="button button-primary violet-button" type="button" data-add-game="violet">
+                <span data-i18n="games.addCart">Add to cart</span>
+              </button>
+              <a
+                class="text-link"
+                href="https://store.steampowered.com/app/4925710/DR_VIOLETS_NIGHT_OFF/"
+                target="_blank"
+                rel="noopener noreferrer"
+              ><span data-i18n="games.viewSteam">View on Steam</span> <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+
+        <div class="media-heading reveal" id="media">
+          <p class="eyebrow"><span></span> <b data-i18n="media.eyebrow">From the games</b></p>
+          <h2 data-i18n="media.title">Trailers & screenshots</h2>
+          <p data-i18n="media.subtitle">Watch the official Steam trailers and explore images from both games.</p>
+        </div>
+
+        <div class="media-grid">
+          <article class="media-card reveal">
+            <div class="media-card-title">
+              <div>
+                <span data-i18n="media.officialTrailer">Official trailer</span>
+                <h3>Desktop Gremlins</h3>
+              </div>
+              <span class="steam-source">Steam</span>
+            </div>
+            <div class="video-shell">
+              <video
+                controls
+                playsinline
+                preload="none"
+                poster="assets/media/gremlins/trailer-poster.jpg"
+                data-hls="https://video.akamai.steamstatic.com/store_trailers/4981140/750720812/8f666b21ac72fc89b86a5a54a0eb0e384a376686/1785065483/hls_264_master.m3u8?t=1785066142"
+              ></video>
+            </div>
+            <p class="gallery-label" data-i18n="media.screenshots">Screenshots</p>
+            <div class="screenshot-grid">
+              <button type="button" data-lightbox-src="assets/media/gremlins/screenshot-1.jpg"><img loading="lazy" src="assets/media/gremlins/screenshot-1.jpg" alt="Desktop Gremlins Workshop upload and pet menu" /></button>
+              <button type="button" data-lightbox-src="assets/media/gremlins/screenshot-2.jpg"><img loading="lazy" src="assets/media/gremlins/screenshot-2.jpg" alt="Desktop Gremlins interface" /></button>
+              <button type="button" data-lightbox-src="assets/media/gremlins/screenshot-3.jpg"><img loading="lazy" src="assets/media/gremlins/screenshot-3.jpg" alt="Desktop Gremlins Chaos Mode effects" /></button>
+              <button type="button" data-lightbox-src="assets/media/gremlins/screenshot-4.jpg"><img loading="lazy" src="assets/media/gremlins/screenshot-4.jpg" alt="Desktop Gremlins television interference effect" /></button>
+            </div>
+          </article>
+
+          <article class="media-card media-card-violet reveal">
+            <div class="media-card-title">
+              <div>
+                <span data-i18n="media.officialTrailer">Official trailer</span>
+                <h3>DR. VIOLET'S NIGHT OFF</h3>
+              </div>
+              <span class="steam-source">Steam</span>
+            </div>
+            <div class="video-shell">
+              <video
+                controls
+                playsinline
+                preload="none"
+                poster="assets/media/violet/trailer-poster.jpg"
+                data-hls="https://video.akamai.steamstatic.com/store_trailers/4925710/1054027965/3ac4ba318e8ad74497280f786b7ff0500a280ccc/1783153227/hls_264_master.m3u8?t=1784307821"
+              ></video>
+            </div>
+            <p class="gallery-label" data-i18n="media.screenshots">Screenshots</p>
+            <div class="screenshot-grid">
+              <button type="button" data-lightbox-src="assets/media/violet/screenshot-1.jpg"><img loading="lazy" src="assets/media/violet/screenshot-1.jpg" alt="Dr. Violet seated pose" /></button>
+              <button type="button" data-lightbox-src="assets/media/violet/screenshot-2.jpg"><img loading="lazy" src="assets/media/violet/screenshot-2.jpg" alt="Dr. Violet controls menu" /></button>
+              <button type="button" data-lightbox-src="assets/media/violet/screenshot-3.jpg"><img loading="lazy" src="assets/media/violet/screenshot-3.jpg" alt="Dr. Violet game interaction" /></button>
+              <button type="button" data-lightbox-src="assets/media/violet/screenshot-4.jpg"><img loading="lazy" src="assets/media/violet/screenshot-4.jpg" alt="Dr. Violet reaction" /></button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="about section" id="about">
+        <div class="about-card reveal">
+          <p class="eyebrow"><span></span> <b data-i18n="about.eyebrow">About ShuGhost</b></p>
+          <h2><span data-i18n="about.title1">Small games.</span><br /><span data-i18n="about.title2">Strong personalities.</span></h2>
+          <p data-i18n="about.text">
+            ShuGhost is an independent developer focused on memorable characters and unusual PC
+            experiences. Each project is made with experimentation at its core — whether that means
+            a creature living above your desktop or a strange night with Dr. Violet.
+          </p>
+          <a class="button button-ghost" href="#games" data-i18n="about.cta">See all games</a>
+        </div>
+        <div class="about-quote reveal">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <blockquote data-i18n="about.quote">Make something small enough to finish — and strange enough to remember.</blockquote>
+          <p>— ShuGhost</p>
+        </div>
+      </section>
+
+      <section class="support section" id="support">
+        <div class="support-panel reveal">
+          <div>
+            <p class="eyebrow"><span></span> <b data-i18n="support.eyebrow">Need help?</b></p>
+            <h2 data-i18n="support.title">Support & community</h2>
+            <p data-i18n="support.text">Report a problem, share feedback, or join a discussion through the official Steam hubs.</p>
+          </div>
+          <div class="support-links">
+            <a
+              class="button button-primary"
+              href="https://steamcommunity.com/app/4981140/discussions/"
+              target="_blank"
+              rel="noopener noreferrer"
+            ><span data-i18n="support.gremlins">Desktop Gremlins support</span></a>
+            <a
+              class="button button-ghost"
+              href="https://steamcommunity.com/app/4925710/discussions/"
+              target="_blank"
+              rel="noopener noreferrer"
+            ><span data-i18n="support.violet">Dr. Violet support</span></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>ShuGhost</span>
+      </a>
+      <p data-i18n="footer.tagline">Independent games with a mischievous soul.</p>
+      <nav aria-label="Footer navigation">
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy</a>
+        <button type="button" class="footer-link-button" data-cookie-settings data-i18n="footer.cookies">Cookie settings</button>
+        <a href="#support" data-i18n="nav.support">Support</a>
+      </nav>
+      <small>© <span data-year></span> ShuGhost. <span data-i18n="footer.legal">All rights reserved. Steam is a trademark of Valve Corporation.</span></small>
+    </footer>
+
+    <div class="scrim" data-cart-close hidden></div>
+    <aside class="cart-drawer" aria-labelledby="cart-title" aria-hidden="true" data-cart>
+      <div class="cart-header">
+        <div>
+          <p class="eyebrow"><span></span> <b data-i18n="cart.eyebrow">Your selection</b></p>
+          <h2 id="cart-title" data-i18n="cart.title">Steam cart</h2>
+        </div>
+        <button class="icon-button" type="button" data-cart-close aria-label="Close cart" data-i18n-aria="cart.close">×</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-empty" data-cart-empty>
+        <span aria-hidden="true">✦</span>
+        <h3 data-i18n="cart.emptyTitle">Your cart is quiet.</h3>
+        <p data-i18n="cart.emptyText">Add a game and continue to its official Steam page.</p>
+      </div>
+      <div class="cart-footer">
+        <p data-i18n="cart.disclaimer">Prices, regional availability, payment, and delivery are handled securely by Steam.</p>
+        <button class="button button-ghost button-full" type="button" data-cart-clear data-i18n="cart.clear">Clear cart</button>
+      </div>
+    </aside>
+
+    <dialog class="lightbox" data-lightbox>
+      <button class="icon-button lightbox-close" type="button" data-lightbox-close aria-label="Close image" data-i18n-aria="media.close">×</button>
+      <img data-lightbox-image alt="" />
+    </dialog>
+
+    <section class="cookie-banner" data-cookie-banner aria-label="Cookie notice" hidden>
+      <div>
+        <strong data-i18n="cookie.title">Your privacy matters.</strong>
+        <p data-i18n="cookie.text">This site currently stores only your cart and cookie preference on this device.</p>
+      </div>
+      <div class="cookie-actions">
+        <a href="privacy.html" class="text-link" data-i18n="cookie.more">Learn more</a>
+        <button class="button button-primary button-small" type="button" data-cookie-accept data-i18n="cookie.accept">Got it</button>
+      </div>
+    </section>
+  </body>
+</html>
