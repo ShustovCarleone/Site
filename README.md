@@ -62,6 +62,12 @@ verify a sender address, and add these Railway Variables:
 - `BREVO_API_KEY`: a Brevo transactional email API key
 - `BREVO_SENDER_EMAIL`: the verified sender email address
 - `BREVO_SENDER_NAME`: optional display name, for example `ShuGhost`
+- `CONTACT_NOTIFICATION_EMAIL`: optional inbox for new-message notifications;
+  defaults to `shustovxd15032112@gmail.com`
+
+With Brevo configured, every new website message is saved in `/inbox` and also
+emailed to `shustovxd15032112@gmail.com`. If the visitor supplied an email
+address, Gmail's Reply action addresses the visitor directly.
 
 Telegram contacts open in Telegram because bots and websites cannot initiate a
 conversation with an arbitrary Telegram user who has not contacted the bot.

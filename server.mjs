@@ -16,8 +16,10 @@ const visitorDataFile = join(visitorDataDir, 'visitor-stats.json')
 const contactDataFile = join(visitorDataDir, 'contact-messages.json')
 const contactAdminToken = String(process.env.CONTACT_ADMIN_TOKEN || '')
 const brevoApiKey = String(process.env.BREVO_API_KEY || '')
+const brevoApiUrl = String(process.env.BREVO_API_URL || 'https://api.brevo.com/v3/smtp/email')
 const brevoSenderEmail = String(process.env.BREVO_SENDER_EMAIL || '')
 const brevoSenderName = cleanSingleLine(process.env.BREVO_SENDER_NAME || 'ShuGhost', 70)
+const contactNotificationEmail = extractEmail(process.env.CONTACT_NOTIFICATION_EMAIL || 'shustovxd15032112@gmail.com')
 const activeVisitors = new Map()
 const activeWindowMs = 45_000
 const supportedSteamApps = new Set(['4981140', '4925710'])
@@ -123,36 +125,69 @@ function isEmailReplyConfigured() {
   return brevoApiKey.length >= 20 && Boolean(extractEmail(brevoSenderEmail))
 }
 
-async function sendContactReply(item, replyText) {
-  const channel = getReplyChannel(item.replyTo)
-  if (channel.type !== 'email') throw new Error('recipient-not-email')
+async function sendBrevoEmail(payload) {
   if (!isEmailReplyConfigured()) throw new Error('email-not-configured')
-
-  const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+  const emailResponse = await fetch(brevoApiUrl, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'api-key': brevoApiKey,
     },
-    body: JSON.stringify({
-      sender: { name: brevoSenderName, email: brevoSenderEmail },
-      to: [{ email: channel.target, name: item.name }],
-      replyTo: { email: brevoSenderEmail, name: brevoSenderName },
-      subject: `Re: ${item.subject}`.slice(0, 200),
-      textContent: replyText,
-      tags: ['shughost-contact-reply'],
-    }),
+    body: JSON.stringify(payload),
     signal: AbortSignal.timeout(12_000),
   })
 
   let result = {}
   try { result = await emailResponse.json() } catch { /* response may be empty */ }
   if (!emailResponse.ok) {
-    console.error('Brevo rejected a contact reply:', emailResponse.status, result?.message || '')
+    console.error('Brevo rejected an email:', emailResponse.status, result?.message || '')
     throw new Error('email-provider-error')
   }
-  return { channel, providerId: cleanSingleLine(result.messageId, 250) }
+  return cleanSingleLine(result.messageId, 250)
+}
+
+async function notifyOwnerOfContact(item) {
+  const visitorEmail = extractEmail(item.replyTo)
+  const textContent = [
+    'New message from the ShuGhost website',
+    '',
+    `Name: ${item.name}`,
+    `Contact: ${item.replyTo}`,
+    `Subject: ${item.subject}`,
+    `Language: ${item.language}`,
+    `Sent: ${item.createdAt}`,
+    '',
+    item.message,
+    '',
+    'Open the private inbox:',
+    'https://shughost.up.railway.app/inbox',
+  ].join('\n')
+
+  return sendBrevoEmail({
+    sender: { name: brevoSenderName, email: brevoSenderEmail },
+    to: [{ email: contactNotificationEmail, name: 'ShuGhost' }],
+    ...(visitorEmail ? { replyTo: { email: visitorEmail, name: item.name } } : {}),
+    subject: `[ShuGhost website] ${item.subject}`.slice(0, 200),
+    textContent,
+    tags: ['shughost-contact-notification'],
+  })
+}
+
+async function sendContactReply(item, replyText) {
+  const channel = getReplyChannel(item.replyTo)
+  if (channel.type !== 'email') throw new Error('recipient-not-email')
+  if (!isEmailReplyConfigured()) throw new Error('email-not-configured')
+
+  const providerId = await sendBrevoEmail({
+      sender: { name: brevoSenderName, email: brevoSenderEmail },
+      to: [{ email: channel.target, name: item.name }],
+      replyTo: { email: brevoSenderEmail, name: brevoSenderName },
+      subject: `Re: ${item.subject}`.slice(0, 200),
+      textContent: replyText,
+      tags: ['shughost-contact-reply'],
+  })
+  return { channel, providerId }
 }
 
 function isAdminRequest(request) {
@@ -333,7 +368,7 @@ function handleVisitorHeartbeat(request, response) {
 }
 
 function handleContactMessage(request, response) {
-  readJsonBody(request, maximumContactBodyBytes, (error, payload) => {
+  readJsonBody(request, maximumContactBodyBytes, async (error, payload) => {
     if (error?.message === 'too-large') {
       sendJson(response, 413, { error: 'Message is too large' })
       return
@@ -373,7 +408,20 @@ function handleContactMessage(request, response) {
     contactMessages = contactMessages.slice(0, 2000)
     try {
       saveContactMessages()
-      sendJson(response, 201, { ok: true })
+      let emailNotified = false
+      if (isEmailReplyConfigured()) {
+        try {
+          item.notification = {
+            sentAt: new Date().toISOString(),
+            providerId: await notifyOwnerOfContact(item),
+          }
+          saveContactMessages()
+          emailNotified = true
+        } catch (notificationError) {
+          console.error('Unable to email contact notification:', notificationError.message)
+        }
+      }
+      sendJson(response, 201, { ok: true, emailNotified })
     } catch (saveError) {
       console.error('Unable to save contact message:', saveError)
       contactMessages = contactMessages.filter((messageItem) => messageItem.id !== item.id)
