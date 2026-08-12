@@ -329,6 +329,7 @@ function getFilePath(requestUrl) {
     '/privacy/': 'privacy.html',
     '/privacy.html': 'privacy.html',
     '/robots.txt': 'robots.txt',
+    '/google831fe18e8943573a.html': 'google831fe18e8943573a.html',
   }
   const relativePath = routes[pathname]
     || (pathname.startsWith('/assets/') ? pathname.replace(/^\/+/, '') : null)
