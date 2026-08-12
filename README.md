@@ -18,6 +18,11 @@ The project is ready for Railway: `package.json` contains the `npm start`
 command, `server.mjs` listens on `0.0.0.0` and Railway's `PORT`, and
 `railway.json` configures the health check.
 
+The production server also includes basic API rate limiting, request-size and
+timeout limits, security headers, graceful shutdown handling, and a dedicated
+`/health` endpoint used by Railway. Railway is configured to restart a failed
+process up to 10 times.
+
 Recommended deployment flow:
 
 1. Put the contents of this folder in a GitHub repository.

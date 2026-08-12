@@ -1,9 +1,11 @@
 import { createReadStream, existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from 'node:fs'
 import { createServer } from 'node:http'
-import { extname, join, normalize, resolve } from 'node:path'
+import { extname, join, normalize, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = fileURLToPath(new URL('.', import.meta.url))
+const resolvedRoot = resolve(root)
+const resolvedRootPrefix = `${resolvedRoot}${sep}`
 const port = Number(process.env.PORT) || 3000
 const host = '0.0.0.0'
 const visitorDataDir = process.env.VISITOR_DATA_DIR
@@ -15,6 +17,14 @@ const activeWindowMs = 45_000
 const supportedSteamApps = new Set(['4981140', '4925710'])
 const steamNewsCache = new Map()
 const steamNewsCacheMs = 15 * 60 * 1000
+const rateLimits = new Map()
+const recentPageViews = new Map()
+const rateLimitWindowMs = 60_000
+const pageViewWindowMs = 30 * 60 * 1000
+const maximumTrackedClients = 10_000
+const maximumJsonBodyBytes = 4096
+let saveTimer = null
+let visitsDirty = false
 
 mkdirSync(visitorDataDir, { recursive: true })
 
@@ -31,9 +41,24 @@ function loadTotalVisits() {
 let totalViews = loadTotalVisits()
 
 function saveTotalVisits() {
-  const temporaryFile = `${visitorDataFile}.tmp`
-  writeFileSync(temporaryFile, JSON.stringify({ totalViews }), 'utf8')
-  renameSync(temporaryFile, visitorDataFile)
+  try {
+    const temporaryFile = `${visitorDataFile}.tmp`
+    writeFileSync(temporaryFile, JSON.stringify({ totalViews }), 'utf8')
+    renameSync(temporaryFile, visitorDataFile)
+    visitsDirty = false
+  } catch (error) {
+    console.error('Unable to save visitor statistics:', error)
+  }
+}
+
+function scheduleVisitSave() {
+  visitsDirty = true
+  if (saveTimer) return
+  saveTimer = setTimeout(() => {
+    saveTimer = null
+    if (visitsDirty) saveTotalVisits()
+  }, 5000)
+  saveTimer.unref()
 }
 
 function pruneVisitors(now = Date.now()) {
@@ -42,24 +67,119 @@ function pruneVisitors(now = Date.now()) {
   })
 }
 
-function sendJson(response, statusCode, payload) {
-  response.writeHead(statusCode, {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Cache-Control': 'no-store',
+function pruneProtectionState(now = Date.now()) {
+  rateLimits.forEach((entry, key) => {
+    if (entry.resetAt <= now) rateLimits.delete(key)
+  })
+  recentPageViews.forEach((lastSeen, key) => {
+    if (now - lastSeen > pageViewWindowMs) recentPageViews.delete(key)
+  })
+
+  while (rateLimits.size > maximumTrackedClients) rateLimits.delete(rateLimits.keys().next().value)
+  while (recentPageViews.size > maximumTrackedClients) recentPageViews.delete(recentPageViews.keys().next().value)
+}
+
+function getClientIp(request) {
+  const railwayIp = request.headers['x-real-ip']
+  if (typeof railwayIp === 'string' && railwayIp.length <= 64) return railwayIp
+  return request.socket.remoteAddress || 'unknown'
+}
+
+function allowRequest(request, bucket, maximumRequests) {
+  const now = Date.now()
+  const key = `${bucket}:${getClientIp(request)}`
+  const current = rateLimits.get(key)
+
+  if (!current || current.resetAt <= now) {
+    rateLimits.set(key, { count: 1, resetAt: now + rateLimitWindowMs })
+    return { allowed: true, retryAfter: 0 }
+  }
+
+  current.count += 1
+  if (current.count <= maximumRequests) return { allowed: true, retryAfter: 0 }
+  return { allowed: false, retryAfter: Math.max(1, Math.ceil((current.resetAt - now) / 1000)) }
+}
+
+function securityHeaders(contentType = '') {
+  const headers = {
     'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'X-Frame-Options': 'SAMEORIGIN',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+    'Cross-Origin-Opener-Policy': 'same-origin',
+  }
+
+  if (contentType.startsWith('text/html')) {
+    headers['Content-Security-Policy'] = [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'self'",
+      "form-action 'self'",
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: https://www.google.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net",
+      "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net",
+      "font-src 'self' data:",
+      'upgrade-insecure-requests',
+    ].join('; ')
+  }
+
+  return headers
+}
+
+function sendText(response, statusCode, text, extraHeaders = {}) {
+  const contentType = 'text/plain; charset=utf-8'
+  response.writeHead(statusCode, {
+    'Content-Type': contentType,
+    'Cache-Control': 'no-store',
+    ...securityHeaders(contentType),
+    ...extraHeaders,
+  })
+  response.end(text)
+}
+
+function sendJson(response, statusCode, payload) {
+  const contentType = 'application/json; charset=utf-8'
+  response.writeHead(statusCode, {
+    'Content-Type': contentType,
+    'Cache-Control': 'no-store',
+    ...securityHeaders(contentType),
   })
   response.end(JSON.stringify(payload))
 }
 
+function sendRateLimit(response, retryAfter) {
+  const contentType = 'application/json; charset=utf-8'
+  response.writeHead(429, {
+    'Content-Type': contentType,
+    'Cache-Control': 'no-store',
+    'Retry-After': String(retryAfter),
+    ...securityHeaders(contentType),
+  })
+  response.end(JSON.stringify({ error: 'Too many requests. Please try again shortly.' }))
+}
+
 function handleVisitorHeartbeat(request, response) {
   let body = ''
+  let bodyTooLarge = false
 
   request.on('data', (chunk) => {
+    if (bodyTooLarge) return
     body += chunk
-    if (body.length > 4096) request.destroy()
+    if (Buffer.byteLength(body, 'utf8') > maximumJsonBodyBytes) {
+      bodyTooLarge = true
+      body = ''
+    }
   })
 
   request.on('end', () => {
+    if (bodyTooLarge) {
+      sendJson(response, 413, { error: 'Request body is too large' })
+      return
+    }
+
     try {
       const { visitorId, pageView } = JSON.parse(body || '{}')
       if (typeof visitorId !== 'string' || !/^[a-zA-Z0-9_-]{8,64}$/.test(visitorId)) {
@@ -71,9 +191,12 @@ function handleVisitorHeartbeat(request, response) {
       pruneVisitors(now)
       activeVisitors.set(visitorId, now)
 
-      if (pageView === true) {
+      const pageViewKey = `${getClientIp(request)}:${visitorId}`
+      const previousPageView = recentPageViews.get(pageViewKey) || 0
+      if (pageView === true && now - previousPageView >= pageViewWindowMs) {
+        recentPageViews.set(pageViewKey, now)
         totalViews += 1
-        saveTotalVisits()
+        scheduleVisitSave()
       }
 
       sendJson(response, 200, { online: activeVisitors.size, views: totalViews })
@@ -192,25 +315,65 @@ const mimeTypes = {
 }
 
 function getFilePath(requestUrl) {
-  const pathname = decodeURIComponent(new URL(requestUrl, 'http://localhost').pathname)
+  let pathname
+  try {
+    pathname = decodeURIComponent(new URL(requestUrl, 'http://localhost').pathname)
+  } catch {
+    return null
+  }
   const routes = {
     '/': 'index.html',
     '/privacy': 'privacy.html',
     '/privacy/': 'privacy.html',
+    '/privacy.html': 'privacy.html',
+    '/robots.txt': 'robots.txt',
   }
-  const relativePath = routes[pathname] || pathname.replace(/^\/+/, '')
+  const relativePath = routes[pathname]
+    || (pathname.startsWith('/assets/') ? pathname.replace(/^\/+/, '') : null)
+  if (!relativePath || relativePath.split('/').some((part) => part.startsWith('.'))) return null
   const candidate = resolve(root, normalize(relativePath))
-  return candidate.startsWith(resolve(root)) ? candidate : null
+  return candidate === resolvedRoot || candidate.startsWith(resolvedRootPrefix) ? candidate : null
 }
 
 const server = createServer((request, response) => {
-  const requestUrl = new URL(request.url || '/', 'http://localhost')
+  if ((request.url || '').length > 2048) {
+    sendText(response, 414, 'URI Too Long')
+    return
+  }
+
+  let requestUrl
+  try {
+    requestUrl = new URL(request.url || '/', 'http://localhost')
+  } catch {
+    sendText(response, 400, 'Bad Request')
+    return
+  }
   const pathname = requestUrl.pathname
+
+  if (pathname === '/health') {
+    if (!['GET', 'HEAD'].includes(request.method || 'GET')) {
+      sendText(response, 405, 'Method Not Allowed', { Allow: 'GET, HEAD' })
+      return
+    }
+    const contentType = 'application/json; charset=utf-8'
+    response.writeHead(200, {
+      'Content-Type': contentType,
+      'Cache-Control': 'no-store',
+      ...securityHeaders(contentType),
+    })
+    const payload = JSON.stringify({ status: 'ok', uptime: Math.floor(process.uptime()) })
+    response.end(request.method === 'HEAD' ? undefined : payload)
+    return
+  }
 
   if (pathname === '/api/visitor-heartbeat') {
     if (request.method !== 'POST') {
-      response.writeHead(405, { Allow: 'POST' })
-      response.end('Method Not Allowed')
+      sendText(response, 405, 'Method Not Allowed', { Allow: 'POST' })
+      return
+    }
+    const rateLimit = allowRequest(request, 'visitor', 30)
+    if (!rateLimit.allowed) {
+      sendRateLimit(response, rateLimit.retryAfter)
       return
     }
     handleVisitorHeartbeat(request, response)
@@ -219,8 +382,12 @@ const server = createServer((request, response) => {
 
   if (pathname === '/api/steam-news') {
     if (request.method !== 'GET') {
-      response.writeHead(405, { Allow: 'GET' })
-      response.end('Method Not Allowed')
+      sendText(response, 405, 'Method Not Allowed', { Allow: 'GET' })
+      return
+    }
+    const rateLimit = allowRequest(request, 'steam-news', 60)
+    if (!rateLimit.allowed) {
+      sendRateLimit(response, rateLimit.retryAfter)
       return
     }
     void handleSteamNews(requestUrl, response)
@@ -228,8 +395,7 @@ const server = createServer((request, response) => {
   }
 
   if (!['GET', 'HEAD'].includes(request.method || 'GET')) {
-    response.writeHead(405, { Allow: 'GET, HEAD' })
-    response.end('Method Not Allowed')
+    sendText(response, 405, 'Method Not Allowed', { Allow: 'GET, HEAD' })
     return
   }
 
@@ -237,8 +403,7 @@ const server = createServer((request, response) => {
   if (filePath && existsSync(filePath) && statSync(filePath).isDirectory()) filePath = join(filePath, 'index.html')
 
   if (!filePath || !existsSync(filePath) || !statSync(filePath).isFile()) {
-    response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' })
-    response.end('404 — Page not found')
+    sendText(response, 404, '404 — Page not found')
     return
   }
 
@@ -249,14 +414,44 @@ const server = createServer((request, response) => {
   response.writeHead(200, {
     'Content-Type': mimeTypes[extension] || 'application/octet-stream',
     'Cache-Control': cacheControl,
-    'X-Content-Type-Options': 'nosniff',
-    'Referrer-Policy': 'strict-origin-when-cross-origin',
-    'X-Frame-Options': 'SAMEORIGIN',
+    ...securityHeaders(mimeTypes[extension] || 'application/octet-stream'),
   })
 
   if (request.method === 'HEAD') response.end()
-  else createReadStream(filePath).pipe(response)
+  else {
+    const stream = createReadStream(filePath)
+    stream.on('error', (error) => {
+      console.error('Unable to stream static file:', error)
+      if (!response.headersSent) sendText(response, 500, 'Internal Server Error')
+      else response.destroy(error)
+    })
+    stream.pipe(response)
+  }
 })
+
+server.requestTimeout = 15_000
+server.headersTimeout = 10_000
+server.keepAliveTimeout = 5_000
+server.maxHeadersCount = 100
+
+server.on('clientError', (_error, socket) => {
+  if (socket.writable) socket.end('HTTP/1.1 400 Bad Request\r\nConnection: close\r\n\r\n')
+})
+
+const protectionCleanup = setInterval(pruneProtectionState, 60_000)
+protectionCleanup.unref()
+
+function shutdown(signal) {
+  console.log(`${signal} received; shutting down cleanly`)
+  if (saveTimer) clearTimeout(saveTimer)
+  if (visitsDirty) saveTotalVisits()
+  server.close(() => process.exit(0))
+  setTimeout(() => process.exit(1), 10_000).unref()
+}
+
+process.once('SIGTERM', () => shutdown('SIGTERM'))
+process.once('SIGINT', () => shutdown('SIGINT'))
+process.on('unhandledRejection', (error) => console.error('Unhandled promise rejection:', error))
 
 server.listen(port, host, () => {
   console.log(`ShuGhost website running on http://${host}:${port}`)

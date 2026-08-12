@@ -453,6 +453,12 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
 .support-panel > div:first-child { max-width: 650px; }
 .support-panel p:not(.eyebrow) { color: var(--muted); line-height: 1.7; }
 .support-links { min-width: 270px; flex-direction: column; margin-top: 0; }
+.button-community { justify-content: flex-start; gap: 10px; border-color: rgba(255,255,255,.15); color: #fff; }
+.button-community > span:first-child { display: inline-grid; width: 24px; height: 24px; place-items: center; border-radius: 50%; background: rgba(255,255,255,.12); }
+.button-telegram { background: linear-gradient(135deg, rgba(42,171,238,.24), rgba(42,171,238,.08)); }
+.button-telegram:hover { border-color: rgba(42,171,238,.72); box-shadow: 0 14px 36px rgba(42,171,238,.18); }
+.button-discord { background: linear-gradient(135deg, rgba(88,101,242,.28), rgba(88,101,242,.08)); }
+.button-discord:hover { border-color: rgba(88,101,242,.78); box-shadow: 0 14px 36px rgba(88,101,242,.2); }
 
 .site-footer {
   width: min(calc(100% - 36px), var(--max));
@@ -465,7 +471,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
   border-top: 1px solid var(--line);
 }
 .site-footer > p { margin: 0; color: var(--muted); font-size: 14px; }
-.site-footer nav { display: flex; gap: 22px; }
+.site-footer nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px 22px; }
 .site-footer small { grid-column: 1 / -1; color: #6f7896; font-size: 11px; }
 .footer-link-button { padding: 0; border: 0; background: none; cursor: pointer; }
 .visitor-stats { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
