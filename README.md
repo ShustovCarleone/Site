@@ -55,3 +55,13 @@ variable named `CONTACT_ADMIN_TOKEN` with a unique password of at least 16
 characters, then open `/inbox` and enter that password to read messages.
 
 Do not commit the token to Git or expose it in client-side code.
+
+To reply to email contacts directly from `/inbox`, create a Brevo account,
+verify a sender address, and add these Railway Variables:
+
+- `BREVO_API_KEY`: a Brevo transactional email API key
+- `BREVO_SENDER_EMAIL`: the verified sender email address
+- `BREVO_SENDER_NAME`: optional display name, for example `ShuGhost`
+
+Telegram contacts open in Telegram because bots and websites cannot initiate a
+conversation with an arbitrary Telegram user who has not contacted the bot.

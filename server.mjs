@@ -15,6 +15,9 @@ const visitorDataDir = process.env.VISITOR_DATA_DIR
 const visitorDataFile = join(visitorDataDir, 'visitor-stats.json')
 const contactDataFile = join(visitorDataDir, 'contact-messages.json')
 const contactAdminToken = String(process.env.CONTACT_ADMIN_TOKEN || '')
+const brevoApiKey = String(process.env.BREVO_API_KEY || '')
+const brevoSenderEmail = String(process.env.BREVO_SENDER_EMAIL || '')
+const brevoSenderName = cleanSingleLine(process.env.BREVO_SENDER_NAME || 'ShuGhost', 70)
 const activeVisitors = new Map()
 const activeWindowMs = 45_000
 const supportedSteamApps = new Set(['4981140', '4925710'])
@@ -93,6 +96,63 @@ function cleanSingleLine(value, maximumLength) {
 
 function cleanMessage(value, maximumLength) {
   return String(value || '').replace(/\u0000/g, '').replace(/\r\n?/g, '\n').trim().slice(0, maximumLength)
+}
+
+function extractEmail(value) {
+  const match = String(value || '').match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)
+  return match ? match[0].toLowerCase() : ''
+}
+
+function extractTelegramUsername(value) {
+  const text = String(value || '')
+  const urlMatch = text.match(/(?:https?:\/\/)?t\.me\/([a-zA-Z0-9_]{5,32})/i)
+  if (urlMatch) return urlMatch[1]
+  const usernameMatch = text.match(/(?:^|\s)@([a-zA-Z0-9_]{5,32})(?:\s|$)/)
+  return usernameMatch ? usernameMatch[1] : ''
+}
+
+function getReplyChannel(replyTo) {
+  const email = extractEmail(replyTo)
+  if (email) return { type: 'email', target: email }
+  const username = extractTelegramUsername(replyTo)
+  if (username) return { type: 'telegram', target: `https://t.me/${username}` }
+  return { type: 'manual', target: cleanSingleLine(replyTo, 160) }
+}
+
+function isEmailReplyConfigured() {
+  return brevoApiKey.length >= 20 && Boolean(extractEmail(brevoSenderEmail))
+}
+
+async function sendContactReply(item, replyText) {
+  const channel = getReplyChannel(item.replyTo)
+  if (channel.type !== 'email') throw new Error('recipient-not-email')
+  if (!isEmailReplyConfigured()) throw new Error('email-not-configured')
+
+  const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'api-key': brevoApiKey,
+    },
+    body: JSON.stringify({
+      sender: { name: brevoSenderName, email: brevoSenderEmail },
+      to: [{ email: channel.target, name: item.name }],
+      replyTo: { email: brevoSenderEmail, name: brevoSenderName },
+      subject: `Re: ${item.subject}`.slice(0, 200),
+      textContent: replyText,
+      tags: ['shughost-contact-reply'],
+    }),
+    signal: AbortSignal.timeout(12_000),
+  })
+
+  let result = {}
+  try { result = await emailResponse.json() } catch { /* response may be empty */ }
+  if (!emailResponse.ok) {
+    console.error('Brevo rejected a contact reply:', emailResponse.status, result?.message || '')
+    throw new Error('email-provider-error')
+  }
+  return { channel, providerId: cleanSingleLine(result.messageId, 250) }
 }
 
 function isAdminRequest(request) {
@@ -329,7 +389,13 @@ function handleContactAdmin(request, response) {
   }
 
   if (request.method === 'GET') {
-    sendJson(response, 200, { messages: contactMessages })
+    sendJson(response, 200, {
+      messages: contactMessages.map((message) => ({
+        ...message,
+        replyChannel: getReplyChannel(message.replyTo),
+      })),
+      emailReplyConfigured: isEmailReplyConfigured(),
+    })
     return
   }
 
@@ -351,6 +417,53 @@ function handleContactAdmin(request, response) {
     } catch (saveError) {
       console.error('Unable to update contact message:', saveError)
       sendJson(response, 500, { error: 'Unable to update the message' })
+    }
+  })
+}
+
+function handleContactReply(request, response) {
+  if (!isAdminRequest(request)) {
+    sendJson(response, 401, { error: 'Unauthorized' })
+    return
+  }
+
+  readJsonBody(request, maximumContactBodyBytes, async (error, payload) => {
+    if (error) {
+      sendJson(response, error.message === 'too-large' ? 413 : 400, { error: 'Invalid request' })
+      return
+    }
+    const id = cleanSingleLine(payload.id, 64)
+    const replyText = cleanMessage(payload.reply, 8000)
+    const item = contactMessages.find((message) => message.id === id)
+    if (!item) {
+      sendJson(response, 404, { error: 'Message not found' })
+      return
+    }
+    if (replyText.length < 2) {
+      sendJson(response, 400, { error: 'Reply is empty' })
+      return
+    }
+
+    try {
+      const sent = await sendContactReply(item, replyText)
+      item.read = true
+      item.replies = Array.isArray(item.replies) ? item.replies : []
+      item.replies.unshift({
+        id: randomUUID(),
+        createdAt: new Date().toISOString(),
+        text: replyText,
+        channel: sent.channel.type,
+        providerId: sent.providerId,
+      })
+      saveContactMessages()
+      sendJson(response, 200, { ok: true })
+    } catch (sendError) {
+      const statusByError = {
+        'recipient-not-email': 400,
+        'email-not-configured': 503,
+        'email-provider-error': 502,
+      }
+      sendJson(response, statusByError[sendError.message] || 502, { error: sendError.message || 'reply-failed' })
     }
   })
 }
@@ -576,6 +689,20 @@ const server = createServer((request, response) => {
       return
     }
     handleContactAdmin(request, response)
+    return
+  }
+
+  if (pathname === '/api/contact-reply') {
+    if (request.method !== 'POST') {
+      sendText(response, 405, 'Method Not Allowed', { Allow: 'POST' })
+      return
+    }
+    const rateLimit = allowRequest(request, 'contact-reply', 10)
+    if (!rateLimit.allowed) {
+      sendRateLimit(response, rateLimit.retryAfter)
+      return
+    }
+    handleContactReply(request, response)
     return
   }
 

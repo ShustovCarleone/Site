@@ -471,6 +471,11 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
 .inbox-header, .inbox-toolbar, .inbox-message-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }.inbox-header h1 { margin: 4px 0 0; font-size: clamp(2.4rem, 7vw, 5rem); letter-spacing: -.06em; }
 .inbox-login, .inbox-message, .inbox-empty { margin-top: 30px; padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); }.inbox-login { max-width: 560px; }.inbox-login form { display: flex; align-items: end; gap: 14px; }.inbox-login label { flex: 1; display: grid; gap: 8px; }.inbox-list { display: grid; gap: 18px; }
 .inbox-message.is-unread { border-color: rgba(54,220,255,.42); box-shadow: inset 3px 0 var(--cyan); }.inbox-message h2 { margin: 7px 0 0; }.inbox-message time, .inbox-sender { color: var(--muted); font-size: 13px; }.inbox-sender a { color: var(--cyan); }.inbox-state { color: var(--cyan); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; }.inbox-message-body { white-space: pre-wrap; line-height: 1.7; }
+.inbox-message-tools { display: flex; gap: 12px; margin-top: 20px; }
+.inbox-reply-box, .inbox-reply-form, .inbox-reply-history { margin-top: 22px; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: rgba(3,6,17,.48); }
+.inbox-reply-box p, .inbox-warning { color: var(--muted); line-height: 1.6; }.inbox-reply-box code { display: inline-block; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,.06); color: var(--cyan); }
+.inbox-reply-form label { display: grid; gap: 9px; font-size: 13px; font-weight: 700; }.inbox-reply-form textarea { width: 100%; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(3,6,17,.75); color: var(--text); resize: vertical; outline: none; }.inbox-reply-form textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(54,220,255,.1); }
+.inbox-reply-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; }.inbox-warning { color: #ffc875; }.inbox-reply-history summary { cursor: pointer; color: var(--cyan); font-weight: 700; }.inbox-reply-history article { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }.inbox-reply-history article p { white-space: pre-wrap; line-height: 1.6; }
 .button-community { justify-content: flex-start; gap: 10px; border-color: rgba(255,255,255,.15); color: #fff; }
 .button-community > span:first-child { display: inline-grid; width: 24px; height: 24px; place-items: center; border-radius: 50%; background: rgba(255,255,255,.12); }
 .button-telegram { background: linear-gradient(135deg, rgba(42,171,238,.24), rgba(42,171,238,.08)); }
@@ -700,6 +705,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
   .cookie-actions { justify-content: space-between; }
   .contact-form-row { grid-template-columns: 1fr; }
   .contact-submit-row, .inbox-login form, .inbox-header, .inbox-message-head { align-items: stretch; flex-direction: column; }
+  .inbox-reply-actions { align-items: stretch; flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {
