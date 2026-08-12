@@ -29,7 +29,7 @@ function renderReplyArea(item) {
   }
 
   const mailtoUrl = `mailto:${channel.target}?subject=${encodeURIComponent(`Re: ${item.subject}`)}`
-  const setupNote = emailReplyConfigured ? '' : `<p class="inbox-warning">Надсилання email ще не налаштовано. Додай BREVO_API_KEY і BREVO_SENDER_EMAIL у Railway Variables.</p><a class="button button-ghost button-small" href="${escapeHtml(mailtoUrl)}">Відкрити поштову програму</a>`
+  const setupNote = emailReplyConfigured ? '' : `<p class="inbox-warning">Надсилання email ще не налаштовано. Додай GMAIL_USER і GMAIL_APP_PASSWORD у Railway Variables.</p><a class="button button-ghost button-small" href="${escapeHtml(mailtoUrl)}">Відкрити поштову програму</a>`
   return `<form class="inbox-reply-form" data-reply-form data-message-id="${escapeHtml(item.id)}">
     <label>Відповідь для ${escapeHtml(channel.target)}<textarea name="reply" rows="6" maxlength="8000" required placeholder="Напиши відповідь…"></textarea></label>
     ${setupNote}
@@ -119,7 +119,7 @@ list.addEventListener('submit', async (event) => {
   } catch (error) {
     const errors = {
       'email-not-configured': 'Email ще не налаштовано в Railway.',
-      'email-provider-error': 'Brevo не прийняв лист. Перевір API key та підтвердженого відправника.',
+      'email-provider-error': 'Gmail не надіслав лист. Перевір адресу та пароль застосунку Google.',
       'recipient-not-email': 'Це не email-адреса.',
     }
     status.className = 'form-status is-error'

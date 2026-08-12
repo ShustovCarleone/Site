@@ -56,18 +56,22 @@ characters, then open `/inbox` and enter that password to read messages.
 
 Do not commit the token to Git or expose it in client-side code.
 
-To reply to email contacts directly from `/inbox`, create a Brevo account,
-verify a sender address, and add these Railway Variables:
+To receive contact notifications and reply directly from `/inbox`, enable
+Google 2-Step Verification, create a dedicated Google App Password, and add
+these Railway Variables:
 
-- `BREVO_API_KEY`: a Brevo transactional email API key
-- `BREVO_SENDER_EMAIL`: the verified sender email address
-- `BREVO_SENDER_NAME`: optional display name, for example `ShuGhost`
+- `GMAIL_USER`: the Gmail sender address, for example `name@gmail.com`
+- `GMAIL_APP_PASSWORD`: the 16-character Google App Password (never the normal
+  Google Account password)
+- `EMAIL_SENDER_NAME`: optional display name, for example `ShuGhost`
 - `CONTACT_NOTIFICATION_EMAIL`: optional inbox for new-message notifications;
   defaults to `shustovxd15032112@gmail.com`
 
-With Brevo configured, every new website message is saved in `/inbox` and also
+With Gmail configured, every new website message is saved in `/inbox` and also
 emailed to `shustovxd15032112@gmail.com`. If the visitor supplied an email
 address, Gmail's Reply action addresses the visitor directly.
+
+Never commit the App Password to Git or place it in browser-side JavaScript.
 
 Telegram contacts open in Telegram because bots and websites cannot initiate a
 conversation with an arbitrary Telegram user who has not contacted the bot.

@@ -3,6 +3,7 @@ import { randomUUID, timingSafeEqual } from 'node:crypto'
 import { createServer } from 'node:http'
 import { extname, join, normalize, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import nodemailer from 'nodemailer'
 
 const root = fileURLToPath(new URL('.', import.meta.url))
 const resolvedRoot = resolve(root)
@@ -15,11 +16,23 @@ const visitorDataDir = process.env.VISITOR_DATA_DIR
 const visitorDataFile = join(visitorDataDir, 'visitor-stats.json')
 const contactDataFile = join(visitorDataDir, 'contact-messages.json')
 const contactAdminToken = String(process.env.CONTACT_ADMIN_TOKEN || '')
-const brevoApiKey = String(process.env.BREVO_API_KEY || '')
-const brevoApiUrl = String(process.env.BREVO_API_URL || 'https://api.brevo.com/v3/smtp/email')
-const brevoSenderEmail = String(process.env.BREVO_SENDER_EMAIL || '')
-const brevoSenderName = cleanSingleLine(process.env.BREVO_SENDER_NAME || 'ShuGhost', 70)
+const gmailUser = extractEmail(process.env.GMAIL_USER || '')
+const gmailAppPassword = String(process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '')
+const emailSenderName = cleanSingleLine(process.env.EMAIL_SENDER_NAME || 'ShuGhost', 70)
 const contactNotificationEmail = extractEmail(process.env.CONTACT_NOTIFICATION_EMAIL || 'shustovxd15032112@gmail.com')
+const emailTransport = gmailUser && gmailAppPassword.length >= 16
+  ? nodemailer.createTransport(process.env.NODE_ENV === 'test'
+    ? { jsonTransport: true }
+    : {
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: { user: gmailUser, pass: gmailAppPassword },
+        connectionTimeout: 12_000,
+        greetingTimeout: 12_000,
+        socketTimeout: 20_000,
+      })
+  : null
 const activeVisitors = new Map()
 const activeWindowMs = 45_000
 const supportedSteamApps = new Set(['4981140', '4925710'])
@@ -122,29 +135,21 @@ function getReplyChannel(replyTo) {
 }
 
 function isEmailReplyConfigured() {
-  return brevoApiKey.length >= 20 && Boolean(extractEmail(brevoSenderEmail))
+  return Boolean(emailTransport && gmailUser)
 }
 
-async function sendBrevoEmail(payload) {
+async function sendEmail(payload) {
   if (!isEmailReplyConfigured()) throw new Error('email-not-configured')
-  const emailResponse = await fetch(brevoApiUrl, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'api-key': brevoApiKey,
-    },
-    body: JSON.stringify(payload),
-    signal: AbortSignal.timeout(12_000),
-  })
-
-  let result = {}
-  try { result = await emailResponse.json() } catch { /* response may be empty */ }
-  if (!emailResponse.ok) {
-    console.error('Brevo rejected an email:', emailResponse.status, result?.message || '')
+  try {
+    const result = await emailTransport.sendMail({
+      from: { name: emailSenderName, address: gmailUser },
+      ...payload,
+    })
+    return cleanSingleLine(result.messageId, 250)
+  } catch (error) {
+    console.error('Gmail SMTP rejected an email:', error?.code || '', error?.message || '')
     throw new Error('email-provider-error')
   }
-  return cleanSingleLine(result.messageId, 250)
 }
 
 async function notifyOwnerOfContact(item) {
@@ -164,13 +169,11 @@ async function notifyOwnerOfContact(item) {
     'https://shughost.up.railway.app/inbox',
   ].join('\n')
 
-  return sendBrevoEmail({
-    sender: { name: brevoSenderName, email: brevoSenderEmail },
-    to: [{ email: contactNotificationEmail, name: 'ShuGhost' }],
-    ...(visitorEmail ? { replyTo: { email: visitorEmail, name: item.name } } : {}),
+  return sendEmail({
+    to: { name: 'ShuGhost', address: contactNotificationEmail },
+    ...(visitorEmail ? { replyTo: { name: item.name, address: visitorEmail } } : {}),
     subject: `[ShuGhost website] ${item.subject}`.slice(0, 200),
-    textContent,
-    tags: ['shughost-contact-notification'],
+    text: textContent,
   })
 }
 
@@ -179,13 +182,11 @@ async function sendContactReply(item, replyText) {
   if (channel.type !== 'email') throw new Error('recipient-not-email')
   if (!isEmailReplyConfigured()) throw new Error('email-not-configured')
 
-  const providerId = await sendBrevoEmail({
-      sender: { name: brevoSenderName, email: brevoSenderEmail },
-      to: [{ email: channel.target, name: item.name }],
-      replyTo: { email: brevoSenderEmail, name: brevoSenderName },
+  const providerId = await sendEmail({
+      to: { name: item.name, address: channel.target },
+      replyTo: { name: emailSenderName, address: gmailUser },
       subject: `Re: ${item.subject}`.slice(0, 200),
-      textContent: replyText,
-      tags: ['shughost-contact-reply'],
+      text: replyText,
   })
   return { channel, providerId }
 }

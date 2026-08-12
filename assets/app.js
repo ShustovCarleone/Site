@@ -49,7 +49,7 @@ const translations = {
     'privacy.externalTitle': 'External websites', 'privacy.externalText': 'Links to Steam and other third-party services leave this website. ShuGhost is not responsible for the privacy practices or content of those external services.',
     'privacy.choicesTitle': 'Your choices', 'privacy.choicesText': 'You can clear the on-site cart from the cart panel. You can also remove stored site data at any time using your browser\'s privacy or site settings.',
     'privacy.contactTitle': 'Contact', 'privacy.contactText': 'For game support or privacy questions, use the official Steam Community support links on the', 'privacy.contactLink': 'ShuGhost support section',
-    'privacy.contactMessagesTitle': 'Contact messages', 'privacy.contactMessagesText': 'When you use the contact form, ShuGhost stores the name, reply address, subject, message, language, submission time, and any replies sent through the private inbox. A transactional email provider may process this information to deliver a private notification and reply. It is not displayed publicly.',
+    'privacy.contactMessagesTitle': 'Contact messages', 'privacy.contactMessagesText': 'When you use the contact form, ShuGhost stores the name, reply address, subject, message, language, submission time, and any replies sent through the private inbox. Google Gmail may process this information to deliver a private notification and reply. It is not displayed publicly.',
     'genre.gremlins': 'Desktop pet · Simulation', 'genre.violet': 'Visual novel · Story rich',
   },
   uk: {
@@ -102,7 +102,7 @@ const translations = {
     'privacy.externalTitle': 'Зовнішні сайти', 'privacy.externalText': 'Посилання на Steam та інші сторонні сервіси ведуть за межі цього сайту. ShuGhost не відповідає за правила конфіденційності або вміст сторонніх сервісів.',
     'privacy.choicesTitle': 'Ваш вибір', 'privacy.choicesText': 'Ви можете очистити кошик у його панелі. Також у будь-який момент можна видалити збережені дані сайту через налаштування конфіденційності браузера.',
     'privacy.contactTitle': 'Зв’язок', 'privacy.contactText': 'Для підтримки ігор або запитань щодо конфіденційності скористайтеся офіційними посиланнями спільноти Steam у', 'privacy.contactLink': 'розділі підтримки ShuGhost',
-    'privacy.contactMessagesTitle': 'Контактні повідомлення', 'privacy.contactMessagesText': 'Коли ви користуєтеся контактною формою, ShuGhost зберігає вказані вами ім’я, адресу для відповіді, тему, повідомлення, мову, час надсилання та відповіді з приватного inbox. Сервіс транзакційної пошти може обробляти ці дані, щоб доставити приватне сповіщення та відповідь. Вони не публікуються на сайті.',
+    'privacy.contactMessagesTitle': 'Контактні повідомлення', 'privacy.contactMessagesText': 'Коли ви користуєтеся контактною формою, ShuGhost зберігає вказані вами ім’я, адресу для відповіді, тему, повідомлення, мову, час надсилання та відповіді з приватного inbox. Google Gmail може обробляти ці дані, щоб доставити приватне сповіщення та відповідь. Вони не публікуються на сайті.',
     'genre.gremlins': 'Десктопний улюбленець · Симулятор', 'genre.violet': 'Візуальна новела · Сюжетна гра',
   },
   ru: {
@@ -155,7 +155,7 @@ const translations = {
     'privacy.externalTitle': 'Внешние сайты', 'privacy.externalText': 'Ссылки на Steam и другие сторонние сервисы ведут за пределы этого сайта. ShuGhost не отвечает за правила конфиденциальности или содержимое сторонних сервисов.',
     'privacy.choicesTitle': 'Ваш выбор', 'privacy.choicesText': 'Вы можете очистить корзину в её панели. Также в любой момент можно удалить сохранённые данные сайта через настройки конфиденциальности браузера.',
     'privacy.contactTitle': 'Связь', 'privacy.contactText': 'Для поддержки игр или вопросов о конфиденциальности воспользуйтесь официальными ссылками сообщества Steam в', 'privacy.contactLink': 'разделе поддержки ShuGhost',
-    'privacy.contactMessagesTitle': 'Контактные сообщения', 'privacy.contactMessagesText': 'Когда вы используете контактную форму, ShuGhost сохраняет указанные вами имя, адрес для ответа, тему, сообщение, язык, время отправки и ответы из приватного inbox. Сервис транзакционной почты может обрабатывать эти данные для доставки приватного уведомления и ответа. Они не публикуются на сайте.',
+    'privacy.contactMessagesTitle': 'Контактные сообщения', 'privacy.contactMessagesText': 'Когда вы используете контактную форму, ShuGhost сохраняет указанные вами имя, адрес для ответа, тему, сообщение, язык, время отправки и ответы из приватного inbox. Google Gmail может обрабатывать эти данные для доставки приватного уведомления и ответа. Они не публикуются на сайте.',
     'genre.gremlins': 'Питомец рабочего стола · Симулятор', 'genre.violet': 'Визуальная новелла · Сюжетная игра',
   },
 }
