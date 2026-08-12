@@ -18,17 +18,18 @@ mkdirSync(visitorDataDir, { recursive: true })
 function loadTotalVisits() {
   try {
     const stored = JSON.parse(readFileSync(visitorDataFile, 'utf8'))
-    return Number.isSafeInteger(stored.totalVisits) && stored.totalVisits >= 0 ? stored.totalVisits : 0
+    const value = stored.totalViews ?? stored.totalVisits
+    return Number.isSafeInteger(value) && value >= 0 ? value : 0
   } catch {
     return 0
   }
 }
 
-let totalVisits = loadTotalVisits()
+let totalViews = loadTotalVisits()
 
 function saveTotalVisits() {
   const temporaryFile = `${visitorDataFile}.tmp`
-  writeFileSync(temporaryFile, JSON.stringify({ totalVisits }), 'utf8')
+  writeFileSync(temporaryFile, JSON.stringify({ totalViews }), 'utf8')
   renameSync(temporaryFile, visitorDataFile)
 }
 
@@ -57,7 +58,7 @@ function handleVisitorHeartbeat(request, response) {
 
   request.on('end', () => {
     try {
-      const { visitorId } = JSON.parse(body || '{}')
+      const { visitorId, pageView } = JSON.parse(body || '{}')
       if (typeof visitorId !== 'string' || !/^[a-zA-Z0-9_-]{8,64}$/.test(visitorId)) {
         sendJson(response, 400, { error: 'Invalid visitor ID' })
         return
@@ -65,15 +66,14 @@ function handleVisitorHeartbeat(request, response) {
 
       const now = Date.now()
       pruneVisitors(now)
-      const isNewVisit = !activeVisitors.has(visitorId)
       activeVisitors.set(visitorId, now)
 
-      if (isNewVisit) {
-        totalVisits += 1
+      if (pageView === true) {
+        totalViews += 1
         saveTotalVisits()
       }
 
-      sendJson(response, 200, { online: activeVisitors.size, totalVisits })
+      sendJson(response, 200, { online: activeVisitors.size, views: totalViews })
     } catch {
       sendJson(response, 400, { error: 'Invalid request' })
     }

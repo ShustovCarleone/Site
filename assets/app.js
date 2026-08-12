@@ -26,7 +26,7 @@ const translations = {
     'support.gremlins': 'Desktop Gremlins support', 'support.violet': 'Dr. Violet support',
     'footer.tagline': 'Independent games with a mischievous soul.', 'footer.privacy': 'Privacy', 'footer.cookies': 'Cookie settings',
     'footer.legal': 'All rights reserved. Steam is a trademark of Valve Corporation.',
-    'stats.online': 'online now', 'stats.visits': 'total visits',
+    'stats.online': 'online', 'stats.visits': 'views',
     'cart.open': 'Open cart', 'cart.close': 'Close cart', 'cart.eyebrow': 'Your selection', 'cart.title': 'Steam cart',
     'cart.emptyTitle': 'Your cart is quiet.', 'cart.emptyText': 'Add a game and continue to its official Steam page.',
     'cart.disclaimer': 'Prices, regional availability, payment, and delivery are handled securely by Steam.', 'cart.clear': 'Clear cart',
@@ -71,7 +71,7 @@ const translations = {
     'support.gremlins': 'Підтримка Desktop Gremlins', 'support.violet': 'Підтримка Dr. Violet',
     'footer.tagline': 'Незалежні ігри з бешкетною душею.', 'footer.privacy': 'Конфіденційність', 'footer.cookies': 'Налаштування cookie',
     'footer.legal': 'Усі права захищено. Steam є торговельною маркою Valve Corporation.',
-    'stats.online': 'зараз онлайн', 'stats.visits': 'усього відвідувань',
+    'stats.online': 'онлайн', 'stats.visits': 'переглядів',
     'cart.open': 'Відкрити кошик', 'cart.close': 'Закрити кошик', 'cart.eyebrow': 'Ваш вибір', 'cart.title': 'Кошик Steam',
     'cart.emptyTitle': 'У кошику поки тихо.', 'cart.emptyText': 'Додайте гру та перейдіть на її офіційну сторінку Steam.',
     'cart.disclaimer': 'Ціни, регіональна доступність, оплата й доставка безпечно обробляються Steam.', 'cart.clear': 'Очистити кошик',
@@ -116,7 +116,7 @@ const translations = {
     'support.gremlins': 'Поддержка Desktop Gremlins', 'support.violet': 'Поддержка Dr. Violet',
     'footer.tagline': 'Независимые игры с озорной душой.', 'footer.privacy': 'Конфиденциальность', 'footer.cookies': 'Настройки cookie',
     'footer.legal': 'Все права защищены. Steam является товарным знаком Valve Corporation.',
-    'stats.online': 'сейчас онлайн', 'stats.visits': 'всего посещений',
+    'stats.online': 'онлайн', 'stats.visits': 'просмотров',
     'cart.open': 'Открыть корзину', 'cart.close': 'Закрыть корзину', 'cart.eyebrow': 'Ваш выбор', 'cart.title': 'Корзина Steam',
     'cart.emptyTitle': 'В корзине пока тихо.', 'cart.emptyText': 'Добавьте игру и перейдите на её официальную страницу Steam.',
     'cart.disclaimer': 'Цены, региональная доступность, оплата и доставка безопасно обрабатываются Steam.', 'cart.clear': 'Очистить корзину',
@@ -395,20 +395,20 @@ function getVisitorId() {
   return visitorId
 }
 
-async function updateVisitorStats() {
+async function updateVisitorStats(pageView = false) {
   if (!onlineCount || !totalVisitCount) return
 
   try {
     const response = await fetch('/api/visitor-heartbeat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ visitorId: getVisitorId() }),
+      body: JSON.stringify({ visitorId: getVisitorId(), pageView }),
       cache: 'no-store',
     })
     if (!response.ok) throw new Error(`Visitor stats request failed: ${response.status}`)
     const stats = await response.json()
     onlineCount.textContent = Number(stats.online).toLocaleString()
-    totalVisitCount.textContent = Number(stats.totalVisits).toLocaleString()
+    totalVisitCount.textContent = Number(stats.views).toLocaleString()
   } catch {
     onlineCount.textContent = '—'
     totalVisitCount.textContent = '—'
@@ -417,5 +417,5 @@ async function updateVisitorStats() {
 
 applyLanguage(currentLanguage)
 showCookieBanner()
-updateVisitorStats()
+updateVisitorStats(true)
 setInterval(updateVisitorStats, 20_000)
