@@ -459,7 +459,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
   margin: 0 auto;
   padding: 42px 0 38px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
   gap: 24px;
   border-top: 1px solid var(--line);
@@ -468,6 +468,10 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
 .site-footer nav { display: flex; gap: 22px; }
 .site-footer small { grid-column: 1 / -1; color: #6f7896; font-size: 11px; }
 .footer-link-button { padding: 0; border: 0; background: none; cursor: pointer; }
+.visitor-stats { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
+.visitor-stats > span { display: inline-flex; align-items: center; gap: 5px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.025); white-space: nowrap; }
+.visitor-stats b { color: var(--text); font-variant-numeric: tabular-nums; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #42e69a; box-shadow: 0 0 10px rgba(66,230,154,.75); }
 
 .scrim { position: fixed; z-index: 60; inset: 0; background: rgba(2,4,12,.68); backdrop-filter: blur(6px); }
 .cart-drawer {
@@ -595,6 +599,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
   .media-card { padding: 12px; border-radius: 20px; }
   .video-shell { border-radius: 13px; }
   .site-footer { grid-template-columns: 1fr; align-items: start; }
+  .visitor-stats { flex-wrap: wrap; }
   .site-footer small { grid-column: 1; }
   .cookie-banner { align-items: stretch; flex-direction: column; }
   .cookie-actions { justify-content: space-between; }

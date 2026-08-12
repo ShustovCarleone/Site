@@ -26,17 +26,19 @@ const translations = {
     'support.gremlins': 'Desktop Gremlins support', 'support.violet': 'Dr. Violet support',
     'footer.tagline': 'Independent games with a mischievous soul.', 'footer.privacy': 'Privacy', 'footer.cookies': 'Cookie settings',
     'footer.legal': 'All rights reserved. Steam is a trademark of Valve Corporation.',
+    'stats.online': 'online now', 'stats.visits': 'total visits',
     'cart.open': 'Open cart', 'cart.close': 'Close cart', 'cart.eyebrow': 'Your selection', 'cart.title': 'Steam cart',
     'cart.emptyTitle': 'Your cart is quiet.', 'cart.emptyText': 'Add a game and continue to its official Steam page.',
     'cart.disclaimer': 'Prices, regional availability, payment, and delivery are handled securely by Steam.', 'cart.clear': 'Clear cart',
     'cart.price': 'Price shown on Steam', 'cart.continue': 'Continue on Steam', 'cart.remove': 'Remove',
-    'cookie.title': 'Your privacy matters.', 'cookie.text': 'This site currently stores only your cart and cookie preference on this device.',
-    'cookie.more': 'Learn more', 'cookie.accept': 'Got it',
+    'cookie.title': 'Your privacy matters.', 'cookie.text': 'Allow Google Ads measurement cookies to help ShuGhost understand which ads bring visitors to the site.',
+    'cookie.more': 'Learn more', 'cookie.accept': 'Accept', 'cookie.reject': 'Reject',
     'privacy.back': 'Back to home', 'privacy.legal': 'Legal', 'privacy.title': 'Privacy Policy', 'privacy.updated': 'Last updated: August 12, 2026',
     'privacy.overviewTitle': 'Overview', 'privacy.overviewText': 'ShuGhost respects your privacy. This policy explains what information this website stores, how external services may process information, and the choices available to you.',
     'privacy.storageTitle': 'Information stored on your device', 'privacy.storageText': 'The site uses browser local storage to remember the games placed in your on-site cart and whether you dismissed the cookie notice. This information stays on your device and is not transmitted to ShuGhost.',
     'privacy.steamTitle': 'Steam links and purchases', 'privacy.steamText': 'Purchase buttons lead to store pages operated by Valve Corporation. Payments, Steam accounts, regional pricing, delivery, refunds, and any information submitted on Steam are governed by Steam\'s own terms and privacy policy. This website does not receive or store payment details.',
-    'privacy.adsTitle': 'Advertising and analytics', 'privacy.adsText': 'The current version of this website does not load non-essential advertising or analytics cookies. If Google Ads, conversion measurement, or analytics are enabled later, this policy and the consent controls will be updated before those tools are activated where required.',
+    'privacy.counterTitle': 'Visitor counter', 'privacy.counterText': 'The site creates a random ID for the current browser tab to calculate anonymous online and total visit counts. The ID expires with the browser session. ShuGhost does not use this counter to store names, accounts, or complete IP addresses.',
+    'privacy.adsTitle': 'Advertising and analytics', 'privacy.adsText': 'This website uses the Google tag for Google Ads measurement. Advertising and analytics storage is denied by default and enabled only after you grant consent. Google may then process device, browser, interaction, and advertising-attribution information under its own privacy terms.',
     'privacy.externalTitle': 'External websites', 'privacy.externalText': 'Links to Steam and other third-party services leave this website. ShuGhost is not responsible for the privacy practices or content of those external services.',
     'privacy.choicesTitle': 'Your choices', 'privacy.choicesText': 'You can clear the on-site cart from the cart panel. You can also remove stored site data at any time using your browser\'s privacy or site settings.',
     'privacy.contactTitle': 'Contact', 'privacy.contactText': 'For game support or privacy questions, use the official Steam Community support links on the', 'privacy.contactLink': 'ShuGhost support section',
@@ -69,17 +71,19 @@ const translations = {
     'support.gremlins': 'Підтримка Desktop Gremlins', 'support.violet': 'Підтримка Dr. Violet',
     'footer.tagline': 'Незалежні ігри з бешкетною душею.', 'footer.privacy': 'Конфіденційність', 'footer.cookies': 'Налаштування cookie',
     'footer.legal': 'Усі права захищено. Steam є торговельною маркою Valve Corporation.',
+    'stats.online': 'зараз онлайн', 'stats.visits': 'усього відвідувань',
     'cart.open': 'Відкрити кошик', 'cart.close': 'Закрити кошик', 'cart.eyebrow': 'Ваш вибір', 'cart.title': 'Кошик Steam',
     'cart.emptyTitle': 'У кошику поки тихо.', 'cart.emptyText': 'Додайте гру та перейдіть на її офіційну сторінку Steam.',
     'cart.disclaimer': 'Ціни, регіональна доступність, оплата й доставка безпечно обробляються Steam.', 'cart.clear': 'Очистити кошик',
     'cart.price': 'Ціну вказано в Steam', 'cart.continue': 'Продовжити в Steam', 'cart.remove': 'Видалити',
-    'cookie.title': 'Ваша приватність важлива.', 'cookie.text': 'Цей сайт зберігає на пристрої лише ваш кошик і вибір щодо повідомлення про cookie.',
-    'cookie.more': 'Докладніше', 'cookie.accept': 'Зрозуміло',
+    'cookie.title': 'Ваша приватність важлива.', 'cookie.text': 'Дозвольте Google Ads вимірювати рекламу, щоб ShuGhost міг розуміти, які оголошення приводять відвідувачів на сайт.',
+    'cookie.more': 'Докладніше', 'cookie.accept': 'Прийняти', 'cookie.reject': 'Відхилити',
     'privacy.back': 'На головну', 'privacy.legal': 'Правова інформація', 'privacy.title': 'Політика конфіденційності', 'privacy.updated': 'Оновлено: 12 серпня 2026 року',
     'privacy.overviewTitle': 'Загальні положення', 'privacy.overviewText': 'ShuGhost поважає вашу приватність. Ця політика пояснює, яку інформацію зберігає сайт, як зовнішні сервіси можуть обробляти дані та які можливості вибору ви маєте.',
     'privacy.storageTitle': 'Інформація, що зберігається на пристрої', 'privacy.storageText': 'Сайт використовує локальне сховище браузера, щоб запам’ятати додані до кошика ігри та факт закриття повідомлення про cookie. Ця інформація залишається на вашому пристрої й не передається ShuGhost.',
     'privacy.steamTitle': 'Посилання Steam і покупки', 'privacy.steamText': 'Кнопки покупки ведуть на сторінки магазину Valve Corporation. Платежі, облікові записи Steam, регіональні ціни, доставка, повернення коштів та інформація, надана у Steam, регулюються умовами й політикою конфіденційності Steam. Цей сайт не отримує та не зберігає платіжних даних.',
-    'privacy.adsTitle': 'Реклама й аналітика', 'privacy.adsText': 'Поточна версія сайту не завантажує необов’язкові рекламні або аналітичні cookie. Якщо пізніше буде активовано Google Ads, відстеження конверсій або аналітику, цю політику й засоби керування згодою буде оновлено до їх увімкнення там, де це необхідно.',
+    'privacy.counterTitle': 'Лічильник відвідувачів', 'privacy.counterText': 'Сайт створює випадковий ідентифікатор для поточної вкладки браузера, щоб обчислювати анонімну кількість користувачів онлайн і відвідувань. Ідентифікатор зникає після завершення сеансу браузера. ShuGhost не зберігає через цей лічильник імена, облікові записи чи повні IP-адреси.',
+    'privacy.adsTitle': 'Реклама й аналітика', 'privacy.adsText': 'Цей сайт використовує тег Google для вимірювання Google Ads. Сховища реклами й аналітики типово вимкнені та вмикаються лише після вашої згоди. Після цього Google може обробляти інформацію про пристрій, браузер, взаємодії та рекламну атрибуцію відповідно до власної політики конфіденційності.',
     'privacy.externalTitle': 'Зовнішні сайти', 'privacy.externalText': 'Посилання на Steam та інші сторонні сервіси ведуть за межі цього сайту. ShuGhost не відповідає за правила конфіденційності або вміст сторонніх сервісів.',
     'privacy.choicesTitle': 'Ваш вибір', 'privacy.choicesText': 'Ви можете очистити кошик у його панелі. Також у будь-який момент можна видалити збережені дані сайту через налаштування конфіденційності браузера.',
     'privacy.contactTitle': 'Зв’язок', 'privacy.contactText': 'Для підтримки ігор або запитань щодо конфіденційності скористайтеся офіційними посиланнями спільноти Steam у', 'privacy.contactLink': 'розділі підтримки ShuGhost',
@@ -112,17 +116,19 @@ const translations = {
     'support.gremlins': 'Поддержка Desktop Gremlins', 'support.violet': 'Поддержка Dr. Violet',
     'footer.tagline': 'Независимые игры с озорной душой.', 'footer.privacy': 'Конфиденциальность', 'footer.cookies': 'Настройки cookie',
     'footer.legal': 'Все права защищены. Steam является товарным знаком Valve Corporation.',
+    'stats.online': 'сейчас онлайн', 'stats.visits': 'всего посещений',
     'cart.open': 'Открыть корзину', 'cart.close': 'Закрыть корзину', 'cart.eyebrow': 'Ваш выбор', 'cart.title': 'Корзина Steam',
     'cart.emptyTitle': 'В корзине пока тихо.', 'cart.emptyText': 'Добавьте игру и перейдите на её официальную страницу Steam.',
     'cart.disclaimer': 'Цены, региональная доступность, оплата и доставка безопасно обрабатываются Steam.', 'cart.clear': 'Очистить корзину',
     'cart.price': 'Цена указана в Steam', 'cart.continue': 'Продолжить в Steam', 'cart.remove': 'Удалить',
-    'cookie.title': 'Ваша приватность важна.', 'cookie.text': 'Этот сайт хранит на устройстве только вашу корзину и выбор относительно уведомления о cookie.',
-    'cookie.more': 'Подробнее', 'cookie.accept': 'Понятно',
+    'cookie.title': 'Ваша приватность важна.', 'cookie.text': 'Разрешите Google Ads измерять рекламу, чтобы ShuGhost мог понимать, какие объявления приводят посетителей на сайт.',
+    'cookie.more': 'Подробнее', 'cookie.accept': 'Принять', 'cookie.reject': 'Отклонить',
     'privacy.back': 'На главную', 'privacy.legal': 'Правовая информация', 'privacy.title': 'Политика конфиденциальности', 'privacy.updated': 'Обновлено: 12 августа 2026 года',
     'privacy.overviewTitle': 'Общие положения', 'privacy.overviewText': 'ShuGhost уважает вашу приватность. Эта политика объясняет, какую информацию хранит сайт, как внешние сервисы могут обрабатывать данные и какие возможности выбора у вас есть.',
     'privacy.storageTitle': 'Информация, хранящаяся на устройстве', 'privacy.storageText': 'Сайт использует локальное хранилище браузера, чтобы запомнить добавленные в корзину игры и факт закрытия уведомления о cookie. Эта информация остаётся на вашем устройстве и не передаётся ShuGhost.',
     'privacy.steamTitle': 'Ссылки Steam и покупки', 'privacy.steamText': 'Кнопки покупки ведут на страницы магазина Valve Corporation. Платежи, аккаунты Steam, региональные цены, доставка, возвраты и информация, предоставленная в Steam, регулируются условиями и политикой конфиденциальности Steam. Этот сайт не получает и не хранит платёжные данные.',
-    'privacy.adsTitle': 'Реклама и аналитика', 'privacy.adsText': 'Текущая версия сайта не загружает необязательные рекламные или аналитические cookie. Если позднее будут включены Google Ads, отслеживание конверсий или аналитика, эта политика и средства управления согласием будут обновлены до их активации там, где это необходимо.',
+    'privacy.counterTitle': 'Счётчик посетителей', 'privacy.counterText': 'Сайт создаёт случайный идентификатор для текущей вкладки браузера, чтобы подсчитывать анонимное количество пользователей онлайн и посещений. Идентификатор исчезает после завершения сеанса браузера. ShuGhost не сохраняет через этот счётчик имена, аккаунты или полные IP-адреса.',
+    'privacy.adsTitle': 'Реклама и аналитика', 'privacy.adsText': 'Этот сайт использует тег Google для измерения Google Ads. Хранилища рекламы и аналитики по умолчанию отключены и включаются только после вашего согласия. После этого Google может обрабатывать информацию об устройстве, браузере, взаимодействиях и рекламной атрибуции в соответствии со своей политикой конфиденциальности.',
     'privacy.externalTitle': 'Внешние сайты', 'privacy.externalText': 'Ссылки на Steam и другие сторонние сервисы ведут за пределы этого сайта. ShuGhost не отвечает за правила конфиденциальности или содержимое сторонних сервисов.',
     'privacy.choicesTitle': 'Ваш выбор', 'privacy.choicesText': 'Вы можете очистить корзину в её панели. Также в любой момент можно удалить сохранённые данные сайта через настройки конфиденциальности браузера.',
     'privacy.contactTitle': 'Связь', 'privacy.contactText': 'Для поддержки игр или вопросов о конфиденциальности воспользуйтесь официальными ссылками сообщества Steam в', 'privacy.contactLink': 'разделе поддержки ShuGhost',
@@ -158,7 +164,7 @@ const games = {
 }
 
 const CART_KEY = 'shughost-cart-v1'
-const COOKIE_KEY = 'shughost-cookie-notice-v1'
+const CONSENT_KEY = 'shughost-consent-v2'
 
 function loadCart() {
   try {
@@ -347,17 +353,69 @@ document.querySelectorAll('.reveal').forEach((element) => {
 })
 
 const cookieBanner = document.querySelector('[data-cookie-banner]')
+function updateGoogleConsent(granted) {
+  window.gtag?.('consent', 'update', {
+    ad_storage: granted ? 'granted' : 'denied',
+    ad_user_data: granted ? 'granted' : 'denied',
+    ad_personalization: granted ? 'granted' : 'denied',
+    analytics_storage: granted ? 'granted' : 'denied',
+  })
+}
+
 function showCookieBanner() {
-  if (cookieBanner && localStorage.getItem(COOKIE_KEY) !== 'dismissed') cookieBanner.hidden = false
+  if (cookieBanner && !localStorage.getItem(CONSENT_KEY)) cookieBanner.hidden = false
 }
 document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => {
-  localStorage.setItem(COOKIE_KEY, 'dismissed')
+  localStorage.setItem(CONSENT_KEY, 'granted')
+  updateGoogleConsent(true)
+  if (cookieBanner) cookieBanner.hidden = true
+})
+document.querySelector('[data-cookie-reject]')?.addEventListener('click', () => {
+  localStorage.setItem(CONSENT_KEY, 'denied')
+  updateGoogleConsent(false)
   if (cookieBanner) cookieBanner.hidden = true
 })
 document.querySelector('[data-cookie-settings]')?.addEventListener('click', () => {
-  localStorage.removeItem(COOKIE_KEY)
+  localStorage.removeItem(CONSENT_KEY)
   if (cookieBanner) cookieBanner.hidden = false
 })
 
+const onlineCount = document.querySelector('[data-visitor-online]')
+const totalVisitCount = document.querySelector('[data-visitor-total]')
+
+function getVisitorId() {
+  const key = 'shughost-visitor-session-v1'
+  let visitorId = sessionStorage.getItem(key)
+  if (visitorId) return visitorId
+
+  visitorId = globalThis.crypto?.randomUUID
+    ? globalThis.crypto.randomUUID().replaceAll('-', '')
+    : `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`
+  sessionStorage.setItem(key, visitorId)
+  return visitorId
+}
+
+async function updateVisitorStats() {
+  if (!onlineCount || !totalVisitCount) return
+
+  try {
+    const response = await fetch('/api/visitor-heartbeat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ visitorId: getVisitorId() }),
+      cache: 'no-store',
+    })
+    if (!response.ok) throw new Error(`Visitor stats request failed: ${response.status}`)
+    const stats = await response.json()
+    onlineCount.textContent = Number(stats.online).toLocaleString()
+    totalVisitCount.textContent = Number(stats.totalVisits).toLocaleString()
+  } catch {
+    onlineCount.textContent = '—'
+    totalVisitCount.textContent = '—'
+  }
+}
+
 applyLanguage(currentLanguage)
 showCookieBanner()
+updateVisitorStats()
+setInterval(updateVisitorStats, 20_000)

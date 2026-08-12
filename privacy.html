@@ -6,6 +6,23 @@
     <meta name="theme-color" content="#070a17" />
     <meta name="description" content="Privacy policy for the ShuGhost website." />
     <title>Privacy Policy — ShuGhost</title>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      const googleConsentGranted = localStorage.getItem('shughost-consent-v2') === 'granted';
+      gtag('consent', 'default', {
+        ad_storage: googleConsentGranted ? 'granted' : 'denied',
+        ad_user_data: googleConsentGranted ? 'granted' : 'denied',
+        ad_personalization: googleConsentGranted ? 'granted' : 'denied',
+        analytics_storage: googleConsentGranted ? 'granted' : 'denied'
+      });
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18379981521"></script>
+    <script>
+      gtag('js', new Date());
+      gtag('config', 'AW-18379981521');
+    </script>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="assets/styles.css" />
     <script src="assets/app.js" defer></script>
@@ -57,11 +74,21 @@
       </section>
 
       <section>
+        <h2 data-i18n="privacy.counterTitle">Visitor counter</h2>
+        <p data-i18n="privacy.counterText">
+          The site creates a random ID for the current browser tab to calculate anonymous online and
+          total visit counts. The ID expires with the browser session. ShuGhost does not use this
+          counter to store names, accounts, or complete IP addresses.
+        </p>
+      </section>
+
+      <section>
         <h2 data-i18n="privacy.adsTitle">Advertising and analytics</h2>
         <p data-i18n="privacy.adsText">
-          The current version of this website does not load non-essential advertising or analytics
-          cookies. If Google Ads, conversion measurement, or analytics are enabled later, this policy
-          and the consent controls will be updated before those tools are activated where required.
+          This website uses the Google tag for Google Ads measurement. Advertising and analytics
+          storage is denied by default and enabled only after you grant consent. Google may then
+          process device, browser, interaction, and advertising-attribution information under its
+          own privacy terms.
         </p>
       </section>
 
@@ -93,5 +120,16 @@
     <footer class="site-footer legal-footer">
       <small>© <span data-year></span> ShuGhost. All rights reserved.</small>
     </footer>
+
+    <section class="cookie-banner" data-cookie-banner aria-label="Cookie notice" hidden>
+      <div>
+        <strong data-i18n="cookie.title">Your privacy matters.</strong>
+        <p data-i18n="cookie.text">Allow Google Ads measurement cookies to help ShuGhost understand which ads bring visitors to the site.</p>
+      </div>
+      <div class="cookie-actions">
+        <button class="button button-ghost button-small" type="button" data-cookie-reject data-i18n="cookie.reject">Reject</button>
+        <button class="button button-primary button-small" type="button" data-cookie-accept data-i18n="cookie.accept">Accept</button>
+      </div>
+    </section>
   </body>
 </html>
