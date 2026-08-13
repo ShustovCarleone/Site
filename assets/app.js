@@ -15,7 +15,7 @@ const translations = {
     'gremlins.tag1': 'Desktop pet', 'gremlins.tag2': 'Simulation',
     'gremlins.description': 'Meet a mischievous desktop companion that evolves, reacts to your programs and music, and occasionally decides your open windows need a little chaos.',
     'gremlins.feature1': 'Four evolving character forms', 'gremlins.feature2': 'Music and application reactions', 'gremlins.feature3': 'Community sprite packs via Steam Workshop',
-    'violet.tag1': 'Visual novel', 'violet.tag2': 'Story rich', 'violet.tag3': 'Atmospheric',
+    'violet.tag1': 'Simulation', 'violet.tag2': 'Virtual companion', 'violet.tag3': 'Atmospheric',
     'violet.description': 'A quiet night, a complicated doctor, and a story that becomes more personal than expected. Step into Violet\'s world when her carefully controlled routine breaks.',
     'violet.feature1': 'Character-driven narrative', 'violet.feature2': 'Dark, intimate atmosphere', 'violet.feature3': 'A compact independent experience',
     'about.eyebrow': 'About ShuGhost', 'about.title1': 'Small games.', 'about.title2': 'Strong personalities.',
@@ -46,7 +46,7 @@ const translations = {
     'privacy.externalTitle': 'External websites', 'privacy.externalText': 'Links to Steam and other third-party services leave this website. ShuGhost is not responsible for the privacy practices or content of those external services.',
     'privacy.choicesTitle': 'Your choices', 'privacy.choicesText': 'You can clear the on-site cart from the cart panel. You can also remove stored site data at any time using your browser\'s privacy or site settings.',
     'privacy.contactTitle': 'Contact', 'privacy.contactText': 'For game support or privacy questions, contact ShuGhost at',
-    'genre.gremlins': 'Desktop pet · Simulation', 'genre.violet': 'Visual novel · Story rich',
+    'genre.gremlins': 'Desktop pet · Simulation', 'genre.violet': 'Simulation · Virtual companion',
   },
   uk: {
     'meta.title': 'ShuGhost — незалежні ігри',
@@ -64,7 +64,7 @@ const translations = {
     'gremlins.tag1': 'Десктопний улюбленець', 'gremlins.tag2': 'Симулятор',
     'gremlins.description': 'Познайомтеся з бешкетним компаньйоном, який живе на робочому столі, еволюціонує, реагує на програми й музику та часом вирішує, що вашим вікнам бракує хаосу.',
     'gremlins.feature1': 'Чотири форми еволюції персонажа', 'gremlins.feature2': 'Реакції на музику та програми', 'gremlins.feature3': 'Набори спрайтів спільноти у Steam Workshop',
-    'violet.tag1': 'Візуальна новела', 'violet.tag2': 'Сюжетна гра', 'violet.tag3': 'Атмосферна',
+    'violet.tag1': 'Симулятор', 'violet.tag2': 'Віртуальна компаньйонка', 'violet.tag3': 'Атмосферна',
     'violet.description': 'Тиха ніч, непроста лікарка та історія, яка стає особистішою, ніж очікувалося. Зазирніть у світ Вайолет, коли її ретельно продуманий розпорядок руйнується.',
     'violet.feature1': 'Історія, зосереджена на персонажах', 'violet.feature2': 'Темна й особиста атмосфера', 'violet.feature3': 'Компактна незалежна пригода',
     'about.eyebrow': 'Про ShuGhost', 'about.title1': 'Невеликі ігри.', 'about.title2': 'Яскраві характери.',
@@ -95,7 +95,7 @@ const translations = {
     'privacy.externalTitle': 'Зовнішні сайти', 'privacy.externalText': 'Посилання на Steam та інші сторонні сервіси ведуть за межі цього сайту. ShuGhost не відповідає за правила конфіденційності або вміст сторонніх сервісів.',
     'privacy.choicesTitle': 'Ваш вибір', 'privacy.choicesText': 'Ви можете очистити кошик у його панелі. Також у будь-який момент можна видалити збережені дані сайту через налаштування конфіденційності браузера.',
     'privacy.contactTitle': 'Зв’язок', 'privacy.contactText': 'Для підтримки ігор або запитань щодо конфіденційності напишіть ShuGhost на адресу',
-    'genre.gremlins': 'Десктопний улюбленець · Симулятор', 'genre.violet': 'Візуальна новела · Сюжетна гра',
+    'genre.gremlins': 'Десктопний улюбленець · Симулятор', 'genre.violet': 'Симулятор · Віртуальна компаньйонка',
   },
   ru: {
     'meta.title': 'ShuGhost — независимые игры',
@@ -113,7 +113,7 @@ const translations = {
     'gremlins.tag1': 'Питомец рабочего стола', 'gremlins.tag2': 'Симулятор',
     'gremlins.description': 'Познакомьтесь с озорным компаньоном, который живёт на рабочем столе, эволюционирует, реагирует на программы и музыку и иногда решает, что вашим окнам не хватает хаоса.',
     'gremlins.feature1': 'Четыре формы эволюции персонажа', 'gremlins.feature2': 'Реакции на музыку и программы', 'gremlins.feature3': 'Наборы спрайтов сообщества в Steam Workshop',
-    'violet.tag1': 'Визуальная новелла', 'violet.tag2': 'Сюжетная игра', 'violet.tag3': 'Атмосферная',
+    'violet.tag1': 'Симулятор', 'violet.tag2': 'Виртуальная компаньонка', 'violet.tag3': 'Атмосферная',
     'violet.description': 'Тихая ночь, непростая доктор и история, которая становится личнее, чем ожидалось. Загляните в мир Вайолет, когда её тщательно выстроенный распорядок рушится.',
     'violet.feature1': 'История, сосредоточенная на персонажах', 'violet.feature2': 'Тёмная и личная атмосфера', 'violet.feature3': 'Компактное независимое приключение',
     'about.eyebrow': 'О ShuGhost', 'about.title1': 'Небольшие игры.', 'about.title2': 'Яркие характеры.',
@@ -144,7 +144,7 @@ const translations = {
     'privacy.externalTitle': 'Внешние сайты', 'privacy.externalText': 'Ссылки на Steam и другие сторонние сервисы ведут за пределы этого сайта. ShuGhost не отвечает за правила конфиденциальности или содержимое сторонних сервисов.',
     'privacy.choicesTitle': 'Ваш выбор', 'privacy.choicesText': 'Вы можете очистить корзину в её панели. Также в любой момент можно удалить сохранённые данные сайта через настройки конфиденциальности браузера.',
     'privacy.contactTitle': 'Связь', 'privacy.contactText': 'Для поддержки игр или вопросов о конфиденциальности напишите ShuGhost по адресу',
-    'genre.gremlins': 'Питомец рабочего стола · Симулятор', 'genre.violet': 'Визуальная новелла · Сюжетная игра',
+    'genre.gremlins': 'Питомец рабочего стола · Симулятор', 'genre.violet': 'Симулятор · Виртуальная компаньонка',
   },
 }
 
