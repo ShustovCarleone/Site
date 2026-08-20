@@ -325,6 +325,24 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
 .game-poster-wrap img { width: 100%; height: auto; }
 .violet-poster { right: auto; left: 7%; transform: rotate(-2deg); }
 .game-content { display: flex; flex-direction: column; justify-content: center; padding: clamp(34px, 5vw, 70px); }
+.release-pill {
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 7px 11px;
+  border: 1px solid rgba(86, 217, 255, .46);
+  border-radius: 999px;
+  color: #b9efff;
+  background: linear-gradient(120deg, rgba(38, 197, 255, .15), rgba(138, 92, 255, .18));
+  box-shadow: 0 0 24px rgba(55, 199, 255, .12);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  animation: release-pill-pulse 3.2s ease-in-out infinite;
+}
+@keyframes release-pill-pulse {
+  50% { box-shadow: 0 0 30px rgba(98, 112, 255, .24); transform: translateY(-1px); }
+}
 .game-meta { display: flex; flex-wrap: wrap; gap: 8px; }
 .game-meta span {
   padding: 7px 10px;

@@ -12,9 +12,10 @@ const translations = {
     'media.eyebrow': 'From the games', 'media.title': 'Trailers & screenshots',
     'media.subtitle': 'Watch the official Steam trailers and explore images from both games.',
     'media.officialTrailer': 'Official trailer', 'media.screenshots': 'Screenshots', 'media.close': 'Close image',
+    'gremlins.updateBadge': 'V2.6 · Twitch Chaos Update',
     'gremlins.tag1': 'Desktop pet', 'gremlins.tag2': 'Simulation',
-    'gremlins.description': 'Meet a mischievous desktop companion that evolves, reacts to your programs and music, and occasionally decides your open windows need a little chaos.',
-    'gremlins.feature1': 'Four evolving character forms', 'gremlins.feature2': 'Music and application reactions', 'gremlins.feature3': 'Community sprite packs via Steam Workshop',
+    'gremlins.description': 'Meet a mischievous desktop companion that evolves, reacts to your programs and music, and lets Twitch viewers trigger Chaos effects with Channel Points.',
+    'gremlins.feature1': 'Twitch Channel Point rewards with a sequential effect queue', 'gremlins.feature2': '50+ Chaos effects, music reactions, and window attachment', 'gremlins.feature3': 'Evolving companions and community sprite packs via Steam Workshop',
     'violet.tag1': 'Simulation', 'violet.tag2': 'Virtual companion', 'violet.tag3': 'Atmospheric',
     'violet.description': 'A quiet night, a complicated doctor, and a story that becomes more personal than expected. Step into Violet\'s world when her carefully controlled routine breaks.',
     'violet.feature1': 'Character-driven narrative', 'violet.feature2': 'Dark, intimate atmosphere', 'violet.feature3': 'A compact independent experience',
@@ -61,9 +62,10 @@ const translations = {
     'media.eyebrow': 'Безпосередньо з ігор', 'media.title': 'Трейлери та скриншоти',
     'media.subtitle': 'Перегляньте офіційні трейлери Steam і зображення з обох ігор.',
     'media.officialTrailer': 'Офіційний трейлер', 'media.screenshots': 'Скриншоти', 'media.close': 'Закрити зображення',
+    'gremlins.updateBadge': 'V2.6 · Twitch Chaos Update',
     'gremlins.tag1': 'Десктопний улюбленець', 'gremlins.tag2': 'Симулятор',
-    'gremlins.description': 'Познайомтеся з бешкетним компаньйоном, який живе на робочому столі, еволюціонує, реагує на програми й музику та часом вирішує, що вашим вікнам бракує хаосу.',
-    'gremlins.feature1': 'Чотири форми еволюції персонажа', 'gremlins.feature2': 'Реакції на музику та програми', 'gremlins.feature3': 'Набори спрайтів спільноти у Steam Workshop',
+    'gremlins.description': 'Познайомтеся з бешкетним компаньйоном, який еволюціонує, реагує на програми й музику та дозволяє глядачам Twitch запускати ефекти хаосу за бали каналу.',
+    'gremlins.feature1': 'Нагороди Twitch за бали каналу з послідовною чергою ефектів', 'gremlins.feature2': 'Понад 50 ефектів хаосу, реакції на музику та прикріплення до вікон', 'gremlins.feature3': 'Еволюція компаньйонів і набори спрайтів зі Steam Workshop',
     'violet.tag1': 'Симулятор', 'violet.tag2': 'Віртуальна компаньйонка', 'violet.tag3': 'Атмосферна',
     'violet.description': 'Тиха ніч, непроста лікарка та історія, яка стає особистішою, ніж очікувалося. Зазирніть у світ Вайолет, коли її ретельно продуманий розпорядок руйнується.',
     'violet.feature1': 'Історія, зосереджена на персонажах', 'violet.feature2': 'Темна й особиста атмосфера', 'violet.feature3': 'Компактна незалежна пригода',
@@ -110,9 +112,10 @@ const translations = {
     'media.eyebrow': 'Непосредственно из игр', 'media.title': 'Трейлеры и скриншоты',
     'media.subtitle': 'Посмотрите официальные трейлеры Steam и изображения из обеих игр.',
     'media.officialTrailer': 'Официальный трейлер', 'media.screenshots': 'Скриншоты', 'media.close': 'Закрыть изображение',
+    'gremlins.updateBadge': 'V2.6 · Twitch Chaos Update',
     'gremlins.tag1': 'Питомец рабочего стола', 'gremlins.tag2': 'Симулятор',
-    'gremlins.description': 'Познакомьтесь с озорным компаньоном, который живёт на рабочем столе, эволюционирует, реагирует на программы и музыку и иногда решает, что вашим окнам не хватает хаоса.',
-    'gremlins.feature1': 'Четыре формы эволюции персонажа', 'gremlins.feature2': 'Реакции на музыку и программы', 'gremlins.feature3': 'Наборы спрайтов сообщества в Steam Workshop',
+    'gremlins.description': 'Познакомьтесь с озорным компаньоном, который эволюционирует, реагирует на программы и музыку и позволяет зрителям Twitch запускать эффекты хаоса за баллы канала.',
+    'gremlins.feature1': 'Награды Twitch за баллы канала с последовательной очередью эффектов', 'gremlins.feature2': 'Более 50 эффектов хаоса, реакции на музыку и прикрепление к окнам', 'gremlins.feature3': 'Эволюция компаньонов и наборы спрайтов из Steam Workshop',
     'violet.tag1': 'Симулятор', 'violet.tag2': 'Виртуальная компаньонка', 'violet.tag3': 'Атмосферная',
     'violet.description': 'Тихая ночь, непростая доктор и история, которая становится личнее, чем ожидалось. Загляните в мир Вайолет, когда её тщательно выстроенный распорядок рушится.',
     'violet.feature1': 'История, сосредоточенная на персонажах', 'violet.feature2': 'Тёмная и личная атмосфера', 'violet.feature3': 'Компактное независимое приключение',
@@ -468,7 +471,24 @@ function initializeHlsPlayers() {
   })
 }
 
-initializeHlsPlayers()
+async function synchronizeSteamTrailers() {
+  const videos = [...document.querySelectorAll('video[data-steam-appid]')]
+  await Promise.all(videos.map(async (video) => {
+    try {
+      const response = await fetch(`/api/steam-media?appid=${encodeURIComponent(video.dataset.steamAppid)}`, {
+        headers: { Accept: 'application/json' },
+      })
+      if (!response.ok) throw new Error(`Steam media returned ${response.status}`)
+      const payload = await response.json()
+      if (payload?.media?.hls) video.dataset.hls = payload.media.hls
+      if (payload?.media?.poster) video.poster = payload.media.poster
+    } catch {
+      // Keep the known-good Steam URL embedded in index.html as a fallback.
+    }
+  }))
+}
+
+void synchronizeSteamTrailers().finally(initializeHlsPlayers)
 const hlsLibrary = document.querySelector('[data-hls-library]')
 hlsLibrary?.addEventListener('load', initializeHlsPlayers)
 hlsLibrary?.addEventListener('error', () => {

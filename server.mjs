@@ -17,6 +17,8 @@ const activeWindowMs = 45_000
 const supportedSteamApps = new Set(['4981140', '4925710'])
 const steamNewsCache = new Map()
 const steamNewsCacheMs = 15 * 60 * 1000
+const steamMediaCache = new Map()
+const steamMediaCacheMs = 15 * 60 * 1000
 const rateLimits = new Map()
 const recentPageViews = new Map()
 const rateLimitWindowMs = 60_000
@@ -119,7 +121,7 @@ function securityHeaders(contentType = '') {
       "form-action 'self'",
       "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: https://www.google.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net",
+      "img-src 'self' data: https://shared.akamai.steamstatic.com https://www.google.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net",
       "connect-src 'self' https://video.akamai.steamstatic.com https://www.google-analytics.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net",
       "media-src 'self' blob: https://video.akamai.steamstatic.com",
       "font-src 'self' data:",
@@ -302,6 +304,66 @@ async function handleSteamNews(requestUrl, response) {
   }
 }
 
+function isAllowedSteamMediaUrl(value) {
+  try {
+    const hostname = new URL(value).hostname.toLowerCase()
+    return hostname === 'steamstatic.com'
+      || hostname.endsWith('.steamstatic.com')
+      || hostname === 'akamaihd.net'
+      || hostname.endsWith('.akamaihd.net')
+  } catch {
+    return false
+  }
+}
+
+async function fetchSteamMedia(appId) {
+  const cached = steamMediaCache.get(appId)
+  if (cached && Date.now() - cached.timestamp < steamMediaCacheMs) return cached.media
+
+  try {
+    const endpoint = new URL('https://store.steampowered.com/api/appdetails')
+    endpoint.searchParams.set('appids', appId)
+    endpoint.searchParams.set('l', 'english')
+    const steamResponse = await fetch(endpoint, {
+      headers: { Accept: 'application/json', 'User-Agent': 'ShuGhost-Website/1.0' },
+      signal: AbortSignal.timeout(10_000),
+    })
+    if (!steamResponse.ok) throw new Error(`Steam Store API returned ${steamResponse.status}`)
+
+    const payload = await steamResponse.json()
+    const movies = payload?.[appId]?.data?.movies
+    if (!Array.isArray(movies) || movies.length === 0) throw new Error('Steam did not return a trailer')
+    const movie = movies.find((item) => item?.highlight) || movies[0]
+    const hls = String(movie?.hls_h264 || '')
+    const poster = String(movie?.thumbnail || '')
+    if (!isAllowedSteamMediaUrl(hls) || !isAllowedSteamMediaUrl(poster)) {
+      throw new Error('Steam returned an unexpected media host')
+    }
+
+    const media = { name: String(movie?.name || 'Official trailer'), hls, poster }
+    steamMediaCache.set(appId, { timestamp: Date.now(), media })
+    return media
+  } catch (error) {
+    if (cached) return cached.media
+    throw error
+  }
+}
+
+async function handleSteamMedia(requestUrl, response) {
+  const appId = requestUrl.searchParams.get('appid') || ''
+  if (!supportedSteamApps.has(appId)) {
+    sendJson(response, 400, { error: 'Unsupported Steam App ID' })
+    return
+  }
+
+  try {
+    const media = await fetchSteamMedia(appId)
+    sendJson(response, 200, { appId, media })
+  } catch {
+    sendJson(response, 502, { error: 'Steam media is temporarily unavailable' })
+  }
+}
+
 const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
   '.html': 'text/html; charset=utf-8',
@@ -396,6 +458,20 @@ const server = createServer((request, response) => {
       return
     }
     void handleSteamNews(requestUrl, response)
+    return
+  }
+
+  if (pathname === '/api/steam-media') {
+    if (request.method !== 'GET') {
+      sendText(response, 405, 'Method Not Allowed', { Allow: 'GET' })
+      return
+    }
+    const rateLimit = allowRequest(request, 'steam-media', 60)
+    if (!rateLimit.allowed) {
+      sendRateLimit(response, rateLimit.retryAfter)
+      return
+    }
+    void handleSteamMedia(requestUrl, response)
     return
   }
 
