@@ -121,7 +121,7 @@ function securityHeaders(contentType = '') {
       "form-action 'self'",
       "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: https://shared.akamai.steamstatic.com https://www.google.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net",
+      "img-src 'self' data: https://shared.akamai.steamstatic.com https://static-cdn.jtvnw.net https://www.google.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net",
       "connect-src 'self' https://video.akamai.steamstatic.com https://www.google-analytics.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net",
       "media-src 'self' blob: https://video.akamai.steamstatic.com",
       "font-src 'self' data:",
