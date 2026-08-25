@@ -56,8 +56,11 @@ button { font: inherit; }
 .brand { display: inline-flex; align-items: center; gap: 11px; flex-shrink: 0; font: 700 18px/1 'Space Grotesk',sans-serif; letter-spacing: -.055em; }
 .brand-logo-shell { position: relative; display: grid; width: 39px; height: 39px; place-items: center; overflow: hidden; border: 1px solid rgba(255,246,232,.18); border-radius: 50%; background: radial-gradient(circle,rgba(142,23,53,.28),transparent 70%); box-shadow: 0 0 28px rgba(142,23,53,.2),inset 0 0 22px rgba(255,246,232,.04); }
 .brand-logo-shell::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,.03); }
-.brand-logo-shell img { width: 51px; max-width: none; animation: brand-breathe 5s ease-in-out infinite; }
-@keyframes brand-breathe { 50% { transform: scale(1.09) rotate(-1.5deg); filter: drop-shadow(0 0 9px rgba(212,71,104,.52)); } }
+.brand-logo-shell img { width: 47px; max-width: none; margin: 1px 0 0 3px; animation: brand-breathe 5s ease-in-out infinite; }
+@keyframes brand-breathe {
+  0%,100% { transform: translateX(0) scale(1); }
+  50% { transform: translateX(0) scale(1.08) rotate(-1.5deg); filter: drop-shadow(0 0 9px rgba(212,71,104,.52)); }
+}
 
 .main-nav { display: flex; align-items: center; gap: clamp(18px,2.4vw,34px); }
 .main-nav a, .site-footer nav a, .footer-link-button { position: relative; color: var(--muted); font-size: 13px; transition: color .25s ease; }
@@ -113,6 +116,15 @@ h1, h2, h3 { font-family: 'Space Grotesk',sans-serif; }
 .hero-logo-wrap { position: absolute; z-index: 2; inset: 3% -2% 0 2%; transform-style: preserve-3d; animation: logo-float 7s ease-in-out infinite; will-change: transform; }
 .hero-logo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 58px rgba(0,0,0,.9)); }
 .hero-logo-shadow { opacity: .4; filter: sepia(1) saturate(5) hue-rotate(300deg) blur(13px); transform: translate3d(16px,13px,-20px) scale(.985); animation: logo-echo 4.5s ease-in-out infinite; }
+.logo-blood-flow { position: absolute; z-index: 4; inset: 0; overflow: visible; pointer-events: none; filter: drop-shadow(0 0 7px rgba(192,26,62,.52)); }
+.blood-spread { position: absolute; top: 64.2%; left: 58.5%; width: 11.5%; height: 4px; border-radius: 999px; background: linear-gradient(90deg,rgba(90,8,25,.25),#8d1832 28%,#d54867 72%,rgba(100,8,29,.2)); box-shadow: 0 2px 9px rgba(119,11,37,.64); transform: rotate(2deg) scaleX(0); transform-origin: 62% 50%; animation: blood-spread 7.2s cubic-bezier(.2,.7,.2,1) infinite; }
+.blood-rivulet { position: absolute; width: 4px; border-radius: 2px 2px 70% 70%; background: linear-gradient(180deg,#c53155 0%,#8c102e 62%,#540718 100%); box-shadow: inset 1px 0 rgba(255,151,164,.28),0 0 8px rgba(149,16,48,.46); transform: scaleY(0); transform-origin: 50% 0; opacity: 0; }
+.blood-rivulet::after { content: ''; position: absolute; right: 50%; bottom: -5px; width: 8px; height: 10px; border-radius: 70% 40% 68% 42%; background: radial-gradient(circle at 35% 27%,#e36a7f,#9b1735 48%,#530717 85%); transform: translateX(50%) rotate(38deg); }
+.blood-rivulet-main { top: 64%; left: 64.5%; height: 68px; animation: blood-rivulet 7.2s cubic-bezier(.16,.8,.3,1) infinite; }
+.blood-rivulet-side { top: 64.4%; left: 59.6%; width: 3px; height: 38px; animation: blood-rivulet 7.2s .42s cubic-bezier(.16,.8,.3,1) infinite; }
+.blood-drop { position: absolute; width: 13px; height: 17px; border-radius: 72% 42% 68% 46%; background: radial-gradient(circle at 34% 25%,#ef8496 0%,#b32244 35%,#650a20 76%); box-shadow: inset 1px 2px rgba(255,221,220,.25),0 0 13px rgba(193,27,65,.5); opacity: 0; }
+.blood-drop-main { top: calc(64% + 67px); left: calc(64.5% - 4px); animation: blood-drop-main 7.2s cubic-bezier(.34,.02,.66,.98) infinite; }
+.blood-drop-small { top: calc(64.4% + 37px); left: calc(59.6% - 3px); width: 9px; height: 12px; animation: blood-drop-small 7.2s .48s cubic-bezier(.34,.02,.66,.98) infinite; }
 .logo-aura { position: absolute; inset: 15% 7% 10%; border-radius: 50%; background: radial-gradient(circle,rgba(142,23,53,.2),rgba(142,23,53,.045) 46%,transparent 70%); filter: blur(18px); animation: aura-pulse 5s ease-in-out infinite; }
 .logo-orbit { position: absolute; border: 1px solid rgba(255,246,232,.12); border-radius: 50%; animation: orbit-turn 18s linear infinite; }
 .logo-orbit::before { content: ''; position: absolute; width: 7px; height: 7px; top: 10%; left: 13%; border-radius: 50%; background: var(--wine-bright); box-shadow: 0 0 17px var(--wine-bright); }
@@ -126,6 +138,31 @@ h1, h2, h3 { font-family: 'Space Grotesk',sans-serif; }
 @keyframes aura-pulse { 50%{opacity:.62;transform:scale(1.08)} }
 @keyframes orbit-turn { to{transform:rotate(348deg)} }
 @keyframes stamp-pulse { 50%{box-shadow:0 0 34px rgba(142,23,53,.25);transform:rotate(4deg)} }
+@keyframes blood-spread {
+  0%,12% { opacity: 0; transform: rotate(2deg) scaleX(0); }
+  22% { opacity: .92; }
+  38%,72% { opacity: .95; transform: rotate(2deg) scaleX(1); }
+  88%,100% { opacity: 0; transform: rotate(2deg) scaleX(1.08); }
+}
+@keyframes blood-rivulet {
+  0%,20% { opacity: 0; transform: scaleY(0); }
+  29% { opacity: .95; }
+  48%,73% { opacity: 1; transform: scaleY(1); }
+  88%,100% { opacity: 0; transform: scaleY(1.04); }
+}
+@keyframes blood-drop-main {
+  0%,46% { opacity: 0; transform: translate3d(0,0,0) rotate(43deg) scale(.35); }
+  53% { opacity: 1; transform: translate3d(0,0,0) rotate(43deg) scale(1); }
+  66% { opacity: 1; transform: translate3d(1px,18px,0) rotate(43deg) scale(.9); }
+  86% { opacity: .85; transform: translate3d(-3px,128px,0) rotate(43deg) scale(.72); }
+  94%,100% { opacity: 0; transform: translate3d(-5px,158px,0) rotate(43deg) scale(.5); }
+}
+@keyframes blood-drop-small {
+  0%,52% { opacity: 0; transform: translate3d(0,0,0) rotate(38deg) scale(.3); }
+  59% { opacity: .9; transform: translate3d(0,0,0) rotate(38deg) scale(1); }
+  75% { opacity: .86; transform: translate3d(6px,48px,0) rotate(38deg) scale(.78); }
+  91%,100% { opacity: 0; transform: translate3d(10px,105px,0) rotate(38deg) scale(.5); }
+}
 
 .motion-marquee { position: relative; overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.012); transform: rotate(-1deg) scale(1.02); }
 .motion-marquee::before, .motion-marquee::after { content: ''; position: absolute; z-index: 2; top: 0; bottom: 0; width: 12vw; pointer-events: none; }
