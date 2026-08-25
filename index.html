@@ -3,11 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#070a17" />
+    <meta name="theme-color" content="#050304" />
     <meta
       name="description"
       content="ShuGhost is an independent game developer creating unusual, character-driven games for PC. Discover Desktop Gremlins and DR. VIOLET'S NIGHT OFF."
     />
+    <link rel="canonical" href="https://shughost.up.railway.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ShuGhost — Independent Games" />
+    <meta property="og:description" content="Independent games with a mischievous soul." />
+    <meta property="og:url" content="https://shughost.up.railway.app/" />
+    <meta property="og:image" content="https://shughost.up.railway.app/assets/images/shughost-social-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ShuGhost — Independent games with a mischievous soul" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ShuGhost — Independent Games" />
+    <meta name="twitter:description" content="Independent games with a mischievous soul." />
+    <meta name="twitter:image" content="https://shughost.up.railway.app/assets/images/shughost-social-preview.png" />
     <title>ShuGhost — Independent Games</title>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -26,17 +39,25 @@
       gtag('js', new Date());
       gtag('config', 'AW-18379981521');
     </script>
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="assets/styles.css?v=10" />
+    <link rel="icon" href="assets/images/shughost-logo.png" type="image/png" />
+    <link rel="stylesheet" href="assets/styles.css?v=11" />
     <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js" defer data-hls-library></script>
-    <script src="assets/app.js?v=12" defer></script>
+    <script src="assets/app.js?v=13" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-grid"></span>
+      <span class="atmosphere-glow atmosphere-glow-one"></span>
+      <span class="atmosphere-glow atmosphere-glow-two"></span>
+      <span class="atmosphere-grain"></span>
+    </div>
 
     <header class="site-header" data-header>
       <a class="brand" href="#top" aria-label="ShuGhost home">
-        <span class="brand-mark" aria-hidden="true">S</span>
+        <span class="brand-logo-shell" aria-hidden="true">
+          <img src="assets/images/shughost-logo.png" alt="" />
+        </span>
         <span>ShuGhost</span>
       </a>
 
@@ -66,6 +87,7 @@
         <div class="hero-noise" aria-hidden="true"></div>
         <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
         <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+        <div class="hero-scanline" aria-hidden="true"></div>
 
         <div class="hero-copy reveal">
           <p class="eyebrow"><span></span> <b data-i18n="hero.eyebrow">Independent developer</b></p>
@@ -80,16 +102,29 @@
           </div>
         </div>
 
-        <div class="hero-art reveal" aria-label="Featured ShuGhost games">
-          <article class="floating-cover cover-gremlins">
-            <img src="assets/images/desktop-gremlins-cover.png" alt="Desktop Gremlins cover art" />
-          </article>
-          <article class="floating-cover cover-violet">
-            <img src="assets/images/dr-violet-cover.png" alt="DR. VIOLET'S NIGHT OFF cover art" />
-          </article>
+        <div class="hero-art reveal" aria-label="ShuGhost animated studio mark" data-motion-stage>
+          <div class="logo-aura" aria-hidden="true"></div>
+          <div class="logo-orbit logo-orbit-one" aria-hidden="true"></div>
+          <div class="logo-orbit logo-orbit-two" aria-hidden="true"></div>
+          <div class="hero-logo-wrap" data-logo-parallax>
+            <img class="hero-logo hero-logo-shadow" src="assets/images/shughost-logo.png" alt="" aria-hidden="true" />
+            <img class="hero-logo" src="assets/images/shughost-logo.png" alt="ShuGhost studio logo" />
+          </div>
+          <span class="hero-art-caption" aria-hidden="true">SHUGHOST / INDEPENDENT STUDIO / 2026</span>
           <div class="hero-stamp" aria-hidden="true">2<br /><small data-i18n="hero.worlds">worlds</small></div>
         </div>
       </section>
+
+      <div class="motion-marquee" aria-hidden="true">
+        <div class="motion-marquee-track">
+          <span>CHARACTERS WITH A MIND OF THEIR OWN</span><i>✦</i>
+          <span>INDEPENDENT GAMES</span><i>✦</i>
+          <span>WORLDS OUTSIDE THE WINDOW</span><i>✦</i>
+          <span>CHARACTERS WITH A MIND OF THEIR OWN</span><i>✦</i>
+          <span>INDEPENDENT GAMES</span><i>✦</i>
+          <span>WORLDS OUTSIDE THE WINDOW</span><i>✦</i>
+        </div>
+      </div>
 
       <section class="games section" id="games">
         <div class="section-heading reveal">
@@ -100,7 +135,7 @@
           <p data-i18n="games.subtitle">Two very different games, both built independently with care.</p>
         </div>
 
-        <article class="game-card game-card-gremlins reveal">
+        <article class="game-card game-card-gremlins reveal" data-motion-card>
           <div class="game-visual">
             <img
               class="game-backdrop"
@@ -143,7 +178,7 @@
           </div>
         </article>
 
-        <article class="game-card game-card-violet reveal">
+        <article class="game-card game-card-violet reveal" data-motion-card>
           <div class="game-visual">
             <img
               class="game-backdrop"
@@ -192,7 +227,7 @@
         </div>
 
         <div class="media-grid">
-          <article class="media-card reveal">
+          <article class="media-card reveal" data-motion-card>
             <div class="media-card-title">
               <div>
                 <span data-i18n="media.officialTrailer">Official trailer</span>
@@ -219,7 +254,7 @@
             </div>
           </article>
 
-          <article class="media-card media-card-violet reveal">
+          <article class="media-card media-card-violet reveal" data-motion-card>
             <div class="media-card-title">
               <div>
                 <span data-i18n="media.officialTrailer">Official trailer</span>
@@ -357,7 +392,7 @@
 
     <footer class="site-footer">
       <a class="brand footer-brand" href="#top">
-        <span class="brand-mark" aria-hidden="true">S</span>
+        <span class="brand-logo-shell" aria-hidden="true"><img src="assets/images/shughost-logo.png" alt="" /></span>
         <span>ShuGhost</span>
       </a>
       <p data-i18n="footer.tagline">Independent games with a mischievous soul.</p>

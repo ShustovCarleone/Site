@@ -581,10 +581,48 @@ const revealObserver = 'IntersectionObserver' in window
     }, { threshold: 0.14 })
   : null
 
-document.querySelectorAll('.reveal').forEach((element) => {
+document.querySelectorAll('.reveal').forEach((element, index) => {
+  element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 70}ms`)
   if (revealObserver) revealObserver.observe(element)
   else element.classList.add('visible')
 })
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
+const motionStage = document.querySelector('[data-motion-stage]')
+const logoParallax = document.querySelector('[data-logo-parallax]')
+
+if (motionStage && logoParallax && finePointer.matches && !reducedMotion.matches) {
+  motionStage.addEventListener('pointermove', (event) => {
+    const bounds = motionStage.getBoundingClientRect()
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 18
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 14
+    logoParallax.style.setProperty('--logo-x', `${x.toFixed(2)}px`)
+    logoParallax.style.setProperty('--logo-y', `${y.toFixed(2)}px`)
+    logoParallax.style.setProperty('--logo-rotate', `${(x * 0.08).toFixed(2)}deg`)
+  })
+  motionStage.addEventListener('pointerleave', () => {
+    logoParallax.style.removeProperty('--logo-x')
+    logoParallax.style.removeProperty('--logo-y')
+    logoParallax.style.removeProperty('--logo-rotate')
+  })
+}
+
+if (finePointer.matches && !reducedMotion.matches) {
+  document.querySelectorAll('[data-motion-card]').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const bounds = card.getBoundingClientRect()
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5
+      card.style.setProperty('--tilt-x', `${(-y * 2.6).toFixed(2)}deg`)
+      card.style.setProperty('--tilt-y', `${(x * 3.4).toFixed(2)}deg`)
+    })
+    card.addEventListener('pointerleave', () => {
+      card.style.removeProperty('--tilt-x')
+      card.style.removeProperty('--tilt-y')
+    })
+  })
+}
 
 const cookieBanner = document.querySelector('[data-cookie-banner]')
 function updateGoogleConsent(granted) {
