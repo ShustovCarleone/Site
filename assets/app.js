@@ -19,6 +19,7 @@ const translations = {
     'streamers.eyebrow': 'Desktop Gremlins creators', 'streamers.title': 'Streamers using Desktop Gremlins',
     'streamers.text': 'Meet creators who bring viewer-controlled gremlin chaos to their Twitch streams.',
     'streamers.firstCreator': 'First featured Desktop Gremlins streamer', 'streamers.featuredCreator': 'Featured Desktop Gremlins streamer', 'streamers.openTwitch': 'Open Twitch ↗',
+    'streamers.checking': 'Checking live status…', 'streamers.online': 'Live now', 'streamers.offline': 'Offline', 'streamers.unavailable': 'Status unavailable',
     'streamers.joinText': 'Want to appear in this catalog?', 'streamers.joinCta': 'Contact ShuGhost',
     'violet.tag1': 'Simulation', 'violet.tag2': 'Virtual companion', 'violet.tag3': 'Atmospheric',
     'violet.description': 'A quiet night, a complicated doctor, and a story that becomes more personal than expected. Step into Violet\'s world when her carefully controlled routine breaks.',
@@ -73,6 +74,7 @@ const translations = {
     'streamers.eyebrow': 'Автори з Desktop Gremlins', 'streamers.title': 'Стрімери, які використовують Desktop Gremlins',
     'streamers.text': 'Знайомтеся з авторами, які додають на свої Twitch-трансляції керований глядачами хаос гремлінів.',
     'streamers.firstCreator': 'Перший стрімер у каталозі Desktop Gremlins', 'streamers.featuredCreator': 'Стрімер із Desktop Gremlins', 'streamers.openTwitch': 'Відкрити Twitch ↗',
+    'streamers.checking': 'Перевіряємо статус…', 'streamers.online': 'Зараз онлайн', 'streamers.offline': 'Офлайн', 'streamers.unavailable': 'Статус недоступний',
     'streamers.joinText': 'Хочете потрапити до цього каталогу?', 'streamers.joinCta': 'Зв’язатися із ShuGhost',
     'violet.tag1': 'Симулятор', 'violet.tag2': 'Віртуальна компаньйонка', 'violet.tag3': 'Атмосферна',
     'violet.description': 'Тиха ніч, непроста лікарка та історія, яка стає особистішою, ніж очікувалося. Зазирніть у світ Вайолет, коли її ретельно продуманий розпорядок руйнується.',
@@ -127,6 +129,7 @@ const translations = {
     'streamers.eyebrow': 'Авторы с Desktop Gremlins', 'streamers.title': 'Стримеры, использующие Desktop Gremlins',
     'streamers.text': 'Познакомьтесь с авторами, которые добавляют на свои Twitch-трансляции управляемый зрителями хаос гремлинов.',
     'streamers.firstCreator': 'Первый стример в каталоге Desktop Gremlins', 'streamers.featuredCreator': 'Стример с Desktop Gremlins', 'streamers.openTwitch': 'Открыть Twitch ↗',
+    'streamers.checking': 'Проверяем статус…', 'streamers.online': 'Сейчас онлайн', 'streamers.offline': 'Офлайн', 'streamers.unavailable': 'Статус недоступен',
     'streamers.joinText': 'Хотите попасть в этот каталог?', 'streamers.joinCta': 'Связаться с ShuGhost',
     'violet.tag1': 'Симулятор', 'violet.tag2': 'Виртуальная компаньонка', 'violet.tag3': 'Атмосферная',
     'violet.description': 'Тихая ночь, непростая доктор и история, которая становится личнее, чем ожидалось. Загляните в мир Вайолет, когда её тщательно выстроенный распорядок рушится.',
@@ -455,6 +458,7 @@ function applyLanguage(language) {
   if (description) description.setAttribute('content', isPrivacyPage ? t('privacy.overviewText') : t('meta.description'))
   renderCart()
   refreshUpdatesLanguage()
+  renderStreamerStatusLabels()
 }
 
 document.querySelectorAll('[data-lang]').forEach((button) => {
@@ -623,6 +627,80 @@ if (finePointer.matches && !reducedMotion.matches) {
     })
   })
 }
+
+const streamerCatalog = document.querySelector('[data-streamer-catalog]')
+const streamerCards = [...document.querySelectorAll('[data-streamer-card]')]
+
+function renderStreamerStatusLabels() {
+  streamerCards.forEach((card) => {
+    const status = card.querySelector('[data-streamer-status]')
+    if (!status) return
+    const state = status.dataset.streamerState || 'checking'
+    const game = status.dataset.streamerGame || ''
+    const key = `streamers.${state}`
+    status.textContent = state === 'online' && game ? `${t(key)} · ${game}` : t(key)
+  })
+}
+
+function sortStreamerCards() {
+  if (!streamerCatalog) return
+  streamerCards
+    .sort((first, second) => {
+      const liveDifference = Number(second.dataset.online === 'true') - Number(first.dataset.online === 'true')
+      return liveDifference || Number(first.dataset.streamerOrder) - Number(second.dataset.streamerOrder)
+    })
+    .forEach((card) => streamerCatalog.append(card))
+}
+
+async function refreshTwitchStreamers() {
+  if (!streamerCatalog || streamerCards.length === 0) return
+  try {
+    const response = await fetch('/api/twitch-streamers', { headers: { Accept: 'application/json' } })
+    if (!response.ok) throw new Error('Twitch status unavailable')
+    const payload = await response.json()
+    const streamersByLogin = new Map((payload.streamers || []).map((streamer) => [streamer.login, streamer]))
+
+    streamerCards.forEach((card) => {
+      const streamer = streamersByLogin.get(card.dataset.streamerLogin)
+      const online = Boolean(streamer?.online)
+      const status = card.querySelector('[data-streamer-status]')
+      const avatar = card.querySelector('[data-streamer-avatar]')
+      const name = card.querySelector('[data-streamer-name]')
+      card.dataset.online = String(online)
+      if (status) {
+        status.dataset.streamerState = online ? 'online' : 'offline'
+        status.dataset.streamerGame = online ? String(streamer?.gameName || '') : ''
+      }
+      if (avatar && streamer?.avatarUrl) avatar.src = streamer.avatarUrl
+      if (name && streamer?.displayName) name.textContent = streamer.displayName
+    })
+    renderStreamerStatusLabels()
+    sortStreamerCards()
+  } catch {
+    streamerCards.forEach((card) => {
+      const status = card.querySelector('[data-streamer-status]')
+      if (status) status.dataset.streamerState = 'unavailable'
+    })
+    renderStreamerStatusLabels()
+  }
+}
+
+document.querySelectorAll('[data-has-preview]').forEach((card) => {
+  card.addEventListener('click', (event) => {
+    if (!window.matchMedia('(hover: none)').matches || card.classList.contains('preview-open')) return
+    event.preventDefault()
+    document.querySelectorAll('[data-has-preview].preview-open').forEach((openCard) => openCard.classList.remove('preview-open'))
+    card.classList.add('preview-open')
+  })
+})
+document.addEventListener('pointerdown', (event) => {
+  if (event.target.closest?.('[data-has-preview]')) return
+  document.querySelectorAll('[data-has-preview].preview-open').forEach((card) => card.classList.remove('preview-open'))
+})
+
+void refreshTwitchStreamers()
+const twitchStatusTimer = window.setInterval(refreshTwitchStreamers, 90_000)
+window.addEventListener('beforeunload', () => window.clearInterval(twitchStatusTimer))
 
 const cookieBanner = document.querySelector('[data-cookie-banner]')
 function updateGoogleConsent(granted) {

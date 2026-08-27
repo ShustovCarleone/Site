@@ -19,6 +19,19 @@ const steamNewsCache = new Map()
 const steamNewsCacheMs = 15 * 60 * 1000
 const steamMediaCache = new Map()
 const steamMediaCacheMs = 15 * 60 * 1000
+const featuredTwitchLogins = [
+  'rawyray',
+  'rin_stahich',
+  'debi__ll',
+  'luka_svetlov',
+  '0_0nari_chan0_0',
+  'nezvano',
+  'shibasowrong',
+  'myrreska',
+  'lady_asmidea',
+]
+const twitchStatusCacheMs = 60 * 1000
+let twitchStatusCache = { timestamp: 0, streamers: [] }
 const rateLimits = new Map()
 const recentPageViews = new Map()
 const rateLimitWindowMs = 60_000
@@ -364,6 +377,66 @@ async function handleSteamMedia(requestUrl, response) {
   }
 }
 
+function safeTwitchAvatar(value) {
+  try {
+    const url = new URL(String(value || ''))
+    return url.protocol === 'https:' && url.hostname === 'static-cdn.jtvnw.net' ? url.href : ''
+  } catch {
+    return ''
+  }
+}
+
+async function fetchTwitchStreamerStatuses() {
+  if (Date.now() - twitchStatusCache.timestamp < twitchStatusCacheMs) return twitchStatusCache.streamers
+
+  const query = 'query($login: String!) { user(login: $login) { login displayName profileImageURL(width: 300) stream { id title viewersCount game { name } } } }'
+  try {
+    const twitchResponse = await fetch('https://gql.twitch.tv/gql', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        // Twitch's public web client ID is not a credential and no user token is exposed.
+        'Client-Id': 'kimne78kx3ncx6brgo4mv6wki5h1ko',
+        'User-Agent': 'ShuGhost-Website/1.0',
+      },
+      body: JSON.stringify(featuredTwitchLogins.map((login) => ({ query, variables: { login } }))),
+      signal: AbortSignal.timeout(10_000),
+    })
+    if (!twitchResponse.ok) throw new Error(`Twitch returned ${twitchResponse.status}`)
+    const payload = await twitchResponse.json()
+    if (!Array.isArray(payload)) throw new Error('Twitch returned an invalid response')
+
+    const streamers = featuredTwitchLogins.map((fallbackLogin, index) => {
+      const user = payload[index]?.data?.user
+      const stream = user?.stream
+      return {
+        login: String(user?.login || fallbackLogin).toLowerCase().slice(0, 25),
+        displayName: String(user?.displayName || fallbackLogin).slice(0, 40),
+        avatarUrl: safeTwitchAvatar(user?.profileImageURL),
+        online: Boolean(stream?.id),
+        title: String(stream?.title || '').slice(0, 160),
+        gameName: String(stream?.game?.name || '').slice(0, 80),
+        viewers: Math.max(0, Number(stream?.viewersCount) || 0),
+      }
+    })
+    twitchStatusCache = { timestamp: Date.now(), streamers }
+    return streamers
+  } catch (error) {
+    if (twitchStatusCache.streamers.length > 0) return twitchStatusCache.streamers
+    throw error
+  }
+}
+
+async function handleTwitchStreamers(response) {
+  try {
+    const streamers = await fetchTwitchStreamerStatuses()
+    sendJson(response, 200, { streamers, checkedAt: Date.now() })
+  } catch {
+    sendJson(response, 502, { error: 'Twitch status is temporarily unavailable' })
+  }
+}
+
 const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
   '.html': 'text/html; charset=utf-8',
@@ -472,6 +545,20 @@ const server = createServer((request, response) => {
       return
     }
     void handleSteamMedia(requestUrl, response)
+    return
+  }
+
+  if (pathname === '/api/twitch-streamers') {
+    if (request.method !== 'GET') {
+      sendText(response, 405, 'Method Not Allowed', { Allow: 'GET' })
+      return
+    }
+    const rateLimit = allowRequest(request, 'twitch-streamers', 60)
+    if (!rateLimit.allowed) {
+      sendRateLimit(response, rateLimit.retryAfter)
+      return
+    }
+    void handleTwitchStreamers(response)
     return
   }
 
