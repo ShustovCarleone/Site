@@ -31,6 +31,11 @@ const translations = {
     'support.text': 'Report a problem, share feedback, or join the ShuGhost community on Steam, Telegram, and Discord.',
     'support.gremlins': 'Desktop Gremlins support', 'support.violet': 'Dr. Violet support',
     'support.telegram': 'Join Telegram', 'support.discord': 'Join Discord',
+    'donate.eyebrow': 'Support development', 'donate.title': 'Feed the gremlin a strawberry.',
+    'donate.text': 'If you enjoy Desktop Gremlins, you can support its future updates through the official Monobank jar.',
+    'donate.jar': 'Open Monobank jar', 'donate.cardLabel': 'Jar card number',
+    'donate.copy': 'Copy', 'donate.copied': 'Copied!', 'donate.copyAria': 'Copy the Monobank jar card number',
+    'donate.note': 'Voluntary support only — this is not a purchase.',
     'contact.eyebrow': 'Work together', 'contact.title': 'Have an idea or collaboration proposal?',
     'contact.text': 'Send a message directly to ShuGhost. You can write about reviews, partnerships, game coverage, development work, or anything else relevant.',
     'contact.note': 'Contact ShuGhost directly by email.', 'contact.emailLabel': 'Email', 'contact.emailButton': 'Write an email',
@@ -86,6 +91,11 @@ const translations = {
     'support.text': 'Повідомте про проблему, поділіться відгуком або приєднайтеся до спільноти ShuGhost у Steam, Telegram і Discord.',
     'support.gremlins': 'Підтримка Desktop Gremlins', 'support.violet': 'Підтримка Dr. Violet',
     'support.telegram': 'Приєднатися до Telegram', 'support.discord': 'Приєднатися до Discord',
+    'donate.eyebrow': 'Підтримати розробку', 'donate.title': 'Пригостити гремліна полуничкою.',
+    'donate.text': 'Якщо вам подобається Desktop Gremlins, ви можете підтримати майбутні оновлення через офіційну Банку Monobank.',
+    'donate.jar': 'Відкрити Банку Monobank', 'donate.cardLabel': 'Номер картки Банки',
+    'donate.copy': 'Копіювати', 'donate.copied': 'Скопійовано!', 'donate.copyAria': 'Скопіювати номер картки Банки Monobank',
+    'donate.note': 'Добровільна підтримка — це не купівля товару.',
     'contact.eyebrow': 'Співпраця', 'contact.title': 'Маєте ідею або пропозицію співпраці?',
     'contact.text': 'Напишіть безпосередньо ShuGhost. Тут можна запропонувати огляд, партнерство, висвітлення гри, роботу над проєктом або обговорити іншу доречну ідею.',
     'contact.note': 'Зв’яжіться із ShuGhost безпосередньо через електронну пошту.', 'contact.emailLabel': 'Електронна пошта', 'contact.emailButton': 'Написати листа',
@@ -141,6 +151,11 @@ const translations = {
     'support.text': 'Сообщите о проблеме, поделитесь отзывом или присоединитесь к сообществу ShuGhost в Steam, Telegram и Discord.',
     'support.gremlins': 'Поддержка Desktop Gremlins', 'support.violet': 'Поддержка Dr. Violet',
     'support.telegram': 'Присоединиться к Telegram', 'support.discord': 'Присоединиться к Discord',
+    'donate.eyebrow': 'Поддержать разработку', 'donate.title': 'Угостить гремлина клубничкой.',
+    'donate.text': 'Если вам нравится Desktop Gremlins, вы можете поддержать будущие обновления через официальную Банку Monobank.',
+    'donate.jar': 'Открыть Банку Monobank', 'donate.cardLabel': 'Номер карты Банки',
+    'donate.copy': 'Копировать', 'donate.copied': 'Скопировано!', 'donate.copyAria': 'Скопировать номер карты Банки Monobank',
+    'donate.note': 'Добровольная поддержка — это не покупка товара.',
     'contact.eyebrow': 'Сотрудничество', 'contact.title': 'Есть идея или предложение о сотрудничестве?',
     'contact.text': 'Напишите напрямую ShuGhost. Здесь можно предложить обзор, партнёрство, освещение игры, работу над проектом или обсудить другую подходящую идею.',
     'contact.note': 'Свяжитесь с ShuGhost напрямую по электронной почте.', 'contact.emailLabel': 'Электронная почта', 'contact.emailButton': 'Написать письмо',
@@ -463,6 +478,48 @@ function applyLanguage(language) {
 
 document.querySelectorAll('[data-lang]').forEach((button) => {
   button.addEventListener('click', () => applyLanguage(button.dataset.lang))
+})
+
+async function copySupportCard(value) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(value)
+      return
+    } catch {
+      // Some embedded browsers expose the Clipboard API but block writes.
+      // Fall back to the classic copy command below.
+    }
+  }
+
+  const field = document.createElement('textarea')
+  field.value = value
+  field.setAttribute('readonly', '')
+  field.style.position = 'fixed'
+  field.style.opacity = '0'
+  document.body.appendChild(field)
+  field.select()
+  const copied = document.execCommand('copy')
+  field.remove()
+  if (!copied) throw new Error('Clipboard copy failed')
+}
+
+document.querySelectorAll('[data-copy-support-card]').forEach((button) => {
+  button.addEventListener('click', async () => {
+    try {
+      await copySupportCard(button.dataset.copySupportCard)
+      window.clearTimeout(button.copyResetTimer)
+      button.textContent = t('donate.copied')
+      button.setAttribute('aria-label', t('donate.copied'))
+      button.classList.add('copied')
+      button.copyResetTimer = window.setTimeout(() => {
+        button.textContent = t('donate.copy')
+        button.setAttribute('aria-label', t('donate.copyAria'))
+        button.classList.remove('copied')
+      }, 1800)
+    } catch {
+      button.focus()
+    }
+  })
 })
 
 const hlsPlayers = []

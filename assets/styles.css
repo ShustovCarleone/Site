@@ -240,6 +240,25 @@ h1, h2, h3 { font-family: 'Space Grotesk',sans-serif; }
 .button-telegram:hover { border-color: rgba(42,171,238,.55); box-shadow: 0 14px 36px rgba(42,171,238,.1); }
 .button-discord:hover { border-color: rgba(88,101,242,.6); box-shadow: 0 14px 36px rgba(88,101,242,.12); }
 
+.donation-panel { position: relative; display: grid; grid-template-columns: minmax(0,1fr) minmax(330px,.78fr); gap: clamp(34px,6vw,82px); overflow: hidden; margin-top: 22px; padding: clamp(34px,5vw,62px); border: 1px solid rgba(212,71,104,.28); border-radius: var(--radius); background: radial-gradient(circle at 9% 12%,rgba(212,71,104,.2),transparent 31rem),linear-gradient(135deg,rgba(23,10,14,.98),rgba(6,5,5,.96)); box-shadow: 0 28px 80px rgba(0,0,0,.34),inset 0 1px rgba(255,247,235,.035); }
+.donation-panel::after { content: 'DESKTOP GREMLINS'; position: absolute; right: -1%; bottom: -10%; color: rgba(255,247,235,.025); font: 700 clamp(4.4rem,10vw,8.8rem)/1 'Space Grotesk',sans-serif; letter-spacing: -.08em; pointer-events: none; white-space: nowrap; }
+.donation-copy, .donation-actions { position: relative; z-index: 1; }
+.donation-kicker { display: flex; align-items: center; gap: 10px; margin: 0 0 22px; color: var(--wine-bright); font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+.donation-kicker span { display: grid; width: 31px; height: 31px; place-items: center; border: 1px solid rgba(212,71,104,.3); border-radius: 50%; background: rgba(212,71,104,.08); font-size: 15px; }
+.donation-kicker b { font: inherit; }
+.donation-copy h3 { max-width: 690px; margin: 0; font-size: clamp(2.35rem,4.5vw,4.5rem); line-height: .94; letter-spacing: -.07em; }
+.donation-copy > p:last-child { max-width: 650px; margin: 24px 0 0; color: var(--muted); line-height: 1.75; }
+.donation-actions { display: grid; align-content: center; gap: 13px; padding: clamp(20px,3vw,28px); border: 1px solid var(--line); border-radius: 18px; background: rgba(1,1,1,.44); }
+.donation-jar-button { width: 100%; }
+.donation-card-number { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-width: 0; padding: 14px 14px 14px 17px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,247,235,.035); }
+.donation-card-number > span { display: grid; min-width: 0; gap: 4px; }
+.donation-card-number small { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.donation-card-number strong { color: var(--ivory); font: 700 clamp(.92rem,1.7vw,1.08rem)/1.2 'Space Grotesk',sans-serif; font-variant-numeric: tabular-nums; letter-spacing: .035em; white-space: nowrap; }
+.donation-card-number button { flex-shrink: 0; min-height: 34px; padding: 0 13px; border: 1px solid rgba(212,71,104,.28); border-radius: 999px; background: rgba(212,71,104,.09); color: var(--ivory); cursor: pointer; font-size: 10px; font-weight: 800; transition: border-color .2s ease,background .2s ease,color .2s ease; }
+.donation-card-number button:hover { border-color: rgba(212,71,104,.65); background: rgba(212,71,104,.16); }
+.donation-card-number button.copied { border-color: rgba(89,215,146,.5); background: rgba(89,215,146,.1); color: #8cf2b7; }
+.donation-note { color: var(--faint); font-size: 10px; line-height: 1.45; }
+
 .contact { padding-top: 0; }
 .contact-panel { position: relative; display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(34px,6vw,85px); overflow: hidden; padding: clamp(38px,5vw,68px); border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(circle at 8% 10%,rgba(142,23,53,.17),transparent 28rem),linear-gradient(145deg,rgba(16,12,13,.96),rgba(6,5,5,.94)); box-shadow: var(--shadow); }
 .contact-panel::after { content: 'CONTACT'; position: absolute; right: -1%; bottom: -7%; color: rgba(255,247,235,.025); font: 700 clamp(5rem,12vw,10rem)/1 'Space Grotesk',sans-serif; letter-spacing: -.08em; pointer-events: none; }
@@ -339,6 +358,7 @@ h1, h2, h3 { font-family: 'Space Grotesk',sans-serif; }
   .about { grid-template-columns: 1fr; }
   .support-panel { align-items: flex-start; flex-direction: column; }
   .support-links { width: 100%; }
+  .donation-panel { grid-template-columns: 1fr; }
   .contact-panel { grid-template-columns: 1fr; }
   .streamers-contact { align-items: flex-start; flex-direction: column; }
 }
@@ -394,6 +414,10 @@ h1, h2, h3 { font-family: 'Space Grotesk',sans-serif; }
   .game-visual { min-height: 380px; }
   .screenshot-grid { grid-template-columns: 1fr; }
   .contact-email-card { padding: 26px 20px; }
+  .donation-panel { padding: 30px 20px; }
+  .donation-card-number { align-items: stretch; flex-direction: column; }
+  .donation-card-number strong { white-space: normal; }
+  .donation-card-number button { width: 100%; }
   .cookie-actions { align-items: stretch; flex-direction: column; }
 }
 @media (hover: hover) and (pointer: fine) {
