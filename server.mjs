@@ -24,6 +24,7 @@ const featuredTwitchLogins = [
   'rin_stahich',
   'debi__ll',
   'luka_svetlov',
+  'cumsya',
   '0_0nari_chan0_0',
   'nezvano',
   'miss_evasya',
