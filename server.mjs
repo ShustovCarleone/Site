@@ -26,9 +26,11 @@ const featuredTwitchLogins = [
   'luka_svetlov',
   '0_0nari_chan0_0',
   'nezvano',
+  'miss_evasya',
   'shibasowrong',
   'myrreska',
   'lady_asmidea',
+  'ivatea_',
 ]
 const twitchStatusCacheMs = 60 * 1000
 let twitchStatusCache = { timestamp: 0, streamers: [] }

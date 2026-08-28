@@ -212,6 +212,7 @@ h1, h2, h3 { font-family: 'Space Grotesk',sans-serif; }
 .streamer-card[data-online="true"] .streamer-details small { color: #76f4ad; }
 .streamer-link { color: var(--wine-bright); font-size: 16px; font-weight: 800; white-space: nowrap; }
 .streamer-preview { position: absolute; z-index: 40; top: calc(100% + 10px); left: 50%; display: block; width: min(370px,82vw); aspect-ratio: 1000/702; overflow: hidden; border: 1px solid rgba(255,246,232,.22); border-radius: 14px; background: #050303; box-shadow: 0 28px 70px rgba(0,0,0,.72),0 0 0 1px rgba(212,71,104,.16); opacity: 0; pointer-events: none; transform: translate(-50%,-8px) scale(.97); transition: opacity .2s ease,transform .25s ease; }
+.streamer-card[data-preview-wide] .streamer-preview { width: min(480px,88vw); aspect-ratio: 2556/1179; }
 .streamer-preview img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; border: 0; border-radius: 0; object-fit: cover; box-shadow: none; }
 .streamer-card:hover .streamer-preview, .streamer-card:focus-visible .streamer-preview, .streamer-card.preview-open .streamer-preview { opacity: 1; transform: translate(-50%,0) scale(1); }
 @keyframes live-dot { 50% { opacity: .58; transform: scale(.78); } }
