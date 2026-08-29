@@ -32,6 +32,7 @@ const featuredTwitchLogins = [
   'myrreska',
   'lady_asmidea',
   'ivatea_',
+  'belarusian_beast',
 ]
 const twitchStatusCacheMs = 60 * 1000
 let twitchStatusCache = { timestamp: 0, streamers: [] }
