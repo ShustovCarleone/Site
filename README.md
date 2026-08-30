@@ -49,6 +49,6 @@ cookie banner.
 
 ## Contact
 
-The site displays `shustovxd15032112@gmail.com` as a direct `mailto:` contact.
+The site displays `shughostcom@gmail.com` as a direct `mailto:` contact.
 It does not store contact messages or require any email-related Railway
 variables.
