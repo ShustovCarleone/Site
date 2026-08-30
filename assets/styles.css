@@ -1011,3 +1011,167 @@ body.menu-open { overflow: hidden; }
   .streamer-card { min-height: 70px; }
   .game-visual { min-height: 340px; }
 }
+
+/* --------------------------------------------------------------------------
+   BLACK / RED IDENTITY
+   Final palette pass: ink-black surfaces, vivid crimson actions, no cool hues.
+   -------------------------------------------------------------------------- */
+:root {
+  --bg: #050203;
+  --surface: #0a0406;
+  --surface-soft: rgba(14, 5, 8, .9);
+  --surface-raised: #14070a;
+  --ivory: #fff7f7;
+  --ivory-soft: #ead7da;
+  --text: #fff7f7;
+  --muted: #bea5aa;
+  --faint: #755b61;
+  --wine: #ad0d28;
+  --wine-dark: #43000d;
+  --wine-bright: #ff3048;
+  --rose: #ff3048;
+  --cyan: #ff263f;
+  --blue: #b80020;
+  --violet: #790015;
+  --pink: #ff6578;
+  --line: rgba(255, 92, 112, .17);
+  --line-strong: rgba(255, 74, 96, .36);
+}
+
+body { background: #040203; color: var(--text); }
+.site-atmosphere {
+  background:
+    radial-gradient(circle at 50% -12%, rgba(214, 0, 35, .2), transparent 34rem),
+    radial-gradient(circle at 88% 28%, rgba(105, 0, 19, .15), transparent 30rem),
+    linear-gradient(180deg, #090204, #020102 58%, #090204);
+}
+.atmosphere-grid {
+  background-image:
+    linear-gradient(rgba(255, 54, 78, .03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 54, 78, .03) 1px, transparent 1px);
+}
+.atmosphere-glow-one { background: rgba(225, 0, 35, .18); }
+.atmosphere-glow-two { background: rgba(112, 0, 21, .16); }
+
+.site-header,
+.site-header.scrolled,
+.compact-header {
+  background: #080405;
+  color: #fff7f7;
+  box-shadow: 0 1px 0 rgba(255, 54, 78, .24);
+}
+.site-header .brand { color: #fff7f7; }
+.site-header .brand-logo-shell { background: #d50b2b; }
+.site-header .language-switcher,
+.site-header .cart-button { border-color: rgba(255, 91, 111, .22); }
+.site-header .language-switcher button { color: #bda6aa; }
+.site-header .language-switcher button:hover { color: #fff; }
+.site-header .language-switcher button.active,
+.site-header .cart-count { background: #ed1235; color: #fff; }
+.site-header .cart-button,
+.menu-toggle { color: #fff7f7; }
+.header-cta { background: #ed1235; color: #fff; }
+.header-cta:hover { box-shadow: 0 12px 30px rgba(237, 18, 53, .38); }
+
+.site-menu {
+  background:
+    linear-gradient(120deg, rgba(239, 18, 53, .1), transparent 38%),
+    repeating-linear-gradient(135deg, transparent 0 28px, rgba(255, 53, 77, .035) 28px 29px),
+    #060203;
+}
+.menu-brand .brand-logo-shell { background: #d50b2b; }
+.menu-close:hover { background: #ed1235; color: #fff; }
+.site-menu nav a:hover { color: #fff; text-shadow: 0 0 34px rgba(255, 38, 63, .24); }
+
+.hero-noise { background: radial-gradient(circle at 50% 45%, rgba(220, 0, 34, .22), transparent 32rem); }
+.hero-orb-one { background: rgba(228, 0, 35, .18); }
+.hero-orb-two { background: rgba(95, 0, 18, .2); }
+.hero h1 em { background: linear-gradient(105deg, #fff 0 17%, #ff3048 50%, #8f001a 100%); background-clip: text; }
+.button-primary { background: linear-gradient(120deg, #ff3048, #b50020); color: #fff; box-shadow: 0 14px 40px rgba(237, 18, 53, .23); }
+.button-primary:hover { box-shadow: 0 18px 54px rgba(237, 18, 53, .4); }
+.button-ghost { background: rgba(18, 5, 8, .78); }
+.hero-stripes {
+  background: repeating-linear-gradient(135deg, rgba(255,38,63,.98) 0 12px, rgba(255,38,63,.05) 12px 27px, rgba(121,0,21,.95) 27px 39px, transparent 39px 56px);
+  filter: drop-shadow(0 0 25px rgba(237, 18, 53, .22));
+}
+.hero-scene { border-color: rgba(255, 76, 100, .35); background: #090305; box-shadow: 0 48px 110px rgba(0,0,0,.72), 0 0 82px rgba(183,0,31,.2); }
+.hero-scene-shade { background: linear-gradient(180deg,rgba(9,1,3,.05),transparent 48%,rgba(7,0,2,.78)),linear-gradient(90deg,rgba(16,1,5,.48),transparent 38%); }
+.hero-art-rail,
+.hero-stamp { background: rgba(8,2,4,.92); }
+
+.motion-marquee { background: #ed1235; }
+.motion-marquee::before { background: linear-gradient(90deg,#ed1235,transparent); }
+.motion-marquee::after { background: linear-gradient(-90deg,#ed1235,transparent); }
+.motion-marquee span,
+.motion-marquee i { color: #fff; }
+
+.games.section { background: #080405; color: #fff7f7; }
+.games::before { color: #ff3048; }
+.games .section-heading h2,
+.games .media-heading h2 { color: #fff7f7; }
+.games .section-heading > p,
+.games .media-heading > p:last-child,
+.games .eyebrow { color: #bea5aa; }
+.games .eyebrow span { background: #ed1235; }
+.game-card { background: #0b0506; box-shadow: 0 32px 90px rgba(0,0,0,.62); }
+.game-card,
+.game-card-violet { --card-accent: 255, 48, 72; }
+.game-card::after,
+.game-card-violet::after { background: #ed1235; }
+.game-visual::after { background: linear-gradient(90deg,transparent 34%,#0b0506),linear-gradient(0deg,rgba(5,0,2,.7),transparent 56%); }
+.game-card-violet .game-visual::after { background: linear-gradient(-90deg,transparent 34%,#0b0506),linear-gradient(0deg,rgba(5,0,2,.7),transparent 56%); }
+.media-heading { border-color: rgba(255, 82, 104, .2); }
+.media-card { background: #0b0506; box-shadow: 0 26px 70px rgba(0,0,0,.58); }
+.media-card,
+.media-card-violet { --media-accent: 255, 48, 72; }
+
+.streamers.section {
+  background:
+    linear-gradient(115deg, rgba(200,0,32,.14), transparent 42%),
+    repeating-linear-gradient(135deg, transparent 0 35px, rgba(255,48,72,.03) 35px 36px),
+    #050203;
+}
+.streamer-card { background: #0d0608; }
+.streamer-card:hover,
+.streamer-card:focus-visible,
+.streamer-card.preview-open { background: #18080c; box-shadow: inset 0 -3px #ed1235; }
+
+.about.section { background: #070304; }
+.about-card { background: #0a0506; color: #fff7f7; }
+.about-card .eyebrow,
+.about-card > p:not(.eyebrow) { color: #bea5aa; }
+.about-card h2 { color: #fff7f7; }
+.about-card .button { border-color: rgba(255, 95, 115, .32); color: #fff7f7; }
+.about-quote { background: #d90e30; color: #fff; }
+.about-quote::before { background: rgba(255,255,255,.24); }
+.about-quote p { color: #fff; }
+.quote-mark { color: rgba(35,0,7,.18); }
+
+.support.section,
+.support-panel { background: #050203; }
+.donation-panel { background: #d90e30; color: #fff; }
+.donation-kicker,
+.donation-copy h3,
+.donation-copy > p:last-child { color: #fff; }
+.donation-actions,
+.donation-card-number { border-color: rgba(255,255,255,.24); background: rgba(20,0,5,.3); }
+.donation-actions .button-primary { background: #090304; color: #fff; }
+.donation-card-number small,
+.donation-note { color: #f5c7ce; }
+.donation-card-number strong { color: #fff; }
+
+.contact.section,
+.contact-panel { background: #090405; color: #fff7f7; }
+.contact-copy .eyebrow,
+.contact-copy > p:not(.eyebrow) { color: #bea5aa; }
+.contact-copy h2 { color: #fff7f7; }
+.contact-panel::after { color: rgba(255,48,72,.035); }
+.contact-email-card { background: #d90e30; color: #fff; }
+.contact-email-label { color: #f5c7ce; }
+.site-footer { background: #030102; }
+.cart-drawer,
+.updates-dialog { background: #080304; }
+
+@media (max-width: 760px) {
+  .site-header .cart-count { background: transparent; color: #fff; }
+}
