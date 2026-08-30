@@ -40,9 +40,9 @@
       gtag('config', 'AW-18379981521');
     </script>
     <link rel="icon" href="assets/images/shughost-logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/styles.css?v=17" />
+    <link rel="stylesheet" href="assets/styles.css?v=18" />
     <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js" defer data-hls-library></script>
-    <script src="assets/app.js?v=16" defer></script>
+    <script src="assets/app.js?v=17" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -79,8 +79,38 @@
           <span data-i18n="nav.cart">Cart</span>
           <span class="cart-count" data-cart-count>0</span>
         </button>
+        <a class="header-cta" href="#contact" data-i18n="nav.contact">Contact</a>
+        <button class="menu-toggle" type="button" data-menu-open aria-label="Menu" aria-expanded="false" aria-controls="site-menu">
+          <span>Menu</span>
+          <i aria-hidden="true"></i>
+        </button>
       </div>
     </header>
+
+    <aside class="site-menu" id="site-menu" data-site-menu aria-hidden="true">
+      <div class="site-menu-top">
+        <a class="brand menu-brand" href="#top" aria-label="ShuGhost home" data-menu-close-link>
+          <span class="brand-logo-shell" aria-hidden="true"><img src="assets/images/shughost-logo.png" alt="" /></span>
+          <span>ShuGhost</span>
+        </a>
+        <button class="menu-close" type="button" data-menu-close aria-label="Close menu"><span></span><span></span></button>
+      </div>
+      <div class="site-menu-body">
+        <p class="site-menu-label">NAVIGATION / SHUGHOST</p>
+        <nav aria-label="Site menu" data-i18n-aria="nav.label">
+          <a href="#games" data-menu-close-link><b>01</b><span data-i18n="nav.games">Games</span></a>
+          <a href="#streamers" data-menu-close-link><b>02</b><span data-i18n="nav.streamers">Streamers</span></a>
+          <a href="#about" data-menu-close-link><b>03</b><span data-i18n="nav.about">About</span></a>
+          <a href="#support" data-menu-close-link><b>04</b><span data-i18n="nav.support">Support</span></a>
+          <a href="#contact" data-menu-close-link><b>05</b><span data-i18n="nav.contact">Contact</span></a>
+        </nav>
+        <div class="site-menu-meta">
+          <span>INDEPENDENT GAME STUDIO</span>
+          <a href="mailto:shughoost@gmail.com">SHUGHOOST@GMAIL.COM</a>
+          <small>© 2026 SHUGHOST</small>
+        </div>
+      </div>
+    </aside>
 
     <main id="main">
       <section class="hero" id="top">
@@ -91,7 +121,11 @@
 
         <div class="hero-copy reveal">
           <p class="eyebrow"><span></span> <b data-i18n="hero.eyebrow">Independent developer</b></p>
-          <h1><span data-i18n="hero.title">Games that refuse to stay</span> <em data-i18n="hero.accent">inside the window.</em></h1>
+          <h1 aria-label="ShuGhost"><span>SHU</span><em>GHOST</em></h1>
+          <p class="hero-manifesto">
+            <span data-i18n="hero.title">Games that refuse to stay</span>
+            <strong data-i18n="hero.accent">inside the window.</strong>
+          </p>
           <p class="hero-text" data-i18n="hero.text">
             Strange companions, mischievous systems, and stories with a little darkness.
             Welcome to the worlds of ShuGhost.
@@ -102,14 +136,17 @@
           </div>
         </div>
 
-        <div class="hero-art reveal" aria-label="ShuGhost animated studio mark" data-motion-stage>
-          <div class="logo-aura" aria-hidden="true"></div>
-          <div class="logo-orbit logo-orbit-one" aria-hidden="true"></div>
-          <div class="logo-orbit logo-orbit-two" aria-hidden="true"></div>
-          <div class="hero-logo-wrap" data-logo-parallax>
-            <img class="hero-logo" src="assets/images/shughost-logo.png" alt="ShuGhost studio logo" />
+        <div class="hero-art reveal" aria-label="Desktop Gremlins on a desktop" data-motion-stage>
+          <div class="hero-stripes" aria-hidden="true"></div>
+          <div class="hero-scene" data-logo-parallax>
+            <img src="assets/media/gremlins/screenshot-3.jpg" alt="Desktop Gremlins chaos effects and game controls" />
+            <span class="hero-scene-shade" aria-hidden="true"></span>
+            <span class="hero-scene-index" aria-hidden="true">01</span>
+            <span class="hero-scene-caption">DESKTOP GREMLINS / LIVE ON YOUR SCREEN</span>
           </div>
-          <span class="hero-art-caption" aria-hidden="true">SHUGHOST / INDEPENDENT STUDIO / 2026</span>
+          <div class="hero-art-rail" aria-hidden="true">
+            <span>DESKTOP PET</span><i></i><span>TWITCH</span><i></i><span>CHAOS</span>
+          </div>
           <div class="hero-stamp" aria-hidden="true">2<br /><small data-i18n="hero.worlds">worlds</small></div>
         </div>
       </section>

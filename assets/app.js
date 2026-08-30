@@ -589,6 +589,7 @@ lightbox?.addEventListener('click', (event) => {
 
 function openCart() {
   if (!cartDrawer || !scrim) return
+  closeSiteMenu()
   renderCart()
   cartDrawer.setAttribute('aria-hidden', 'false')
   scrim.hidden = false
@@ -621,8 +622,33 @@ document.querySelector('[data-cart-clear]')?.addEventListener('click', () => {
   renderCart()
 })
 
+const siteMenu = document.querySelector('[data-site-menu]')
+const siteMenuButton = document.querySelector('[data-menu-open]')
+
+function openSiteMenu() {
+  if (!siteMenu) return
+  siteMenu.setAttribute('aria-hidden', 'false')
+  siteMenuButton?.setAttribute('aria-expanded', 'true')
+  document.body.classList.add('menu-open')
+  siteMenu.querySelector('[data-menu-close]')?.focus()
+}
+
+function closeSiteMenu() {
+  if (!siteMenu) return
+  siteMenu.setAttribute('aria-hidden', 'true')
+  siteMenuButton?.setAttribute('aria-expanded', 'false')
+  document.body.classList.remove('menu-open')
+}
+
+siteMenuButton?.addEventListener('click', openSiteMenu)
+document.querySelector('[data-menu-close]')?.addEventListener('click', closeSiteMenu)
+document.querySelectorAll('[data-menu-close-link]').forEach((link) => link.addEventListener('click', closeSiteMenu))
+
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeCart()
+  if (event.key === 'Escape') {
+    closeCart()
+    closeSiteMenu()
+  }
 })
 
 document.querySelectorAll('[data-year]').forEach((node) => {
