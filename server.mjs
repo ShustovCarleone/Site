@@ -448,6 +448,7 @@ const mimeTypes = {
   '.jpeg': 'image/jpeg',
   '.jpg': 'image/jpeg',
   '.json': 'application/json; charset=utf-8',
+  '.mp4': 'video/mp4',
   '.png': 'image/png',
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8',
@@ -580,18 +581,58 @@ const server = createServer((request, response) => {
   }
 
   const extension = extname(filePath).toLowerCase()
+  const fileSize = statSync(filePath).size
+  const contentType = mimeTypes[extension] || 'application/octet-stream'
   const cacheControl = ['.html', '.js', '.css'].includes(extension)
     ? 'no-cache'
     : 'public, max-age=604800, immutable'
-  response.writeHead(200, {
-    'Content-Type': mimeTypes[extension] || 'application/octet-stream',
+  const baseHeaders = {
+    'Content-Type': contentType,
     'Cache-Control': cacheControl,
-    ...securityHeaders(mimeTypes[extension] || 'application/octet-stream'),
+    'Accept-Ranges': 'bytes',
+    ...securityHeaders(contentType),
+  }
+
+  const range = typeof request.headers.range === 'string'
+    ? /^bytes=(\d*)-(\d*)$/.exec(request.headers.range.trim())
+    : null
+
+  let start = 0
+  let end = fileSize - 1
+  let status = 200
+
+  if (range) {
+    if (range[1]) start = Number(range[1])
+    if (range[2]) end = Number(range[2])
+    if (!range[1] && range[2]) {
+      const suffixLength = Number(range[2])
+      start = Math.max(fileSize - suffixLength, 0)
+      end = fileSize - 1
+    }
+    end = Math.min(end, fileSize - 1)
+
+    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || start > end || start >= fileSize) {
+      response.writeHead(416, {
+        ...baseHeaders,
+        'Content-Range': `bytes */${fileSize}`,
+        'Content-Length': 0,
+      })
+      response.end()
+      return
+    }
+    status = 206
+  }
+
+  const contentLength = end - start + 1
+  response.writeHead(status, {
+    ...baseHeaders,
+    'Content-Length': contentLength,
+    ...(status === 206 ? { 'Content-Range': `bytes ${start}-${end}/${fileSize}` } : {}),
   })
 
   if (request.method === 'HEAD') response.end()
   else {
-    const stream = createReadStream(filePath)
+    const stream = createReadStream(filePath, { start, end })
     stream.on('error', (error) => {
       console.error('Unable to stream static file:', error)
       if (!response.headersSent) sendText(response, 500, 'Internal Server Error')
