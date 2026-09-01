@@ -40,11 +40,16 @@
       gtag('config', 'AW-18379981521');
     </script>
     <link rel="icon" href="assets/images/shughost-logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/styles.css?v=24" />
+    <link rel="stylesheet" href="assets/styles.css?v=27" />
     <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js" defer data-hls-library></script>
-    <script src="assets/app.js?v=19" defer></script>
+    <script src="assets/app.js?v=22" defer></script>
   </head>
   <body>
+    <div class="cinematic-loader" data-cinematic-loader aria-hidden="true">
+      <img src="assets/images/shughost-logo.png" alt="" />
+      <p>SHUGHOST</p>
+      <span><i></i></span>
+    </div>
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-atmosphere" aria-hidden="true">
       <span class="atmosphere-grid"></span>
@@ -148,6 +153,40 @@
           </div>
           <div class="hero-stamp" aria-hidden="true">2<br /><small data-i18n="hero.worlds">worlds</small></div>
         </div>
+        <a class="hero-scroll-cue" href="#story" aria-label="Scroll to the story">
+          <span></span><small data-i18n="cinematic.scroll">Scroll to enter</small>
+        </a>
+      </section>
+
+      <section class="shughost-scroll-story" id="story" data-scroll-story aria-label="ShuGhost worlds">
+        <div class="scroll-story-sticky">
+          <div class="story-atmosphere" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="story-visual" aria-hidden="true">
+            <img class="story-logo" src="assets/images/shughost-logo.png" alt="" />
+            <div class="story-card story-card-gremlins"><img src="assets/images/desktop-gremlins-cover.png" alt="" /></div>
+            <div class="story-card story-card-violet"><img src="assets/images/dr-violet-cover.png" alt="" /></div>
+            <div class="story-card story-card-scene"><img src="assets/media/gremlins/screenshot-4.jpg" alt="" /></div>
+          </div>
+          <div class="story-copy">
+            <article class="story-beat is-active" data-story-beat="0">
+              <span>01 / SHUGHOST</span>
+              <h2 data-i18n="cinematic.beat1">Characters that refuse to stay inside the game.</h2>
+            </article>
+            <article class="story-beat" data-story-beat="1">
+              <span>02 / DESKTOP GREMLINS</span>
+              <h2 data-i18n="cinematic.beat2">A little chaos, alive on your desktop.</h2>
+            </article>
+            <article class="story-beat" data-story-beat="2">
+              <span>03 / DR. VIOLET</span>
+              <h2 data-i18n="cinematic.beat3">Quiet stories that look back at you.</h2>
+            </article>
+            <article class="story-beat" data-story-beat="3">
+              <span>04 / TWO WORLDS</span>
+              <h2 data-i18n="cinematic.beat4">Two worlds. One mischievous soul.</h2>
+            </article>
+          </div>
+          <div class="story-progress" aria-hidden="true"><i></i><span>01</span><span>04</span></div>
+        </div>
       </section>
 
       <div class="motion-marquee" aria-hidden="true">
@@ -160,6 +199,54 @@
           <span>WORLDS OUTSIDE THE WINDOW</span><i>✦</i>
         </div>
       </div>
+
+      <section class="shughost-portal-story" data-portal-story aria-label="Enter the ShuGhost worlds">
+        <div class="portal-sticky">
+          <div class="portal-world" aria-hidden="true">
+            <img src="assets/media/gremlins/screenshot-3.jpg" alt="" />
+          </div>
+          <div class="portal-vignette" aria-hidden="true"></div>
+          <img class="portal-mark" src="assets/images/shughost-logo.png" alt="" aria-hidden="true" />
+          <div class="portal-copy">
+            <p data-i18n="cinematic.portalEyebrow">Enter the world outside the window</p>
+            <h2 data-i18n="cinematic.portalTitle">Step through.</h2>
+          </div>
+          <div class="portal-end-copy">
+            <p data-i18n="cinematic.portalEnd">The screen is only the beginning.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="worlds-explorer section" aria-labelledby="worlds-explorer-title">
+        <div class="worlds-explorer-heading reveal">
+          <p class="eyebrow"><span></span> <b data-i18n="cinematic.explorerEyebrow">Explore the possibilities</b></p>
+          <h2 id="worlds-explorer-title" data-i18n="cinematic.explorerTitle">Choose how the worlds come alive.</h2>
+        </div>
+        <div class="worlds-explorer-grid reveal">
+          <div class="worlds-explorer-list" role="list" aria-label="ShuGhost features">
+            <button class="world-item is-active" type="button" data-world-item data-world-image="assets/media/gremlins/screenshot-3.jpg" aria-pressed="true">
+              <span>01</span><strong data-i18n="cinematic.world1">Desktop chaos</strong><i>↗</i>
+            </button>
+            <button class="world-item" type="button" data-world-item data-world-image="assets/media/gremlins/screenshot-2.jpg" aria-pressed="false">
+              <span>02</span><strong data-i18n="cinematic.world2">Friend invasion</strong><i>↗</i>
+            </button>
+            <button class="world-item" type="button" data-world-item data-world-image="assets/media/gremlins/screenshot-4.jpg" aria-pressed="false">
+              <span>03</span><strong data-i18n="cinematic.world3">Effect workshop</strong><i>↗</i>
+            </button>
+            <button class="world-item" type="button" data-world-item data-world-image="assets/media/gremlins/screenshot-1.jpg" aria-pressed="false">
+              <span>04</span><strong data-i18n="cinematic.world4">Twitch and OBS</strong><i>↗</i>
+            </button>
+            <button class="world-item" type="button" data-world-item data-world-image="assets/media/violet/screenshot-2.jpg" aria-pressed="false">
+              <span>05</span><strong data-i18n="cinematic.world5">Dr. Violet's night</strong><i>↗</i>
+            </button>
+          </div>
+          <figure class="worlds-explorer-preview">
+            <div class="worlds-preview-glow" aria-hidden="true"></div>
+            <img src="assets/media/gremlins/screenshot-3.jpg" alt="ShuGhost game preview" data-world-preview />
+            <figcaption><span>SHUGHOST / INTERACTIVE WORLDS</span><b data-i18n="cinematic.previewHint">Hover or select a chapter</b></figcaption>
+          </figure>
+        </div>
+      </section>
 
       <section class="games section" id="games">
         <div class="section-heading reveal">
@@ -499,6 +586,39 @@
             <a class="button button-primary" href="mailto:shughostcom@gmail.com?subject=ShuGhost%20collaboration"><span data-i18n="contact.emailButton">Write an email</span></a>
           </div>
         </div>
+      </section>
+
+      <section class="social-deck section" aria-labelledby="social-deck-title">
+        <div class="social-deck-heading reveal">
+          <p class="eyebrow"><span></span> <b data-i18n="socialDeck.eyebrow">Stay connected</b></p>
+          <h2 id="social-deck-title" data-i18n="socialDeck.title">Find ShuGhost beyond the window.</h2>
+        </div>
+        <ul class="social-deck-list reveal">
+          <li>
+            <a class="social-deck-card social-deck-steam" href="https://store.steampowered.com/app/4981140/Desktop_Gremlins/" target="_blank" rel="noopener noreferrer" aria-label="Desktop Gremlins on Steam">
+              <span class="social-deck-icon" aria-hidden="true">ST</span>
+              <span><small data-i18n="socialDeck.steamHint">Play and follow</small><strong>Steam</strong></span>
+            </a>
+          </li>
+          <li>
+            <a class="social-deck-card social-deck-telegram" href="https://t.me/CursorVerse" target="_blank" rel="noopener noreferrer" aria-label="ShuGhost on Telegram">
+              <span class="social-deck-icon" aria-hidden="true">TG</span>
+              <span><small data-i18n="socialDeck.telegramHint">News and community</small><strong>Telegram</strong></span>
+            </a>
+          </li>
+          <li>
+            <a class="social-deck-card social-deck-discord" href="https://discord.gg/9agE2cnpJ7" target="_blank" rel="noopener noreferrer" aria-label="ShuGhost on Discord">
+              <span class="social-deck-icon" aria-hidden="true">DC</span>
+              <span><small data-i18n="socialDeck.discordHint">Chat with players</small><strong>Discord</strong></span>
+            </a>
+          </li>
+          <li>
+            <a class="social-deck-card social-deck-support" href="/support" aria-label="Support ShuGhost">
+              <span class="social-deck-icon" aria-hidden="true">♥</span>
+              <span><small data-i18n="socialDeck.supportHint">Help development</small><strong data-i18n="nav.support">Support</strong></span>
+            </a>
+          </li>
+        </ul>
       </section>
     </main>
 

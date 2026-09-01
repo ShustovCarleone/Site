@@ -235,6 +235,90 @@ Object.assign(translations.ru, {
   'updates.automatic': 'Автоматически синхронизируется с объявлениями Steam.',
 })
 
+Object.assign(translations.en, {
+  'cinematic.scroll': 'Scroll to enter',
+  'cinematic.beat1': 'Characters that refuse to stay inside the game.',
+  'cinematic.beat2': 'A little chaos, alive on your desktop.',
+  'cinematic.beat3': 'Quiet stories that look back at you.',
+  'cinematic.beat4': 'Two worlds. One mischievous soul.',
+  'cinematic.portalEyebrow': 'Enter the world outside the window',
+  'cinematic.portalTitle': 'Step through.',
+  'cinematic.portalEnd': 'The screen is only the beginning.',
+  'cinematic.explorerEyebrow': 'Explore the possibilities',
+  'cinematic.explorerTitle': 'Choose how the worlds come alive.',
+  'cinematic.world1': 'Desktop chaos',
+  'cinematic.world2': 'Friend invasion',
+  'cinematic.world3': 'Effect workshop',
+  'cinematic.world4': 'Twitch and OBS',
+  'cinematic.world5': "Dr. Violet's night",
+  'cinematic.previewHint': 'Hover or select a chapter',
+})
+
+Object.assign(translations.uk, {
+  'cinematic.scroll': 'Прокрутіть, щоб увійти',
+  'cinematic.beat1': 'Персонажі, які відмовляються залишатися всередині гри.',
+  'cinematic.beat2': 'Трохи живого хаосу просто на вашому робочому столі.',
+  'cinematic.beat3': 'Тихі історії, які дивляться у відповідь.',
+  'cinematic.beat4': 'Два світи. Одна бешкетна душа.',
+  'cinematic.portalEyebrow': 'Увійдіть у світ за межами вікна',
+  'cinematic.portalTitle': 'Зробіть крок.',
+  'cinematic.portalEnd': 'Екран лише початок.',
+  'cinematic.explorerEyebrow': 'Дослідіть можливості',
+  'cinematic.explorerTitle': 'Оберіть, як оживатимуть світи.',
+  'cinematic.world1': 'Хаос на робочому столі',
+  'cinematic.world2': 'Вторгнення друга',
+  'cinematic.world3': 'Майстерня ефектів',
+  'cinematic.world4': 'Twitch та OBS',
+  'cinematic.world5': 'Ніч докторки Вайолет',
+  'cinematic.previewHint': 'Наведіть або оберіть розділ',
+})
+
+Object.assign(translations.ru, {
+  'cinematic.scroll': 'Прокрутите, чтобы войти',
+  'cinematic.beat1': 'Персонажи, которые отказываются оставаться внутри игры.',
+  'cinematic.beat2': 'Немного живого хаоса прямо на вашем рабочем столе.',
+  'cinematic.beat3': 'Тихие истории, которые смотрят в ответ.',
+  'cinematic.beat4': 'Два мира. Одна озорная душа.',
+  'cinematic.portalEyebrow': 'Войдите в мир за пределами окна',
+  'cinematic.portalTitle': 'Сделайте шаг.',
+  'cinematic.portalEnd': 'Экран только начало.',
+  'cinematic.explorerEyebrow': 'Исследуйте возможности',
+  'cinematic.explorerTitle': 'Выберите, как оживут миры.',
+  'cinematic.world1': 'Хаос на рабочем столе',
+  'cinematic.world2': 'Вторжение друга',
+  'cinematic.world3': 'Мастерская эффектов',
+  'cinematic.world4': 'Twitch и OBS',
+  'cinematic.world5': 'Ночь доктора Вайолет',
+  'cinematic.previewHint': 'Наведите или выберите раздел',
+})
+
+Object.assign(translations.en, {
+  'socialDeck.eyebrow': 'Stay connected',
+  'socialDeck.title': 'Find ShuGhost beyond the window.',
+  'socialDeck.steamHint': 'Play and follow',
+  'socialDeck.telegramHint': 'News and community',
+  'socialDeck.discordHint': 'Chat with players',
+  'socialDeck.supportHint': 'Help development',
+})
+
+Object.assign(translations.uk, {
+  'socialDeck.eyebrow': 'Залишайтеся на зв’язку',
+  'socialDeck.title': 'Знайдіть ShuGhost за межами вікна.',
+  'socialDeck.steamHint': 'Грайте та стежте',
+  'socialDeck.telegramHint': 'Новини та спільнота',
+  'socialDeck.discordHint': 'Спілкування з гравцями',
+  'socialDeck.supportHint': 'Підтримати розробку',
+})
+
+Object.assign(translations.ru, {
+  'socialDeck.eyebrow': 'Оставайтесь на связи',
+  'socialDeck.title': 'Найдите ShuGhost за пределами окна.',
+  'socialDeck.steamHint': 'Играйте и следите',
+  'socialDeck.telegramHint': 'Новости и сообщество',
+  'socialDeck.discordHint': 'Общение с игроками',
+  'socialDeck.supportHint': 'Поддержать разработку',
+})
+
 const LANG_KEY = 'shughost-language-v1'
 const supportedLanguages = ['uk', 'en', 'ru']
 const detectedLanguage = (navigator.language || 'en').toLowerCase().split('-')[0]
@@ -694,6 +778,114 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
 const motionStage = document.querySelector('[data-motion-stage]')
 const logoParallax = document.querySelector('[data-logo-parallax]')
+
+if (finePointer.matches && !reducedMotion.matches) {
+  document.querySelectorAll('.button, .header-cta, .cart-button').forEach((control) => {
+    control.addEventListener('pointermove', (event) => {
+      const bounds = control.getBoundingClientRect()
+      control.style.setProperty('--button-x', `${(event.clientX - bounds.left).toFixed(1)}px`)
+      control.style.setProperty('--button-y', `${(event.clientY - bounds.top).toFixed(1)}px`)
+    })
+    control.addEventListener('pointerleave', () => {
+      control.style.removeProperty('--button-x')
+      control.style.removeProperty('--button-y')
+    })
+  })
+}
+
+const cinematicLoader = document.querySelector('[data-cinematic-loader]')
+function finishCinematicLoader() {
+  window.setTimeout(() => document.body.classList.add('cinematic-ready'), reducedMotion.matches ? 0 : 850)
+}
+if (document.readyState === 'complete') finishCinematicLoader()
+else window.addEventListener('load', finishCinematicLoader, { once: true })
+
+const scrollStory = document.querySelector('[data-scroll-story]')
+const storyBeats = [...document.querySelectorAll('[data-story-beat]')]
+const portalStory = document.querySelector('[data-portal-story]')
+let cinematicFrame = 0
+
+function clampMotion(value, minimum = 0, maximum = 1) {
+  return Math.min(maximum, Math.max(minimum, value))
+}
+
+function updateCinematicScenes() {
+  cinematicFrame = 0
+  if (reducedMotion.matches) return
+
+  if (scrollStory) {
+    const rect = scrollStory.getBoundingClientRect()
+    const distance = Math.max(1, rect.height - window.innerHeight)
+    const progress = clampMotion(-rect.top / distance)
+    const beatIndex = Math.min(storyBeats.length - 1, Math.floor(progress * storyBeats.length))
+
+    scrollStory.style.setProperty('--story-progress', progress.toFixed(4))
+    scrollStory.style.setProperty('--story-shift', `${(progress * 76).toFixed(2)}vw`)
+    scrollStory.style.setProperty('--story-lift', `${(progress * 52).toFixed(2)}vh`)
+    scrollStory.style.setProperty('--story-turn', `${((progress - .5) * 10).toFixed(2)}deg`)
+    storyBeats.forEach((beat, index) => beat.classList.toggle('is-active', index === beatIndex))
+  }
+
+  if (portalStory) {
+    const rect = portalStory.getBoundingClientRect()
+    const distance = Math.max(1, rect.height - window.innerHeight)
+    const progress = clampMotion(-rect.top / distance)
+    const clip = Math.max(0, 38 * (1 - progress * 1.32))
+    const markOpacity = clampMotion(1 - Math.max(0, progress - .42) / .24)
+    const copyOpacity = clampMotion(1 - progress / .24)
+    const endOpacity = clampMotion((progress - .76) / .17)
+
+    portalStory.style.setProperty('--portal-clip', `${clip.toFixed(2)}%`)
+    portalStory.style.setProperty('--portal-scale', (.42 + progress * 4.7).toFixed(3))
+    portalStory.style.setProperty('--portal-world-scale', (1.18 - progress * .18).toFixed(3))
+    portalStory.style.setProperty('--portal-mark-opacity', markOpacity.toFixed(3))
+    portalStory.style.setProperty('--portal-copy-opacity', copyOpacity.toFixed(3))
+    portalStory.style.setProperty('--portal-end-opacity', endOpacity.toFixed(3))
+  }
+}
+
+function queueCinematicUpdate() {
+  if (!cinematicFrame) cinematicFrame = window.requestAnimationFrame(updateCinematicScenes)
+}
+
+if (scrollStory || portalStory) {
+  updateCinematicScenes()
+  window.addEventListener('scroll', queueCinematicUpdate, { passive: true })
+  window.addEventListener('resize', queueCinematicUpdate)
+}
+
+const worldItems = [...document.querySelectorAll('[data-world-item]')]
+const worldPreview = document.querySelector('[data-world-preview]')
+const worldPreviewFrame = worldPreview?.closest('.worlds-explorer-preview')
+let worldPreviewTimer = 0
+
+worldItems.forEach((item) => {
+  const source = item.dataset.worldImage
+  if (source) {
+    const preload = new Image()
+    preload.src = source
+  }
+
+  const activate = () => {
+    if (!worldPreview || !worldPreviewFrame || !source || item.classList.contains('is-active')) return
+    worldItems.forEach((candidate) => {
+      const active = candidate === item
+      candidate.classList.toggle('is-active', active)
+      candidate.setAttribute('aria-pressed', String(active))
+    })
+    worldPreviewFrame.classList.add('is-changing')
+    window.clearTimeout(worldPreviewTimer)
+    worldPreviewTimer = window.setTimeout(() => {
+      worldPreview.src = source
+      worldPreview.addEventListener('load', () => worldPreviewFrame.classList.remove('is-changing'), { once: true })
+      worldPreviewTimer = window.setTimeout(() => worldPreviewFrame.classList.remove('is-changing'), 500)
+    }, 150)
+  }
+
+  item.addEventListener('pointerenter', activate)
+  item.addEventListener('focus', activate)
+  item.addEventListener('click', activate)
+})
 
 if (motionStage && logoParallax && finePointer.matches && !reducedMotion.matches) {
   motionStage.addEventListener('pointermove', (event) => {
