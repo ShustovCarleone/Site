@@ -2335,3 +2335,60 @@ body.cinematic-ready .cinematic-loader { opacity: 0; visibility: hidden; pointer
   .button::before,
   :is(.header-cta, .cart-button, .menu-toggle, .menu-close, .donation-card-number button, .footer-link-button, .cart-remove)::before { transition: none; }
 }
+
+/* V3: true edge-to-edge hero with clearly visible motion. */
+.hero {
+  width: 100%;
+  max-width: none;
+  margin-right: 0;
+  margin-left: 0;
+  padding-right: max(18px, calc((100vw - 1440px) / 2));
+  padding-left: max(18px, calc((100vw - 1440px) / 2));
+}
+.hero-backdrop {
+  right: 0;
+  left: 0;
+  width: 100%;
+  min-width: 100%;
+  transform: none;
+}
+.hero-copy {
+  width: min(100%, 1180px);
+  margin-right: auto;
+  margin-left: auto;
+}
+.hero-backdrop::before {
+  animation-duration: 7s;
+  animation-timing-function: cubic-bezier(.45, 0, .55, 1);
+  will-change: transform, filter;
+}
+.hero-backdrop::after {
+  background-position: center, 0 0, 0 0;
+  animation: hero-grid-drift 5.5s linear infinite;
+  will-change: background-position;
+}
+.hero-noise {
+  opacity: .3;
+  animation-duration: 6s;
+  will-change: transform;
+}
+.hero-scanline {
+  background: linear-gradient(112deg, transparent 18%, rgba(255, 35, 72, .04) 32%, rgba(255, 69, 101, .28) 49%, rgba(255, 235, 228, .09) 52%, transparent 69%);
+  animation-duration: 4.2s;
+  will-change: transform, opacity;
+}
+@keyframes hero-grid-drift {
+  from { background-position: center, 0 0, 0 0; }
+  to { background-position: center, 120px 0, 0 120px; }
+}
+@keyframes hero-mesh-breathe {
+  0%, 100% { opacity: .62; filter: blur(48px) saturate(1.15); }
+  50% { opacity: 1; filter: blur(58px) saturate(1.55); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-backdrop::before { animation: hero-mesh-breathe 7s ease-in-out infinite; }
+  .hero-backdrop::after,
+  .hero-noise,
+  .hero-scanline { animation: none; }
+}
