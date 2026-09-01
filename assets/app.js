@@ -779,20 +779,6 @@ const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
 const motionStage = document.querySelector('[data-motion-stage]')
 const logoParallax = document.querySelector('[data-logo-parallax]')
 
-if (finePointer.matches && !reducedMotion.matches) {
-  document.querySelectorAll('.button, .header-cta, .cart-button').forEach((control) => {
-    control.addEventListener('pointermove', (event) => {
-      const bounds = control.getBoundingClientRect()
-      control.style.setProperty('--button-x', `${(event.clientX - bounds.left).toFixed(1)}px`)
-      control.style.setProperty('--button-y', `${(event.clientY - bounds.top).toFixed(1)}px`)
-    })
-    control.addEventListener('pointerleave', () => {
-      control.style.removeProperty('--button-x')
-      control.style.removeProperty('--button-y')
-    })
-  })
-}
-
 const cinematicLoader = document.querySelector('[data-cinematic-loader]')
 function finishCinematicLoader() {
   window.setTimeout(() => document.body.classList.add('cinematic-ready'), reducedMotion.matches ? 0 : 850)

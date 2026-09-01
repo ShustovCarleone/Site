@@ -1094,8 +1094,7 @@ body { background: #040203; color: var(--text); }
   pointer-events: none;
   background:
     radial-gradient(circle at 50% 48%, rgba(72, 0, 13, .12), transparent 46%),
-    linear-gradient(180deg, rgba(3, 1, 2, .7) 0%, rgba(3, 1, 2, .54) 42%, rgba(3, 1, 2, .9) 100%),
-    url('images/shughost-social-preview.png') center 38% / cover no-repeat;
+    linear-gradient(180deg, rgba(3, 1, 2, .7) 0%, rgba(3, 1, 2, .54) 42%, rgba(3, 1, 2, .9) 100%);
   transform: translateX(-50%);
   filter: saturate(.9) contrast(1.04);
 }
@@ -2016,4 +2015,323 @@ body.cinematic-ready .cinematic-loader { opacity: 0; visibility: hidden; pointer
   .header-cta,
   .cart-button { transition-duration: .01ms; }
   .button::before { display: none; }
+}
+
+/* V2: visible mesh background. This replaces the former hero photograph. */
+.site-atmosphere {
+  background: #030103;
+}
+.site-atmosphere::before {
+  inset: -25%;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 32, 71, .28) 0 7%, transparent 27%),
+    radial-gradient(circle at 88% 22%, rgba(112, 0, 42, .38) 0 8%, transparent 31%),
+    radial-gradient(circle at 70% 82%, rgba(218, 0, 46, .2) 0 5%, transparent 29%),
+    radial-gradient(circle at 28% 76%, rgba(77, 0, 50, .35) 0 7%, transparent 30%);
+  filter: blur(54px) saturate(1.35);
+  animation: site-mesh-drift 24s ease-in-out infinite alternate;
+}
+.site-atmosphere::after {
+  background:
+    linear-gradient(180deg, rgba(3, 1, 3, .04), rgba(3, 1, 3, .76)),
+    repeating-linear-gradient(90deg, transparent 0 99px, rgba(255, 255, 255, .02) 100px 101px),
+    repeating-linear-gradient(0deg, transparent 0 99px, rgba(255, 255, 255, .014) 100px 101px);
+  mask-image: none;
+}
+@keyframes site-mesh-drift {
+  0% { transform: translate3d(-5%, -3%, 0) rotate(-8deg) scale(1); }
+  50% { transform: translate3d(5%, 4%, 0) rotate(5deg) scale(1.12); }
+  100% { transform: translate3d(-1%, 7%, 0) rotate(12deg) scale(1.05); }
+}
+
+.hero {
+  min-height: 100svh;
+  align-content: center;
+  gap: 0;
+  overflow: hidden;
+  padding-top: clamp(155px, 20vh, 215px);
+  padding-bottom: clamp(120px, 16vh, 175px);
+}
+.hero-backdrop {
+  top: -84px;
+  bottom: 0;
+  overflow: hidden;
+  background: #040104;
+  filter: none;
+}
+.hero-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 30, 67, .8) 0 5%, rgba(135, 0, 35, .5) 12%, transparent 28%),
+    radial-gradient(circle at 74% 22%, rgba(113, 0, 54, .72) 0 7%, transparent 27%),
+    radial-gradient(circle at 82% 75%, rgba(239, 11, 54, .55) 0 6%, transparent 29%),
+    radial-gradient(circle at 36% 78%, rgba(77, 0, 65, .7) 0 7%, transparent 31%),
+    conic-gradient(from 210deg at 52% 48%, #020102, #23000b, #050106, #39000f, #020102);
+  filter: blur(48px) saturate(1.3);
+  animation: hero-mesh-shift 17s ease-in-out infinite alternate;
+}
+.hero-backdrop::after {
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 42%, transparent 0 22%, rgba(3, 1, 3, .18) 50%, rgba(3, 1, 3, .86) 100%),
+    repeating-linear-gradient(90deg, transparent 0 118px, rgba(255, 255, 255, .035) 119px 120px),
+    repeating-linear-gradient(0deg, transparent 0 118px, rgba(255, 255, 255, .022) 119px 120px);
+  box-shadow: inset 0 -150px 130px rgba(3, 1, 2, .72);
+}
+.hero-noise {
+  z-index: -1;
+  inset: -28%;
+  opacity: .22;
+  background: repeating-radial-gradient(
+    ellipse at 50% 50%,
+    transparent 0 31px,
+    rgba(255, 126, 146, .3) 32px 33px,
+    transparent 34px 58px
+  );
+  mask-image: radial-gradient(ellipse at 50% 50%, #000 10%, transparent 69%);
+  transform: rotate(-9deg) scale(1.18);
+  animation: hero-contours 19s linear infinite;
+}
+.hero-scanline {
+  z-index: -1;
+  inset: 0 -15%;
+  background: linear-gradient(112deg, transparent 24%, rgba(255, 49, 83, .11) 46%, rgba(255, 227, 219, .05) 50%, transparent 67%);
+  mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+  animation: hero-light-sweep 11s ease-in-out infinite alternate;
+}
+.hero-scanline::after { display: none; }
+.hero-orb-one {
+  top: 8%;
+  right: -8%;
+  width: 42vw;
+  height: 42vw;
+  background: rgba(255, 22, 62, .14);
+  filter: blur(65px);
+}
+.hero-orb-two {
+  bottom: -12%;
+  left: -8%;
+  width: 38vw;
+  height: 38vw;
+  background: rgba(91, 0, 70, .2);
+  filter: blur(68px);
+}
+.hero-art { display: none; }
+.hero::before {
+  content: 'SHUGHOST';
+  top: 52%;
+  color: rgba(255, 235, 230, .026);
+  font-size: clamp(9rem, 23vw, 22rem);
+  transform: translate(-50%, -50%);
+}
+.hero-copy {
+  padding: clamp(28px, 5vw, 70px);
+  border: 1px solid rgba(255, 255, 255, .07);
+  background: linear-gradient(145deg, rgba(9, 2, 5, .48), rgba(3, 1, 3, .14));
+  box-shadow: 0 45px 120px rgba(0, 0, 0, .34), inset 0 1px rgba(255, 255, 255, .035);
+  backdrop-filter: blur(3px);
+  clip-path: polygon(26px 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%, 0 26px);
+}
+@keyframes hero-mesh-shift {
+  0% { transform: translate3d(-7%, -4%, 0) rotate(-8deg) scale(1); }
+  50% { transform: translate3d(6%, 3%, 0) rotate(4deg) scale(1.12); }
+  100% { transform: translate3d(-2%, 8%, 0) rotate(11deg) scale(1.05); }
+}
+@keyframes hero-contours {
+  from { transform: rotate(-9deg) scale(1.18) translate3d(0, 0, 0); }
+  to { transform: rotate(-9deg) scale(1.18) translate3d(58px, 36px, 0); }
+}
+@keyframes hero-light-sweep {
+  from { transform: translate3d(-12%, 0, 0); opacity: .45; }
+  to { transform: translate3d(12%, 0, 0); opacity: 1; }
+}
+
+/* V2 controls: cut corners, directional fill and offset press. */
+.button {
+  --button-base: linear-gradient(145deg, rgba(25, 5, 11, .98), rgba(6, 2, 4, .98));
+  --button-fill: linear-gradient(110deg, #760019, #ed1235 58%, #ff4965);
+  min-height: 52px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 82, 108, .42);
+  border-radius: 0;
+  background: var(--button-base);
+  box-shadow: 7px 7px 0 rgba(85, 0, 21, .5);
+  color: #fff;
+  text-shadow: none;
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+  transform: translate(0, 0);
+  transition: transform .28s cubic-bezier(.16, 1, .3, 1), box-shadow .28s ease, border-color .25s ease;
+}
+.button::before {
+  z-index: -1;
+  inset: 0;
+  background: var(--button-fill);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .44s cubic-bezier(.16, 1, .3, 1);
+}
+.button::after {
+  z-index: 2;
+  top: 7px;
+  right: 7px;
+  bottom: auto;
+  left: auto;
+  width: 9px;
+  height: 9px;
+  border-top: 1px solid rgba(255, 255, 255, .7);
+  border-right: 1px solid rgba(255, 255, 255, .7);
+  background: none;
+  opacity: .65;
+  transform: none;
+  transition: width .3s ease, height .3s ease, opacity .3s ease;
+}
+.button:hover {
+  border-color: rgba(255, 126, 146, .78);
+  box-shadow: 11px 11px 0 rgba(85, 0, 21, .72);
+  transform: translate(-4px, -4px);
+}
+.button:hover::before { transform: scaleX(1); }
+.button:hover::after { width: 17px; height: 17px; opacity: 1; transform: none; }
+.button:active {
+  box-shadow: 2px 2px 0 rgba(85, 0, 21, .65);
+  transform: translate(4px, 4px);
+}
+.button-primary {
+  --button-base: linear-gradient(125deg, #e80d35, #93001e);
+  --button-fill: linear-gradient(110deg, #540012, #a90025 58%, #da0b35);
+  color: #fff;
+  box-shadow: 7px 7px 0 rgba(70, 0, 16, .72);
+}
+.button-primary:hover {
+  background: var(--button-base);
+  box-shadow: 11px 11px 0 rgba(70, 0, 16, .82);
+}
+.button-ghost,
+.button-community {
+  --button-base: linear-gradient(145deg, rgba(19, 4, 9, .98), rgba(4, 2, 3, .98));
+  --button-fill: linear-gradient(110deg, #690017, #cf0a31 62%, #ff3d5d);
+  background: var(--button-base);
+  color: #fff;
+}
+.button-ghost:hover,
+.button-community:hover { background: var(--button-base); }
+
+:is(.header-cta, .cart-button, .menu-toggle, .menu-close, .donation-card-number button, .footer-link-button, .cart-remove) {
+  --control-fill: linear-gradient(110deg, #750019, #ed1235 68%, #ff4965);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 0;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition: transform .28s cubic-bezier(.16, 1, .3, 1), box-shadow .28s ease, color .25s ease;
+}
+.header-cta {
+  border: 1px solid rgba(255, 82, 108, .45);
+  background: linear-gradient(145deg, #250711, #090305);
+  box-shadow: 5px 5px 0 rgba(72, 0, 18, .55);
+}
+:is(.header-cta, .cart-button, .menu-toggle, .menu-close, .donation-card-number button, .footer-link-button, .cart-remove)::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: var(--control-fill);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .4s cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none;
+}
+:is(.header-cta, .cart-button, .menu-toggle, .menu-close, .donation-card-number button, .footer-link-button, .cart-remove):hover {
+  color: #fff;
+  box-shadow: 6px 6px 0 rgba(82, 0, 20, .62);
+  transform: translate(-3px, -3px);
+}
+:is(.header-cta, .cart-button, .menu-toggle, .menu-close, .donation-card-number button, .footer-link-button, .cart-remove):hover::before { transform: scaleX(1); }
+:is(.header-cta, .cart-button, .menu-toggle, .menu-close, .donation-card-number button, .footer-link-button, .cart-remove):active {
+  box-shadow: 1px 1px 0 rgba(82, 0, 20, .62);
+  transform: translate(3px, 3px);
+}
+.header-cta::after,
+.cart-button::after { display: none; }
+.menu-toggle span,
+.menu-close span,
+.cart-button > * { position: relative; z-index: 1; }
+
+.language-switcher button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  transition: color .25s ease, transform .25s ease, background .25s ease;
+}
+.language-switcher button::after {
+  content: '';
+  position: absolute;
+  right: 4px;
+  bottom: 3px;
+  left: 4px;
+  height: 2px;
+  background: #ff3152;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s cubic-bezier(.16, 1, .3, 1);
+}
+.language-switcher button:hover { color: #fff; transform: translateY(-2px); }
+.language-switcher button:hover::after,
+.language-switcher button.active::after { transform: scaleX(1); }
+
+.icon-button {
+  border-radius: 0;
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+  transition: transform .25s cubic-bezier(.16, 1, .3, 1), background .25s ease, color .25s ease;
+}
+.icon-button:hover { background: #ed1235; color: #fff; transform: rotate(7deg) scale(1.08); }
+.icon-button:active { transform: scale(.92); }
+
+.world-item {
+  isolation: isolate;
+  overflow: hidden;
+}
+.world-item::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(133, 0, 29, .86), rgba(237, 18, 53, .18));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .42s cubic-bezier(.16, 1, .3, 1);
+}
+.world-item:hover::before,
+.world-item:focus-visible::before,
+.world-item.is-active::before { transform: scaleX(1); }
+.world-item:hover,
+.world-item:focus-visible,
+.world-item.is-active { background: transparent; transform: translateX(8px); }
+
+.screenshot-grid button {
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  transition: transform .34s cubic-bezier(.16, 1, .3, 1), box-shadow .34s ease, filter .3s ease;
+}
+.screenshot-grid button:hover {
+  box-shadow: 10px 10px 0 rgba(105, 0, 26, .68);
+  filter: saturate(1.15) contrast(1.04);
+  transform: translate(-5px, -5px);
+}
+.screenshot-grid button:active { box-shadow: 2px 2px 0 rgba(105, 0, 26, .68); transform: translate(3px, 3px); }
+
+@media (max-width: 700px) {
+  .hero { padding-top: 130px; padding-bottom: 105px; }
+  .hero-copy { padding: 35px 18px 42px; clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px); }
+  .hero h1 { font-size: clamp(3.7rem, 19vw, 6.2rem); white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-atmosphere::before,
+  .hero-backdrop::before,
+  .hero-noise,
+  .hero-scanline { animation: none; }
+  .button::before,
+  :is(.header-cta, .cart-button, .menu-toggle, .menu-close, .donation-card-number button, .footer-link-button, .cart-remove)::before { transition: none; }
 }
