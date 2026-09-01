@@ -40,9 +40,9 @@
       gtag('config', 'AW-18379981521');
     </script>
     <link rel="icon" href="assets/images/shughost-logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/styles.css?v=21" />
+    <link rel="stylesheet" href="assets/styles.css?v=24" />
     <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js" defer data-hls-library></script>
-    <script src="assets/app.js?v=18" defer></script>
+    <script src="assets/app.js?v=19" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -65,7 +65,7 @@
         <a href="#games" data-i18n="nav.games">Games</a>
         <a href="#streamers" data-i18n="nav.streamers">Streamers</a>
         <a href="#about" data-i18n="nav.about">About</a>
-        <a href="#support" data-i18n="nav.support">Support</a>
+        <a href="/support" data-i18n="nav.support">Support</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
 
@@ -101,7 +101,7 @@
           <a href="#games" data-menu-close-link><b>01</b><span data-i18n="nav.games">Games</span></a>
           <a href="#streamers" data-menu-close-link><b>02</b><span data-i18n="nav.streamers">Streamers</span></a>
           <a href="#about" data-menu-close-link><b>03</b><span data-i18n="nav.about">About</span></a>
-          <a href="#support" data-menu-close-link><b>04</b><span data-i18n="nav.support">Support</span></a>
+          <a href="/support" data-menu-close-link><b>04</b><span data-i18n="nav.support">Support</span></a>
           <a href="#contact" data-menu-close-link><b>05</b><span data-i18n="nav.contact">Contact</span></a>
         </nav>
         <div class="site-menu-meta">
@@ -114,6 +114,7 @@
 
     <main id="main">
       <section class="hero" id="top">
+        <div class="hero-backdrop" aria-hidden="true"></div>
         <div class="hero-noise" aria-hidden="true"></div>
         <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
         <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
@@ -137,11 +138,9 @@
         </div>
 
         <div class="hero-art reveal" aria-label="ShuGhost studio artwork" data-motion-stage>
-          <div class="hero-stripes" aria-hidden="true"></div>
           <div class="hero-scene" data-logo-parallax>
-            <img src="assets/images/shughost-social-preview.png" alt="ShuGhost — Independent games with a mischievous soul" />
+            <img class="hero-scene-logo" src="assets/images/shughost-logo.png" alt="ShuGhost studio logo" />
             <span class="hero-scene-shade" aria-hidden="true"></span>
-            <span class="hero-scene-index" aria-hidden="true">01</span>
             <span class="hero-scene-caption">SHUGHOST / INDEPENDENT GAMES</span>
           </div>
           <div class="hero-art-rail" aria-hidden="true">
@@ -486,70 +485,6 @@
         </div>
       </section>
 
-      <section class="support section" id="support">
-        <div class="support-panel reveal">
-          <div>
-            <p class="eyebrow"><span></span> <b data-i18n="support.eyebrow">Need help?</b></p>
-            <h2 data-i18n="support.title">Support & community</h2>
-            <p data-i18n="support.text">Report a problem, share feedback, or join a discussion through the official Steam hubs.</p>
-          </div>
-          <div class="support-links">
-            <a
-              class="button button-primary"
-              href="https://steamcommunity.com/app/4981140/discussions/"
-              target="_blank"
-              rel="noopener noreferrer"
-            ><span data-i18n="support.gremlins">Desktop Gremlins support</span></a>
-            <a
-              class="button button-ghost"
-              href="https://steamcommunity.com/app/4925710/discussions/"
-              target="_blank"
-              rel="noopener noreferrer"
-            ><span data-i18n="support.violet">Dr. Violet support</span></a>
-            <a
-              class="button button-community button-telegram"
-              href="https://t.me/CursorVerse"
-              target="_blank"
-              rel="noopener noreferrer"
-            ><span aria-hidden="true">✈</span><span data-i18n="support.telegram">Join Telegram</span></a>
-            <a
-              class="button button-community button-discord"
-              href="https://discord.gg/9agE2cnpJ7"
-              target="_blank"
-              rel="noopener noreferrer"
-            ><span aria-hidden="true">☁</span><span data-i18n="support.discord">Join Discord</span></a>
-          </div>
-        </div>
-        <div class="donation-panel reveal">
-          <div class="donation-copy">
-            <p class="donation-kicker"><span aria-hidden="true">🍓</span><b data-i18n="donate.eyebrow">Support development</b></p>
-            <h3 data-i18n="donate.title">Feed the gremlin a strawberry.</h3>
-            <p data-i18n="donate.text">If you enjoy Desktop Gremlins, you can support its future updates through the official Monobank jar.</p>
-          </div>
-          <div class="donation-actions">
-            <a
-              class="button button-primary donation-jar-button"
-              href="https://send.monobank.ua/jar/xKusi9cFx"
-              target="_blank"
-              rel="noopener noreferrer"
-            ><span data-i18n="donate.jar">Open Monobank jar</span><span aria-hidden="true">↗</span></a>
-            <div class="donation-card-number">
-              <span>
-                <small data-i18n="donate.cardLabel">Jar card number</small>
-                <strong>4874 1000 3230 9935</strong>
-              </span>
-              <button
-                type="button"
-                data-copy-support-card="4874100032309935"
-                data-i18n="donate.copy"
-                data-i18n-aria="donate.copyAria"
-              >Copy</button>
-            </div>
-            <small class="donation-note" data-i18n="donate.note">Voluntary support only — this is not a purchase.</small>
-          </div>
-        </div>
-      </section>
-
       <section class="contact section" id="contact">
         <div class="contact-panel reveal">
           <div class="contact-copy">
@@ -582,7 +517,7 @@
         <button type="button" class="footer-link-button" data-cookie-settings data-i18n="footer.cookies">Cookie settings</button>
         <a href="https://t.me/CursorVerse" target="_blank" rel="noopener noreferrer">Telegram</a>
         <a href="https://discord.gg/9agE2cnpJ7" target="_blank" rel="noopener noreferrer">Discord</a>
-        <a href="#support" data-i18n="nav.support">Support</a>
+        <a href="/support" data-i18n="nav.support">Support</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
       <small>© <span data-year></span> ShuGhost. <span data-i18n="footer.legal">All rights reserved. Steam is a trademark of Valve Corporation.</span></small>

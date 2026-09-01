@@ -31,9 +31,14 @@ const translations = {
     'support.text': 'Report a problem, share feedback, or join the ShuGhost community on Steam, Telegram, and Discord.',
     'support.gremlins': 'Desktop Gremlins support', 'support.violet': 'Dr. Violet support',
     'support.telegram': 'Join Telegram', 'support.discord': 'Join Discord',
+    'supportPage.eyebrow': 'SHUGHOST / SUPPORT', 'supportPage.title': 'Support ShuGhost',
+    'supportPage.intro': 'Help independent development move forward or find the community channel that works for you.',
+    'supportPage.developmentTitle': 'Support development',
     'donate.eyebrow': 'Support development', 'donate.title': 'Feed the gremlin a strawberry.',
-    'donate.text': 'If you enjoy Desktop Gremlins, you can support its future updates through the official Monobank jar.',
+    'donate.text': 'If you enjoy Desktop Gremlins, you can support future updates through Monobank or DonationAlerts.',
     'donate.jar': 'Open Monobank jar', 'donate.cardLabel': 'Jar card number',
+    'donate.monobankTitle': 'Official Monobank jar', 'donate.monobankText': 'A direct way to support future Desktop Gremlins updates.',
+    'donate.alertsTitle': 'DonationAlerts', 'donate.alertsText': 'Support ShuGhost through the familiar DonationAlerts page.', 'donate.alerts': 'Open DonationAlerts',
     'donate.copy': 'Copy', 'donate.copied': 'Copied!', 'donate.copyAria': 'Copy the Monobank jar card number',
     'donate.note': 'Voluntary support only — this is not a purchase.',
     'contact.eyebrow': 'Work together', 'contact.title': 'Have an idea or collaboration proposal?',
@@ -91,9 +96,14 @@ const translations = {
     'support.text': 'Повідомте про проблему, поділіться відгуком або приєднайтеся до спільноти ShuGhost у Steam, Telegram і Discord.',
     'support.gremlins': 'Підтримка Desktop Gremlins', 'support.violet': 'Підтримка Dr. Violet',
     'support.telegram': 'Приєднатися до Telegram', 'support.discord': 'Приєднатися до Discord',
+    'supportPage.eyebrow': 'SHUGHOST / ПІДТРИМКА', 'supportPage.title': 'Підтримати ShuGhost',
+    'supportPage.intro': 'Допоможіть незалежній розробці рухатися вперед або оберіть зручний канал спільноти.',
+    'supportPage.developmentTitle': 'Підтримати розробку',
     'donate.eyebrow': 'Підтримати розробку', 'donate.title': 'Пригостити гремліна полуничкою.',
-    'donate.text': 'Якщо вам подобається Desktop Gremlins, ви можете підтримати майбутні оновлення через офіційну Банку Monobank.',
+    'donate.text': 'Якщо вам подобається Desktop Gremlins, ви можете підтримати майбутні оновлення через Monobank або DonationAlerts.',
     'donate.jar': 'Відкрити Банку Monobank', 'donate.cardLabel': 'Номер картки Банки',
+    'donate.monobankTitle': 'Офіційна Банка Monobank', 'donate.monobankText': 'Прямий спосіб підтримати майбутні оновлення Desktop Gremlins.',
+    'donate.alertsTitle': 'DonationAlerts', 'donate.alertsText': 'Підтримайте ShuGhost через знайому сторінку DonationAlerts.', 'donate.alerts': 'Відкрити DonationAlerts',
     'donate.copy': 'Копіювати', 'donate.copied': 'Скопійовано!', 'donate.copyAria': 'Скопіювати номер картки Банки Monobank',
     'donate.note': 'Добровільна підтримка — це не купівля товару.',
     'contact.eyebrow': 'Співпраця', 'contact.title': 'Маєте ідею або пропозицію співпраці?',
@@ -151,9 +161,14 @@ const translations = {
     'support.text': 'Сообщите о проблеме, поделитесь отзывом или присоединитесь к сообществу ShuGhost в Steam, Telegram и Discord.',
     'support.gremlins': 'Поддержка Desktop Gremlins', 'support.violet': 'Поддержка Dr. Violet',
     'support.telegram': 'Присоединиться к Telegram', 'support.discord': 'Присоединиться к Discord',
+    'supportPage.eyebrow': 'SHUGHOST / ПОДДЕРЖКА', 'supportPage.title': 'Поддержать ShuGhost',
+    'supportPage.intro': 'Помогите независимой разработке двигаться вперёд или выберите удобный канал сообщества.',
+    'supportPage.developmentTitle': 'Поддержать разработку',
     'donate.eyebrow': 'Поддержать разработку', 'donate.title': 'Угостить гремлина клубничкой.',
-    'donate.text': 'Если вам нравится Desktop Gremlins, вы можете поддержать будущие обновления через официальную Банку Monobank.',
+    'donate.text': 'Если вам нравится Desktop Gremlins, вы можете поддержать будущие обновления через Monobank или DonationAlerts.',
     'donate.jar': 'Открыть Банку Monobank', 'donate.cardLabel': 'Номер карты Банки',
+    'donate.monobankTitle': 'Официальная Банка Monobank', 'donate.monobankText': 'Прямой способ поддержать будущие обновления Desktop Gremlins.',
+    'donate.alertsTitle': 'DonationAlerts', 'donate.alertsText': 'Поддержите ShuGhost через знакомую страницу DonationAlerts.', 'donate.alerts': 'Открыть DonationAlerts',
     'donate.copy': 'Копировать', 'donate.copied': 'Скопировано!', 'donate.copyAria': 'Скопировать номер карты Банки Monobank',
     'donate.note': 'Добровольная поддержка — это не покупка товара.',
     'contact.eyebrow': 'Сотрудничество', 'contact.title': 'Есть идея или предложение о сотрудничестве?',
@@ -467,10 +482,11 @@ function applyLanguage(language) {
     button.setAttribute('aria-pressed', String(active))
   })
 
-  const isPrivacyPage = document.body.classList.contains('legal-page')
-  document.title = isPrivacyPage ? `${t('privacy.title')} — ShuGhost` : t('meta.title')
+  const isSupportPage = document.body.classList.contains('support-page')
+  const isPrivacyPage = document.body.classList.contains('legal-page') && !isSupportPage
+  document.title = isSupportPage ? t('supportPage.title') : isPrivacyPage ? `${t('privacy.title')} — ShuGhost` : t('meta.title')
   const description = document.querySelector('meta[name="description"]')
-  if (description) description.setAttribute('content', isPrivacyPage ? t('privacy.overviewText') : t('meta.description'))
+  if (description) description.setAttribute('content', isSupportPage ? t('supportPage.intro') : isPrivacyPage ? t('privacy.overviewText') : t('meta.description'))
   renderCart()
   refreshUpdatesLanguage()
   renderStreamerStatusLabels()
