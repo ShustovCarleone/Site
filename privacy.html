@@ -3,139 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#050304" />
-    <meta name="description" content="Privacy policy for the ShuGhost website." />
-    <link rel="canonical" href="https://shughost.up.railway.app/privacy" />
-    <title>Privacy Policy — ShuGhost</title>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      const googleConsentGranted = localStorage.getItem('shughost-consent-v2') === 'granted';
-      gtag('consent', 'default', {
-        ad_storage: googleConsentGranted ? 'granted' : 'denied',
-        ad_user_data: googleConsentGranted ? 'granted' : 'denied',
-        ad_personalization: googleConsentGranted ? 'granted' : 'denied',
-        analytics_storage: googleConsentGranted ? 'granted' : 'denied'
-      });
-    </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18379981521"></script>
-    <script>
-      gtag('js', new Date());
-      gtag('config', 'AW-18379981521');
-    </script>
+    <meta name="theme-color" content="#090607" />
+    <meta name="description" content="Privacy Policy for the official ShuGhost website." />
+    <title>Privacy Policy | ShuGhost</title>
     <link rel="icon" href="assets/images/shughost-logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/styles.css?v=29" />
-    <script src="assets/app.js?v=23" defer></script>
+    <link rel="stylesheet" href="assets/new-site.css?v=7" />
+    <script src="assets/privacy.js?v=1" defer></script>
   </head>
-  <body class="legal-page">
-    <div class="site-atmosphere" aria-hidden="true">
-      <span class="atmosphere-grid"></span>
-      <span class="atmosphere-glow atmosphere-glow-one"></span>
-      <span class="atmosphere-grain"></span>
-    </div>
-    <header class="site-header compact-header">
-      <a class="brand" href="/" aria-label="ShuGhost home">
-        <span class="brand-logo-shell" aria-hidden="true"><img src="assets/images/shughost-logo.png" alt="" /></span><span>ShuGhost</span>
-      </a>
-      <div class="header-tools">
-        <div class="language-switcher" role="group" aria-label="Language" data-i18n-aria="language.label">
-          <button type="button" data-lang="uk" aria-label="Українська">UA</button>
-          <button type="button" data-lang="en" aria-label="English">EN</button>
-          <button type="button" data-lang="ru" aria-label="Русский">RU</button>
+  <body>
+    <main class="legal-shell">
+      <header class="legal-toolbar">
+        <a class="legal-brand" href="index.html#home">
+          <img src="assets/images/shughost-logo.png" alt="ShuGhost logo" />
+          <span>ShuGhost</span>
+        </a>
+        <div class="language-switch" role="group" aria-label="Language" data-privacy-aria="language.label">
+          <button type="button" data-privacy-language="uk" aria-pressed="false">УКР</button>
+          <button type="button" data-privacy-language="ru" aria-pressed="false">РУ</button>
+          <button type="button" data-privacy-language="en" aria-pressed="false">EN</button>
         </div>
-        <a class="button button-ghost button-small" href="/" data-i18n="privacy.back">Back to home</a>
-      </div>
-    </header>
+        <a class="legal-back" href="index.html#home" data-privacy-i18n="back">← Back to website</a>
+      </header>
 
-    <main class="legal-main">
-      <p class="eyebrow"><span></span> <b data-i18n="privacy.legal">Legal</b></p>
-      <h1 data-i18n="privacy.title">Privacy Policy</h1>
-      <p class="legal-updated" data-i18n="privacy.updated">Last updated: August 12, 2026</p>
+      <article class="legal-card">
+        <p class="page-kicker" data-privacy-i18n="kicker">♡ official information ♡</p>
+        <h1 data-privacy-i18n="title">Privacy Policy</h1>
+        <p class="legal-updated" data-privacy-i18n="updated">Last updated: September 3, 2026</p>
 
-      <section>
-        <h2 data-i18n="privacy.overviewTitle">Overview</h2>
-        <p data-i18n="privacy.overviewText">
-          ShuGhost respects your privacy. This policy explains what information this website stores,
-          how external services may process information, and the choices available to you.
-        </p>
-      </section>
+        <section>
+          <h2 data-privacy-i18n="overviewTitle">Overview</h2>
+          <p data-privacy-i18n="overviewText">ShuGhost respects your privacy. This page explains what the website stores and what happens when you open external services.</p>
+        </section>
 
-      <section>
-        <h2 data-i18n="privacy.storageTitle">Information stored on your device</h2>
-        <p data-i18n="privacy.storageText">
-          The site uses browser local storage to remember the games placed in your on-site cart and
-          whether you dismissed the cookie notice. This information stays on your device and is not
-          transmitted to ShuGhost.
-        </p>
-      </section>
+        <section>
+          <h2 data-privacy-i18n="storageTitle">Information stored on your device</h2>
+          <p data-privacy-i18n="storageText">The website stores only your selected language in local browser storage. This setting remains on your device and is not sent to ShuGhost.</p>
+        </section>
 
-      <section>
-        <h2 data-i18n="privacy.steamTitle">Steam links and purchases</h2>
-        <p data-i18n="privacy.steamText">
-          Purchase buttons lead to store pages operated by Valve Corporation. Payments, Steam accounts,
-          regional pricing, delivery, refunds, and any information submitted on Steam are governed by
-          Steam's own terms and privacy policy. This website does not receive or store payment details.
-        </p>
-      </section>
+        <section>
+          <h2 data-privacy-i18n="collectionTitle">Personal data</h2>
+          <p data-privacy-i18n="collectionText">This website does not create user accounts, process payments, collect form submissions, or store personal profiles.</p>
+        </section>
 
-      <section>
-        <h2 data-i18n="privacy.counterTitle">Visitor counter</h2>
-        <p data-i18n="privacy.counterText">
-          The site creates a random ID for the current browser tab to calculate anonymous online and
-          total visit counts. The ID expires with the browser session. ShuGhost does not use this
-          counter to store names, accounts, or complete IP addresses.
-        </p>
-      </section>
+        <section>
+          <h2 data-privacy-i18n="externalTitle">External services</h2>
+          <p data-privacy-i18n="externalText">Links to Steam, Twitch, Telegram, Discord, Ko-fi, DonationAlerts, and email services open third-party websites. Their own privacy policies apply after you leave this website.</p>
+        </section>
 
-      <section>
-        <h2 data-i18n="privacy.adsTitle">Advertising and analytics</h2>
-        <p data-i18n="privacy.adsText">
-          This website uses the Google tag for Google Ads measurement. Advertising and analytics
-          storage is denied by default and enabled only after you grant consent. Google may then
-          process device, browser, interaction, and advertising-attribution information under its
-          own privacy terms.
-        </p>
-      </section>
+        <section>
+          <h2 data-privacy-i18n="contactTitle">Contact</h2>
+          <p><span data-privacy-i18n="contactText">For privacy questions, contact</span> <a href="mailto:shughostcom@gmail.com">shughostcom@gmail.com</a>.</p>
+        </section>
+      </article>
 
-      <section>
-        <h2 data-i18n="privacy.externalTitle">External websites</h2>
-        <p data-i18n="privacy.externalText">
-          Links to Steam and other third-party services leave this website. ShuGhost is not responsible
-          for the privacy practices or content of those external services.
-        </p>
-      </section>
-
-      <section>
-        <h2 data-i18n="privacy.choicesTitle">Your choices</h2>
-        <p data-i18n="privacy.choicesText">
-          You can clear the on-site cart from the cart panel. You can also remove stored site data at any
-          time using your browser's privacy or site settings.
-        </p>
-      </section>
-
-      <section>
-        <h2 data-i18n="privacy.contactTitle">Contact</h2>
-        <p>
-          <span data-i18n="privacy.contactText">For game support or privacy questions, contact ShuGhost at</span>
-          <a href="mailto:shughostcom@gmail.com">shughostcom@gmail.com</a>.
-        </p>
-      </section>
+      <footer class="profile-footer legal-page-footer">
+        <p>♡ <span data-year></span> ShuGhost ♡</p>
+      </footer>
     </main>
-
-    <footer class="site-footer legal-footer">
-      <small>© <span data-year></span> ShuGhost. All rights reserved.</small>
-    </footer>
-
-    <section class="cookie-banner" data-cookie-banner aria-label="Cookie notice" hidden>
-      <div>
-        <strong data-i18n="cookie.title">Your privacy matters.</strong>
-        <p data-i18n="cookie.text">Allow Google Ads measurement cookies to help ShuGhost understand which ads bring visitors to the site.</p>
-      </div>
-      <div class="cookie-actions">
-        <button class="button button-ghost button-small" type="button" data-cookie-reject data-i18n="cookie.reject">Reject</button>
-        <button class="button button-primary button-small" type="button" data-cookie-accept data-i18n="cookie.accept">Accept</button>
-      </div>
-    </section>
   </body>
 </html>

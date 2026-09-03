@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://shughost.up.railway.app/sitemap.xml
