@@ -8,6 +8,7 @@ Included features:
 - Desktop Gremlins and Dr. Violet game pages
 - Screenshot gallery
 - Our Streamers page with local avatar images and hover previews
+- Anonymous live online and total view counters with Railway Volume persistence
 - Official community, support, contact, and privacy links
 - Responsive desktop and mobile layouts
 

@@ -99,6 +99,8 @@
       "footer.tagline": "сайт ShuGhost | незалежні ігри, створені з турботою",
       "footer.warning": "Це офіційні посилання ShuGhost. Остерігайтеся сторінок-копій.",
       "footer.privacy": "Політика конфіденційності",
+      "stats.online": "зараз онлайн",
+      "stats.views": "переглядів",
     },
     ru: {
       "common.skip": "Перейти к содержимому",
@@ -182,6 +184,8 @@
       "footer.tagline": "сайт ShuGhost | независимые игры, созданные с заботой",
       "footer.warning": "Это официальные ссылки ShuGhost. Остерегайтесь страниц-копий.",
       "footer.privacy": "Политика конфиденциальности",
+      "stats.online": "сейчас онлайн",
+      "stats.views": "просмотров",
     },
     en: {
       "common.skip": "Skip to content",
@@ -265,6 +269,8 @@
       "footer.tagline": "website by ShuGhost | independent games made with care",
       "footer.warning": "These are the official ShuGhost links. Please be careful with impersonators.",
       "footer.privacy": "Privacy Policy",
+      "stats.online": "online now",
+      "stats.views": "views",
     },
   };
 
@@ -280,13 +286,69 @@
   const refreshButton = document.querySelector("[data-browser-refresh]");
   const homeButton = document.querySelector("[data-browser-home]");
   const siteView = document.querySelector("#site-view");
+  const visitorStats = document.querySelector(".visitor-stats");
+  const onlineCount = document.querySelector("[data-visitor-online]");
+  const totalViewCount = document.querySelector("[data-visitor-total]");
 
   let currentPage = "home";
   let currentLanguage = "en";
+  let visitorId = "";
 
   const validPage = (value) => (pages.includes(value) ? value : "home");
   const pageFromHash = () => validPage(window.location.hash.slice(1).toLowerCase());
   const translate = (key) => translations[currentLanguage]?.[key] || translations.en[key] || key;
+
+  function getVisitorId() {
+    if (visitorId) return visitorId;
+
+    const storageKey = "shughost-visitor-session-v1";
+    try {
+      visitorId = window.sessionStorage.getItem(storageKey) || "";
+    } catch {
+      visitorId = "";
+    }
+    if (visitorId) return visitorId;
+
+    visitorId = globalThis.crypto?.randomUUID
+      ? globalThis.crypto.randomUUID()
+      : `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 18)}`;
+    try {
+      window.sessionStorage.setItem(storageKey, visitorId);
+    } catch {
+      // Keep the generated ID in memory when session storage is unavailable.
+    }
+    return visitorId;
+  }
+
+  function formatVisitorNumber(value) {
+    const locale = currentLanguage === "uk" ? "uk-UA" : currentLanguage === "ru" ? "ru-RU" : "en-US";
+    return new Intl.NumberFormat(locale).format(value);
+  }
+
+  async function updateVisitorStats(pageView = false) {
+    if (!onlineCount || !totalViewCount) return;
+
+    try {
+      const response = await fetch("/api/visitor-heartbeat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visitorId: getVisitorId(), pageView }),
+        cache: "no-store",
+      });
+      if (!response.ok) throw new Error(`Visitor stats request failed: ${response.status}`);
+
+      const stats = await response.json();
+      const online = Number.isSafeInteger(stats.online) && stats.online >= 0 ? stats.online : 0;
+      const views = Number.isSafeInteger(stats.views) && stats.views >= 0 ? stats.views : 0;
+      onlineCount.textContent = formatVisitorNumber(online);
+      totalViewCount.textContent = formatVisitorNumber(views);
+      visitorStats?.classList.remove("unavailable");
+    } catch {
+      onlineCount.textContent = "?";
+      totalViewCount.textContent = "?";
+      visitorStats?.classList.add("unavailable");
+    }
+  }
 
   function detectLanguage() {
     let storedLanguage = "";
@@ -430,6 +492,12 @@
 
   currentPage = pageFromHash();
   applyLanguage(detectLanguage(), false);
+  void updateVisitorStats(true);
+  window.setInterval(() => void updateVisitorStats(false), 20_000);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") void updateVisitorStats(false);
+  });
 
   window.addEventListener("hashchange", () => {
     const hashPage = pageFromHash();
