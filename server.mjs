@@ -20,11 +20,8 @@ const steamNewsCacheMs = 15 * 60 * 1000
 const steamMediaCache = new Map()
 const steamMediaCacheMs = 15 * 60 * 1000
 const featuredTwitchLogins = [
-  'rawyray',
-  'rin_stahich',
   'debi__ll',
   'luka_svetlov',
-  'cumsya',
   '0_0nari_chan0_0',
   'nezvano',
   'miss_evasya',
