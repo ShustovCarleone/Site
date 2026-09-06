@@ -1,6 +1,6 @@
 # ShuGhost website
 
-The official ShuGhost website with a black and red animated design.
+The official ShuGhost website with an animated midnight-blue gradient and clean sans-serif headings.
 
 Included features:
 
