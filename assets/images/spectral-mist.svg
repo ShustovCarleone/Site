@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="460" viewBox="0 0 1440 460" fill="none" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="mist" x1="680" y1="80" x2="720" y2="355" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BDDCD5" stop-opacity="0"/>
+      <stop offset=".46" stop-color="#BEDBD9" stop-opacity=".16"/>
+      <stop offset=".62" stop-color="#9AB3C5" stop-opacity=".09"/>
+      <stop offset="1" stop-color="#9AB3C5" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="wisp" x1="620" y1="110" x2="620" y2="290" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D4E9E1" stop-opacity="0"/>
+      <stop offset=".6" stop-color="#D4E9E1" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#D4E9E1" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fade">
+      <stop stop-color="white" stop-opacity="0"/>
+      <stop offset=".18" stop-color="white"/>
+      <stop offset=".82" stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="edges"><path fill="url(#fade)" d="M0 0h1440v460H0z"/></mask>
+    <filter id="soften" x="-10%" y="-25%" width="120%" height="150%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <g mask="url(#edges)" filter="url(#soften)">
+    <path d="M-100 170C100 40 195 270 430 166S702 73 896 176S1200 219 1540 71V343C1240 412 1131 238 890 305S594 363 412 274S93 258-100 369Z" fill="url(#mist)"/>
+    <path d="M-80 219C136 345 260 81 466 188S747 239 915 145S1195 198 1510 250V330C1154 294 1154 172 923 229S631 329 451 250S148 384-80 299Z" fill="url(#mist)" opacity=".7"/>
+    <path d="M-30 202C180 94 241 270 465 207S687 93 882 168S1240 319 1480 146V256C1240 358 1069 242 880 222S622 164 462 253S147 185-30 300Z" fill="url(#wisp)"/>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="420" viewBox="0 0 260 420" fill="none">
+  <defs>
+    <linearGradient id="veil" x1="97" y1="43" x2="179" y2="378" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E0F3EE" stop-opacity=".7"/>
+      <stop offset=".35" stop-color="#A4C8C5" stop-opacity=".26"/>
+      <stop offset=".72" stop-color="#8F9AB6" stop-opacity=".1"/>
+      <stop offset="1" stop-color="#8F9AB6" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="67" y1="68" x2="209" y2="338" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DAEFE7" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#A4C8C5" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fold" x1="106" y1="112" x2="150" y2="335" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D1EBE5" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#D1EBE5" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M63 129C56 80 85 44 125 46C172 48 185 86 178 130C169 187 151 205 169 251C182 286 205 300 224 309C190 309 164 290 151 264C154 304 179 342 198 357C158 343 132 313 122 277C115 311 105 344 117 383C80 349 81 302 82 270C62 304 47 322 27 323C57 293 53 259 45 232C35 197 64 167 63 129Z" fill="url(#veil)"/>
+  <path d="M63 129C56 80 85 44 125 46C172 48 185 86 178 130C169 187 151 205 169 251C182 286 205 300 224 309" stroke="url(#edge)" stroke-width="1.2"/>
+  <path d="M81 155C87 209 60 222 68 273M147 143C134 194 125 226 151 264M111 163C99 205 104 248 122 277" stroke="url(#fold)" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="99" cy="117" rx="7" ry="13" transform="rotate(9 99 117)" fill="#10191D" fill-opacity=".82"/>
+  <ellipse cx="136" cy="116" rx="7" ry="13" transform="rotate(9 136 116)" fill="#10191D" fill-opacity=".82"/>
+  <path d="M29 348C56 329 76 335 87 346M171 372C194 365 214 373 230 382" stroke="url(#fold)" stroke-linecap="round"/>
+</svg>

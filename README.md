@@ -1,6 +1,8 @@
 # ShuGhost website
 
-The official ShuGhost website with an animated midnight-blue gradient and clean sans-serif headings.
+The official ShuGhost website with a charcoal and sea-glass palette, drifting mist, translucent ghost silhouettes, and clean sans-serif headings. The shared theme covers the main site and privacy page. Decorative layers do not capture input; reduced-motion preferences disable their animation.
+
+The background has three independently moving SVG mist layers, fading ghost passages, and a slow ambient glow. Only transforms and opacity animate. Motion pauses when the tab is hidden, and the mobile layout uses two mist layers.
 
 Included features:
 
